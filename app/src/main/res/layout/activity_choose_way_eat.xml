@@ -3,41 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50px">
         <ImageView
+            android:id="@+id/IvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"/>
+        <ImageView
             android:id="@+id/IvZhongWen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/zhongwen_dingbu"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginLeft="60px"
+            android:src="@mipmap/zhongwen_dingbu"/>
         <ImageView
             android:id="@+id/IvHanYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/hanyu_dingbu"
-            android:layout_toLeftOf="@id/IvZhongWen"
-            android:layout_marginRight="50px"/>
+            android:layout_marginLeft="60px"/>
         <ImageView
             android:id="@+id/IvYingYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/yingyu_dingbu"
             android:layout_toRightOf="@id/IvZhongWen"
-            android:layout_marginLeft="50px"/>
-    </RelativeLayout>
+            android:layout_marginLeft="60px"/>
+    </LinearLayout>
     <ImageView
         android:id="@+id/IvLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/logo_shouye"
+        android:src="@mipmap/logo_yongcanfangshi"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400px"/>
+        android:layout_marginTop="500px"/>
 
-    <Button
-        android:id="@+id/btn"
+    <TextView
+        android:id="@+id/Tv01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/IvLogo"
@@ -46,15 +50,27 @@
         android:paddingBottom="20dp"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="100dp"
-        android:background="@drawable/slt_btn_bottom"
-        android:text="去点单"
+        android:text="请选择用餐方式"
         android:textColor="@color/com_txt_color"
-        android:textSize="@dimen/tv15"/>
-    <ImageView
-        android:layout_width="wrap_content"
+        android:textSize="40sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/zhifufangshi_shouye"
-        android:layout_marginBottom="50dp"
-        android:layout_alignParentBottom="true"/>
+        android:orientation="horizontal"
+        android:layout_below="@+id/Tv01"
+        android:layout_marginTop="200px">
+        <ImageView
+            android:id="@+id/TvPack"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/dabao"
+            />
+        <ImageView
+            android:id="@+id/IvForHere"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/tangshi"/>
+    </LinearLayout>
 </RelativeLayout>
