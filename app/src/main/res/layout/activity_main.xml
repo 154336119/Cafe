@@ -35,14 +35,26 @@
         android:src="@mipmap/logo_shouye"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="700px"/>
+
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/IvLogo"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/slt_btn_bottom"
-        android:textSize="@dimen/tv15"
-        android:textColor="#131313"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_marginTop="200dp"
-        android:text="去点单"/>
+        android:background="@drawable/slt_btn_bottom"
+        android:text="去点单"
+        android:textColor="#131313"
+        android:textSize="@dimen/tv15"
+        android:layout_marginLeft="300dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/zhifufangshi_shouye"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="200dp"/>
 </RelativeLayout>
