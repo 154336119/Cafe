@@ -36,7 +36,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="400px"/>
 
-    <Button
+    <TextView
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,9 +47,10 @@
         android:layout_marginTop="200dp"
         android:layout_marginLeft="100dp"
         android:background="@drawable/slt_btn_bottom"
+        android:gravity="center"
         android:text="去点单"
         android:textColor="@color/com_txt_color"
-        android:textSize="@dimen/tv15"/>
+        android:textSize="@dimen/tv_com_40"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

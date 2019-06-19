@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:splitMotionEvents="false"
+    android:background="@color/white"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="170dp"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler1"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_car_type"
+            android:overScrollMode="never"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+        <include layout="@layout/view_stick_header"/>
+    </FrameLayout>
+
+</LinearLayout>

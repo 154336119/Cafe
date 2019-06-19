@@ -101,4 +101,7 @@ public class BaseActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(uiOptions);
         }
     }
+
+    public void goAccount(View view) {
+    }
 }

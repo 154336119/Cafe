@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:splitMotionEvents="false">
+    <LinearLayout
+        android:id="@+id/LlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50px">
+        <ImageView
+            android:id="@+id/IvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"/>
+        <ImageView
+            android:id="@+id/IvZhongWen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60px"
+            android:src="@mipmap/zhongwen_dingbu"/>
+        <ImageView
+            android:id="@+id/IvHanYu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/hanyu_dingbu"
+            android:layout_marginLeft="60px"/>
+        <ImageView
+            android:id="@+id/IvYingYu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/yingyu_dingbu"
+            android:layout_toRightOf="@id/IvZhongWen"
+            android:layout_marginLeft="60px"/>
+    </LinearLayout>
+
+    <com.mj.cafe.view.ListContainer
+        android:id="@+id/ListContainer"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/LlTopBar"
+        android:layout_marginTop="120dp">
+    </com.mj.cafe.view.ListContainer>
+    <include layout="@layout/view_black" />
+
+    <include layout="@layout/view_carpop" />
+
+    <include layout="@layout/view_car" />
+</android.support.design.widget.CoordinatorLayout>

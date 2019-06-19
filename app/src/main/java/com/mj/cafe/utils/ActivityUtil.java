@@ -1,9 +1,11 @@
-package com.mj.cafe;
+package com.mj.cafe.utils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
+import com.mj.cafe.R;
 
 
 /**

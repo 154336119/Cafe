@@ -5,21 +5,26 @@
 
     <dimen name="statusbar_view_height">0dp</dimen>
     <dimen name="rl_statubar">56dp</dimen>
+    <dimen name="add_width">75dp</dimen>
 
-    <dimen name="title_height">?attr/actionBarSize</dimen>
+    <dimen name="shopcar_height">100dp</dimen>
+    <dimen name="tv_com_40">40sp</dimen>
+    <dimen name="tv_com_35">35sp</dimen>
+    <dimen name="tv_com_30">30sp</dimen>
+    <dimen name="tv_com_25">25sp</dimen>
+    <dimen name="tv_com_20">20sp</dimen>
+    <!--<dimen name="title_height">?attr/actionBarSize</dimen>-->
+    <!--<dimen name="margin12">12dp</dimen>-->
+    <!--<dimen name="margin16">16dp</dimen>-->
+    <!--<dimen name="margin20">20dp</dimen>-->
+    <!--<dimen name="margin32">32dp</dimen>-->
+    <!--<dimen name="tv12">12sp</dimen>-->
+    <!--<dimen name="tv14">14sp</dimen>-->
+    <!--<dimen name="tv15">50px</dimen>-->
+    <!--<dimen name="tv16">16sp</dimen>-->
+    <!--<dimen name="tv18">18sp</dimen>-->
+    <!--<dimen name="city_letter_size">12dp</dimen>-->
+    <!--<dimen name="app_bar_height">228dp</dimen>-->
 
-    <dimen name="margin12">12dp</dimen>
-    <dimen name="margin16">16dp</dimen>
-    <dimen name="margin20">20dp</dimen>
-    <dimen name="margin32">32dp</dimen>
-    <dimen name="tv12">12sp</dimen>
-    <dimen name="tv14">14sp</dimen>
-    <dimen name="tv15">50px</dimen>
-    <dimen name="tv16">16sp</dimen>
-    <dimen name="tv18">18sp</dimen>
-
-    <dimen name="city_letter_size">12dp</dimen>
-
-    <dimen name="app_bar_height">228dp</dimen>
 
 </resources>

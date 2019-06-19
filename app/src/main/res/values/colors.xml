@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="com_txt_color">#494949</color>
+    <color name="color_green">#65C920</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="type_gray">#F1F1F1</color>
+    <color name="type_normal">#6b6b6b</color>
+    <color name="type_checked">#535353</color>
+    <color name="divider_gray">#fafafa</color>
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="color_F1F1F1">#F1F1F1</color>
 </resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/food_main"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:orientation="vertical"
+              android:paddingRight="16dp">
+
+    <include layout="@layout/view_stick_header"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp">
+
+
+        <ImageView
+            android:id="@+id/iv_food"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/jia_kexuan"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/iv_food"
+            android:maxLines="2"
+            android:text="12321312412421fasdfasdasfasdfasdf"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_30"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_name"
+            android:text="123"
+            android:layout_alignBottom="@+id/iv_food"
+            android:textColor="@color/color_green"
+            android:textSize="@dimen/tv_com_30"
+            android:textStyle="bold"/>
+
+        <com.mj.cafe.view.AddWidget
+            android:id="@+id/addwidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/tv_price"
+            app:sub_anim="true"/>
+
+    </RelativeLayout>
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:background="@color/divider_gray"/>-->
+</LinearLayout>

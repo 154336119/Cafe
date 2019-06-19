@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mj.cafe.view.ShopCarView xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/car_mainfl"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/shopcar_height"
+                                android:background="@color/white"
+                                android:layout_gravity="bottom"
+                                android:elevation="4dp"
+                                android:gravity="bottom">
+    <RelativeLayout
+        android:id="@+id/car_rl"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/ba_car">
+
+
+        <LinearLayout
+            android:id="@+id/amount_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="140dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/com_txt_color"
+                android:textSize="@dimen/tv_com_30"
+                android:textStyle="bold"
+                android:text="总计:"/>
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#65C920"
+                android:textSize="@dimen/tv_com_25"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:text="0"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/car_limit"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/slt_btn_bottom"
+            android:gravity="center"
+            android:enabled="false"
+            android:onClick="goAccount"
+            android:layout_marginRight="20dp"
+            android:text="去结算"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_25"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_shop_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/gouwuche"/>
+
+    <TextView
+        android:id="@+id/car_badge"
+        style="@style/badge_style"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="5dp"/>
+</com.mj.cafe.view.ShopCarView>
