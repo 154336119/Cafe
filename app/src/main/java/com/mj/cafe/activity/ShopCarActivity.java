@@ -15,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.R;
@@ -23,7 +22,6 @@ import com.mj.cafe.adapter.CarAdapter;
 import com.mj.cafe.bean.FoodBean;
 import com.mj.cafe.utils.ViewUtils;
 import com.mj.cafe.view.AddWidget;
-import com.mj.cafe.view.ListContainer;
 import com.mj.cafe.view.ShopCarView;
 
 import java.math.BigDecimal;
@@ -157,7 +155,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         carAdapter.setNewData(new ArrayList<FoodBean>());
         ListContainer.foodAdapter.notifyDataSetChanged();
         shopCarView.showBadge(0);
-        ListContainer.typeAdapter.updateBadge(new HashMap<String, Long>());
+//        ListContainer.typeAdapter.updateBadge(new HashMap<String, Long>());
         shopCarView.updateAmount(new BigDecimal(0.0));
     }
 
@@ -203,7 +201,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
             total += foodBean.getSelectCount();
         }
         shopCarView.showBadge(total);
-        ListContainer.typeAdapter.updateBadge(typeSelect);
+//        ListContainer.typeAdapter.updateBadge(typeSelect);
         shopCarView.updateAmount(amount);
     }
 

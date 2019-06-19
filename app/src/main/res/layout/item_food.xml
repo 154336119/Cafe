@@ -18,13 +18,40 @@
         android:paddingLeft="16dp">
 
 
-        <ImageView
-            android:id="@+id/iv_food"
+        <com.makeramen.roundedimageview.RoundedImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="160dp"
             android:layout_height="160dp"
+            android:id="@+id/iv_food"
             android:scaleType="centerCrop"
-            android:src="@mipmap/jia_kexuan"/>
-
+            app:riv_corner_radius="10dip"
+            app:riv_mutate_background="true"
+            app:riv_tile_mode="clamp"
+            app:riv_oval="false" />
+        <RelativeLayout
+            android:id="@+id/RlShadow"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:visibility="gone">
+            <com.makeramen.roundedimageview.RoundedImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:scaleType="fitCenter"
+                android:background="#80000000"
+                app:riv_corner_radius="10dip"
+                app:riv_mutate_background="true"
+                app:riv_tile_mode="clamp"
+                app:riv_oval="false" />
+            <TextView
+                android:id="@+id/TvShadow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tv_com_25"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:text="已售罄"/>
+        </RelativeLayout>
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -35,7 +62,7 @@
             android:maxLines="2"
             android:text="12321312412421fasdfasdasfasdfasdf"
             android:textColor="@color/com_txt_color"
-            android:textSize="@dimen/tv_com_30"
+            android:textSize="@dimen/tv_com_35"
             android:textStyle="bold"/>
 
 
@@ -47,7 +74,7 @@
             android:text="123"
             android:layout_alignBottom="@+id/iv_food"
             android:textColor="@color/color_green"
-            android:textSize="@dimen/tv_com_30"
+            android:textSize="@dimen/tv_com_35"
             android:textStyle="bold"/>
 
         <com.mj.cafe.view.AddWidget

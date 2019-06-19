@@ -10,6 +10,8 @@
         android:id="@+id/tv_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/tv_com_25"
+        android:textColor="@color/com_txt_color"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"/>
 

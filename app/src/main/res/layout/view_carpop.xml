@@ -12,37 +12,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
+
         android:paddingRight="16dp">
 
-        <View
-            android:layout_width="4dp"
-            android:layout_height="16dp"
-            android:background="#2395ff"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:text="已选商品"
-            android:textColor="#666666"
-            android:textSize="12sp"
-            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:onClick="clearCar"
             android:gravity="center"
-            android:drawablePadding="2dp"
-            android:textSize="12sp"
-            android:text="清空"
-            android:textColor="#666666"/>
+            android:drawablePadding="5dp"
+            android:textSize="@dimen/tv_com_25"
+            android:text="清空购物车"
+            android:drawableLeft="@mipmap/qingkonggouwuche"
+            android:textColor="#808080"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
     <com.mj.cafe.view.MaxHeightRecyclerView

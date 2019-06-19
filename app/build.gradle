@@ -43,4 +43,9 @@ dependencies {
     //adapter
     implementation ('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.25' ){ exclude module: 'support-v4' exclude group: 'com.android.support' }
     implementation ('com.github.florent37:viewanimator:1.0.5') { exclude module: 'support-v4' exclude group: 'com.android.support' }
+    //图片加载
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    //圆角
+    compile 'com.makeramen:roundedimageview:2.3.0'
 }

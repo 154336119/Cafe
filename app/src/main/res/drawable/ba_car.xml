@@ -6,7 +6,7 @@
     <item>
         <shape>
             <!--    边框颜色    -->
-            <solid android:color="@color/com_txt_color"/>
+            <solid android:color="@color/color_F5F5F5"/>
         </shape>
     </item>
     <!--    想保留哪一边就设置哪一边边框就好了，列如只有上边框：top="1dp"    -->

@@ -30,10 +30,10 @@ public class TypeAdapter extends BaseQuickAdapter<TypeBean, BaseViewHolder> {
 		}
 	}
 
-	public void updateBadge(HashMap<String, Long> badges) {
-		this.badges = badges;
-		notifyDataSetChanged();
-	}
+//	public void updateBadge(HashMap<String, Long> badges) {
+//		this.badges = badges;
+//		notifyDataSetChanged();
+//	}
 
 
 	@Override

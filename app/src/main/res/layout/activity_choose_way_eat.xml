@@ -16,21 +16,21 @@
             android:id="@+id/IvZhongWen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60px"
+            android:layout_marginLeft="35px"
             android:src="@mipmap/zhongwen_dingbu"/>
         <ImageView
             android:id="@+id/IvHanYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/hanyu_dingbu"
-            android:layout_marginLeft="60px"/>
+            android:layout_marginLeft="35px"/>
         <ImageView
             android:id="@+id/IvYingYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/yingyu_dingbu"
             android:layout_toRightOf="@id/IvZhongWen"
-            android:layout_marginLeft="60px"/>
+            android:layout_marginLeft="35px"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/IvLogo"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/logo_yongcanfangshi"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="500px"/>
+        android:layout_marginTop="300px"/>
 
     <TextView
         android:id="@+id/Tv01"
@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="100dp"
         android:text="请选择用餐方式"
         android:textColor="@color/com_txt_color"
