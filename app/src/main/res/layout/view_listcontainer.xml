@@ -4,8 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:splitMotionEvents="false"
-    android:background="@color/white"
-              android:orientation="horizontal">
+              android:background="@color/white"
+              android:orientation="horizontal"
+    android:layout_marginBottom="100dp">
 
     <RelativeLayout
         android:layout_width="170dp"
@@ -15,6 +16,7 @@
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_car_type"
+            app:layout_behavior="@string/scroll_behavior"
             android:overScrollMode="never"/>
     </RelativeLayout>
 
@@ -27,8 +29,8 @@
             android:id="@+id/recycler2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/scroll_behavior"
             android:overScrollMode="never"/>
-
         <include layout="@layout/view_stick_header"/>
     </FrameLayout>
 

@@ -4,6 +4,7 @@ package com.mj.cafe.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +18,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.mj.cafe.R;
+import com.mj.cafe.bean.TypeBean;
 import com.mj.cafe.utils.BaseUtils;
 import com.mj.cafe.utils.ViewUtils;
 import com.mj.cafe.adapter.FoodAdapter;
 import com.mj.cafe.adapter.TypeAdapter;
 import com.mj.cafe.bean.FoodBean;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,8 @@ import java.util.List;
 public class ListContainer extends LinearLayout {
 
 	public TypeAdapter typeAdapter;
-	private RecyclerView recyclerView2;
 	private LinearLayoutManager linearLayoutManager;
-	private List<FoodBean> foodBeanList;
+	private List<FoodBean> foodBeanList = new ArrayList<>();
 	private boolean move;
 	private int index;
 	private Context mContext;
@@ -39,7 +41,8 @@ public class ListContainer extends LinearLayout {
 	public static List<FoodBean> commandList = new ArrayList<>();
 	private TextView tvStickyHeaderView;
 	private View stickView;
-
+	private RecyclerView recyclerView1;
+	private RecyclerView recyclerView2;
 	public ListContainer(Context context) {
 		super(context);
 	}
@@ -48,42 +51,10 @@ public class ListContainer extends LinearLayout {
 		super(context, attrs);
 		mContext = context;
 		inflate(mContext, R.layout.view_listcontainer, this);
-		RecyclerView recyclerView1 = findViewById(R.id.recycler1);
-		recyclerView1.setLayoutManager(new LinearLayoutManager(mContext));
-		//测试数据
-		typeAdapter = new TypeAdapter(BaseUtils.getTypes());
-		View view = new View(mContext);
-		view.setMinimumHeight(ViewUtils.dip2px(mContext, 50));
-		typeAdapter.addFooterView(view);
-		typeAdapter.bindToRecyclerView(recyclerView1);
-		recyclerView1.addItemDecoration(new SimpleDividerDecoration(mContext));
-		((DefaultItemAnimator) recyclerView1.getItemAnimator()).setSupportsChangeAnimations(false);
-		recyclerView1.addOnItemTouchListener(new OnItemClickListener() {
-			@Override
-			public void onSimpleItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-				if (recyclerView2.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
-					typeAdapter.fromClick = true;
-					typeAdapter.setChecked(i);
-					String type = view.getTag().toString();
-					for (int ii = 0; ii < foodBeanList.size(); ii++) {
-						FoodBean typeBean = foodBeanList.get(ii);
-						if (typeBean.getType().equals(type)) {
-							index = ii;
-							moveToPosition(index);
-							break;
-						}
-					}
-				}
-			}
-		});
+		recyclerView1 = findViewById(R.id.recycler1);
 		recyclerView2 = findViewById(R.id.recycler2);
-		linearLayoutManager = new LinearLayoutManager(mContext);
-		recyclerView2.setLayoutManager(linearLayoutManager);
-		((DefaultItemAnimator) recyclerView2.getItemAnimator()).setSupportsChangeAnimations(false);
-		foodBeanList = BaseUtils.getDatas(mContext);
-		commandList = BaseUtils.getDetails(foodBeanList);
-
 	}
+
 
 	private void moveToPosition(int n) {
 		//先从RecyclerView的LayoutManager中获取第一项和最后一项的Position
@@ -104,6 +75,7 @@ public class ListContainer extends LinearLayout {
 			move = true;
 		}
 	}
+
 
 
 	public void setAddClick(AddWidget.OnAddClick onAddClick) {
@@ -161,5 +133,49 @@ public class ListContainer extends LinearLayout {
 				}
 			}
 		});
+	}
+
+
+	public void setdata(List<TypeBean> typeBeanList){
+		for(TypeBean typeBean : typeBeanList){
+			foodBeanList.addAll(typeBean.getGoodsList());
+		}
+
+		recyclerView1.setLayoutManager(new LinearLayoutManager(mContext));
+		//测试数据
+		typeAdapter = new TypeAdapter(typeBeanList);
+		View view = new View(mContext);
+		view.setMinimumHeight(ViewUtils.dip2px(mContext, 70));
+		typeAdapter.addFooterView(view);
+		typeAdapter.bindToRecyclerView(recyclerView1);
+		recyclerView1.addItemDecoration(new SimpleDividerDecoration(mContext));
+		((DefaultItemAnimator) recyclerView1.getItemAnimator()).setSupportsChangeAnimations(false);
+		recyclerView1.addOnItemTouchListener(new OnItemClickListener() {
+			@Override
+			public void onSimpleItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+				if (recyclerView2.getScrollState() == RecyclerView.SCROLL_STATE_IDLE) {
+					typeAdapter.fromClick = true;
+					typeAdapter.setChecked(i);
+					String type = view.getTag().toString();
+					for (int ii = 0; ii < foodBeanList.size(); ii++) {
+						FoodBean typeBean = foodBeanList.get(ii);
+						if (typeBean.getType().equals(type)) {
+							index = ii;
+							moveToPosition(index);
+							break;
+						}
+					}
+				}
+			}
+		});
+		linearLayoutManager = new LinearLayoutManager(mContext);
+		recyclerView2.setLayoutManager(linearLayoutManager);
+		recyclerView2.addItemDecoration(
+				new HorizontalDividerItemDecoration.Builder(mContext)
+						.color(Color.parseColor("#ffffff"))
+						.sizeResId(R.dimen.dp_10)
+						.build());
+		recyclerView2.addItemDecoration(new SimpleDividerDecoration(mContext));
+		((DefaultItemAnimator) recyclerView2.getItemAnimator()).setSupportsChangeAnimations(false);
 	}
 }

@@ -23,7 +23,7 @@ public class CarAdapter extends BaseQuickAdapter<FoodBean, BaseViewHolder> {
 	@Override
 	protected void convert(BaseViewHolder helper, FoodBean item) {
 		helper.setText(R.id.car_name, item.getName())
-				.setText(R.id.car_price, item.getStrPrice(mContext, item.getPrice().multiply(BigDecimal.valueOf(item.getSelectCount()))))
+				.setText(R.id.car_price, item.getStrPrice(mContext, item.getBigDecimalPrice().multiply(BigDecimal.valueOf(item.getSelectCount()))))
 		;
 		AddWidget addWidget = helper.getView(R.id.car_addwidget);
 //		addWidget.setData(this, helper.getAdapterPosition(), onAddClick);

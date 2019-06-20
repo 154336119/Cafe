@@ -7,6 +7,7 @@ import android.content.Context;
 import com.mj.cafe.bean.CommentBean;
 import com.mj.cafe.bean.FoodBean;
 import com.mj.cafe.bean.TypeBean;
+import com.orhanobut.logger.Logger;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,13 +29,12 @@ public class BaseUtils {
 		ArrayList<FoodBean> fList = new ArrayList<>();
 		for (int i = 0; i < 91; i++) {
 			FoodBean foodBean = new FoodBean();
-			foodBean.setId(i);
+			foodBean.setId(Long.parseLong(i+""));
 			foodBean.setName("食品--" + i + 1);
-			foodBean.setPrice(BigDecimal.valueOf((new Random().nextDouble() * 100)).setScale(1, BigDecimal.ROUND_HALF_DOWN));
-			foodBean.setSale("月售" + new Random().nextInt(100));
+//			foodBean.setPrice(BigDecimal.valueOf((new Random().nextDouble() * 100)).setScale(1, BigDecimal.ROUND_HALF_DOWN));
+			foodBean.setPrice(Long.parseLong("2500"));
 			foodBean.setType("类别" + i / 10);
 			int resID = context.getResources().getIdentifier("food" + new Random().nextInt(8), "drawable", "com.k.neleme");
-			foodBean.setIcon(resID);
 			fList.add(foodBean);
 		}
 		return fList;

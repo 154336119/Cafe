@@ -27,7 +27,7 @@ public class AddButton extends View implements View.OnClickListener {
 	private RectF rectf = new RectF();
 	private Path addPath = new Path();
 	private Paint addPaint;
-
+	public Boolean enable = true;
 	interface AnimListner {
 		void onStop();
 	}
@@ -48,7 +48,6 @@ public class AddButton extends View implements View.OnClickListener {
 	public AddButton(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 		setOnClickListener(this);
-
 		initPaint();
 	}
 
@@ -115,6 +114,9 @@ public class AddButton extends View implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		if(!enable){
+			return;
+		}
 		if (animListner != null) {
 			if (!isCircle) {
 				setClickable(false);
@@ -170,4 +172,5 @@ public class AddButton extends View implements View.OnClickListener {
 				})
 				.start();
 	}
+
 }

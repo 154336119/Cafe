@@ -2,26 +2,44 @@ package com.mj.cafe.bean;
 
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 
+import com.mj.cafe.utils.AmountUtils;
 import com.mj.cafe.utils.ViewUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FoodBean implements Serializable {
+public class FoodBean implements Parcelable, Serializable {
 
-	private int id;
-	private String name;//名
-	private String sale;//销量
-	private String isCommand;//是否推荐
-	private BigDecimal price;//价格
-	private String cut;//打折
-	private String type;//类
-	private int icon;//图片
-	private long selectCount;
+
+	/**
+	 * id : 1
+	 * name : 美式咖啡
+	 * logo : http://s8.sinaimg.cn/mw690/005OCzq7gy6UoJ6VcGz77
+	 * price : 2500
+	 * discount_price : 2200
+	 * stock : 2341
+	 */
+
+	private Long id;
+	private String name;
+	private String logo;
+	private Long price;
+	private Long discount_price;
+	private Long stock;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public long getSelectCount() {
 		return selectCount;
@@ -31,52 +49,19 @@ public class FoodBean implements Serializable {
 		this.selectCount = selectCount;
 	}
 
-	public int getIcon() {
-		return icon;
-	}
+	private String type;//类
+	private long selectCount;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setIcon(int icon) {
-		this.icon = icon;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getSale() {
-		return sale;
-	}
-
-	public void setSale(String sale) {
-		this.sale = sale;
-	}
-
-	public String getIsCommand() {
-		return isCommand;
-	}
-
-	public void setIsCommand(String isCommand) {
-		this.isCommand = isCommand;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
+	public BigDecimal getBigDecimalPrice() {
+		if(discount_price!=null && discount_price!= 0){
+			return AmountUtils.fen2Yuan(discount_price);
+		}else{
+			return AmountUtils.fen2Yuan(price);
+		}
 	}
 
 	public SpannableString getStrPrice(Context context) {
-		String priceStr = String.valueOf(getPrice());
+		String priceStr = String.valueOf(getBigDecimalPrice());
 		SpannableString spanString = new SpannableString("¥" + priceStr);
 		AbsoluteSizeSpan span = new AbsoluteSizeSpan(ViewUtils.sp2px(context, 30));
 		spanString.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -91,23 +76,94 @@ public class FoodBean implements Serializable {
 		return spanString;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public Long getPrice() {
+		return price;
+	}
+
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 
-	public String getCut() {
-		return cut;
+	public Long getDiscount_price() {
+		return discount_price;
 	}
 
-	public void setCut(String cut) {
-		this.cut = cut;
+	public void setDiscount_price(Long discount_price) {
+		this.discount_price = discount_price;
 	}
 
-	public String getType() {
-		return type;
+	public Long getStock() {
+		return stock;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setStock(Long stock) {
+		this.stock = stock;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeValue(this.id);
+		dest.writeString(this.name);
+		dest.writeString(this.logo);
+		dest.writeValue(this.price);
+		dest.writeValue(this.discount_price);
+		dest.writeValue(this.stock);
+		dest.writeString(this.type);
+		dest.writeLong(this.selectCount);
+	}
+
+	public FoodBean() {
+	}
+
+	protected FoodBean(Parcel in) {
+		this.id = (Long) in.readValue(Long.class.getClassLoader());
+		this.name = in.readString();
+		this.logo = in.readString();
+		this.price = (Long) in.readValue(Long.class.getClassLoader());
+		this.discount_price = (Long) in.readValue(Long.class.getClassLoader());
+		this.stock = (Long) in.readValue(Long.class.getClassLoader());
+		this.type = in.readString();
+		this.selectCount = in.readLong();
+	}
+
+	public static final Creator<FoodBean> CREATOR = new Creator<FoodBean>() {
+		@Override
+		public FoodBean createFromParcel(Parcel source) {
+			return new FoodBean(source);
+		}
+
+		@Override
+		public FoodBean[] newArray(int size) {
+			return new FoodBean[size];
+		}
+	};
 }

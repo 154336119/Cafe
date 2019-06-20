@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BaseActivity extends AppCompatActivity {
     private Toast mToast;
     /** 加载等待框 */

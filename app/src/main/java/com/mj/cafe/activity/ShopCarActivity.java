@@ -16,14 +16,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.mj.cafe.BaseActivity;
+import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.CarAdapter;
 import com.mj.cafe.bean.FoodBean;
+import com.mj.cafe.bean.TypeBean;
+import com.mj.cafe.http.DialogCallback;
+import com.mj.cafe.http.JsonCallback;
+import com.mj.cafe.http.LzyArrayResponse;
+import com.mj.cafe.http.LzyResponse;
+import com.mj.cafe.retorfit.HttpMjResult;
+import com.mj.cafe.retorfit.RetrofitSerciveFactory;
+import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
+import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
+import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.ViewUtils;
 import com.mj.cafe.view.AddWidget;
 import com.mj.cafe.view.ShopCarView;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +79,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         IntentFilter intentFilter = new IntentFilter(CAR_ACTION);
         intentFilter.addAction(CLEARCAR_ACTION);
         registerReceiver(broadcastReceiver, intentFilter);
-
+        getGoodList();
     }
 
     private void initViews() {
@@ -186,7 +201,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
             } else {
                 typeSelect.put(fb.getType(), fb.getSelectCount());
             }
-            amount = amount.add(fb.getPrice().multiply(BigDecimal.valueOf(fb.getSelectCount())));
+            amount = amount.add(fb.getBigDecimalPrice().multiply(BigDecimal.valueOf(fb.getSelectCount())));
         }
         if (p >= 0) {
             carAdapter.remove(p);
@@ -197,7 +212,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
             } else {
                 typeSelect.put(foodBean.getType(), foodBean.getSelectCount());
             }
-            amount = amount.add(foodBean.getPrice().multiply(BigDecimal.valueOf(foodBean.getSelectCount())));
+            amount = amount.add(foodBean.getBigDecimalPrice().multiply(BigDecimal.valueOf(foodBean.getSelectCount())));
             total += foodBean.getSelectCount();
         }
         shopCarView.showBadge(total);
@@ -221,5 +236,33 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
+    }
+
+//    //网络请求
+//    private void getGoodList(){
+//        OkGo.<LzyArrayResponse<Type>>post(BizcContant.API  +"/app/goods/category/list")
+//                .tag(this)
+//                .params("lang", (String)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,BizcContant._CN))
+//                .params("storeId",1)
+//                .execute(new JsonCallback<LzyArrayResponse<Type>>() {
+//                    @Override
+//                    public void onSuccess(Response<LzyArrayResponse<Type>> response) {
+////                        RxBus.get().post(new HistoryErrorEvent(response.body().data));
+//                       List<Type> typeList = response.body().data;
+//                    }
+//                });
+//    }
+    //网络请求
+    private void getGoodList(){
+        RetrofitSerciveFactory.provideComService().getGoods((String)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,BizcContant._CN),1)
+                .compose(RxUtil.<HttpMjResult<List<TypeBean>>>applySchedulersForRetrofit())
+                .map(new HttpMjEntityFun<List<TypeBean>>())
+                .subscribe(new BaseSubscriber<List<TypeBean>>(this) {
+                    @Override
+                    public void onNext(List<TypeBean> entity) {
+                        super.onNext(entity);
+                        ListContainer.setdata(entity);
+                    }
+                });
     }
 }

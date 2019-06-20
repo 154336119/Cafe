@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.mj.cafe.view.ShopCarView xmlns:android="http://schemas.android.com/apk/res/android"
-                                android:id="@+id/car_mainfl"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/shopcar_height"
-                                android:background="@color/white"
-                                android:layout_gravity="bottom"
-                                android:elevation="4dp"
-                                android:gravity="bottom">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/car_mainfl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/shopcar_height"
+    android:background="@color/white"
+    android:layout_gravity="bottom"
+    android:elevation="4dp"
+    android:gravity="bottom">
     <RelativeLayout
         android:id="@+id/car_rl"
         android:layout_width="match_parent"
         android:layout_height="85dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/ba_car">
+
+        android:layout_gravity="bottom">
 
 
         <LinearLayout

@@ -42,7 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@+id/LlTopBar"
-        android:layout_marginTop="120dp">
+        android:layout_marginTop="120dp"
+
+        >
     </com.mj.cafe.view.ListContainer>
     <include layout="@layout/view_black" />
 

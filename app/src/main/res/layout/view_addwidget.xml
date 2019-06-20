@@ -38,10 +38,10 @@
         <!--android:alpha="0"-->
         <!--android:padding="2dp"-->
         <!--android:src="@mipmap/jia_kexuan"/>-->
-    <com.mj.cafe.view.AddButton
-        android:id="@+id/addbutton"
-        android:layout_gravity="right"
-        android:layout_width="@dimen/add_width"
-        android:layout_height="45dp"/>
+        <com.mj.cafe.view.AddButton
+            android:id="@+id/addbutton"
+            android:layout_gravity="right"
+            android:layout_width="@dimen/add_width"
+            android:layout_height="45dp"/>
 
 </LinearLayout>

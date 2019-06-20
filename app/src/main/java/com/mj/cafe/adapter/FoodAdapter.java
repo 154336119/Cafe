@@ -3,6 +3,8 @@ package com.mj.cafe.adapter;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -33,20 +35,31 @@ public class FoodAdapter extends BaseQuickAdapter<FoodBean, BaseViewHolder> {
 	protected void convert(BaseViewHolder helper, FoodBean item) {
 		helper.setText(R.id.tv_name, item.getName())
 				.setText(R.id.tv_price,item.getStrPrice(mContext)).addOnClickListener(R.id.addwidget)
-				.addOnClickListener(R.id.food_main)
-		;
+				.addOnClickListener(R.id.food_main);
+
+
 		AddWidget addWidget = helper.getView(R.id.addwidget);
 //		addWidget.setData(this, helper.getAdapterPosition(), onAddClick);
 		addWidget.setData( onAddClick,item);
-
 		RoundedImageView ivFood = helper.getView(R.id.iv_food);
-
 		RoundedCorners roundedCorners= new RoundedCorners(20);
 		RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
 		Glide.with(mContext)
-				.load("http://s8.sinaimg.cn/mw690/005OCzq7gy6UoJ6VcGz77")
+				.load(item.getLogo())
 				.apply(options)
 				.into(ivFood);
+		RelativeLayout RlShadow = helper.getView(R.id.RlShadow);
+		if(item.getStock()==null ||  item.getStock() == 0){
+			//中英文切换？？？？？？
+			helper.setVisible(R.id.RlShadow,true);
+			helper.setVisible(R.id.IvNoadd,true);
+			helper.setVisible(R.id.addwidget,false);
+		}else{
+			helper.setVisible(R.id.RlShadow,false);
+			helper.setVisible(R.id.IvNoadd,false);
+			helper.setVisible(R.id.addwidget,true);
+		}
+
 
 		if (helper.getAdapterPosition() == 0) {
 			helper.setVisible(R.id.stick_header, true)
