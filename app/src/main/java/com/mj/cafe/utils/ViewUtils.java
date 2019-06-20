@@ -79,8 +79,8 @@ public class ViewUtils {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		TextView tv = new TextView(mContext);
 		tv.setText("清空购物车?");
-		tv.setTextSize(14);
-		tv.setPadding(ViewUtils.dip2px(mContext, 16), ViewUtils.dip2px(mContext, 16), 0, 0);
+		tv.setTextSize(30);
+		tv.setPadding(ViewUtils.dip2px(mContext, 26), ViewUtils.dip2px(mContext, 26), 0, 0);
 		tv.setTextColor(Color.parseColor("#757575"));
 		AlertDialog alertDialog = builder
 				.setNegativeButton("取消", null)
@@ -89,9 +89,11 @@ public class ViewUtils {
 				.show();
 		Button nButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 		nButton.setTextColor(ContextCompat.getColor(mContext, R.color.color_green));
+		nButton.setTextSize(30);
 		nButton.setTypeface(Typeface.DEFAULT_BOLD);
 		Button pButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
 		pButton.setTextColor(ContextCompat.getColor(mContext, R.color.color_green));
+		pButton.setTextSize(30);
 		pButton.setTypeface(Typeface.DEFAULT_BOLD);
 	}
 }

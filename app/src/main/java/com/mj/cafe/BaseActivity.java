@@ -12,9 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
-
-import java.util.LinkedList;
-import java.util.List;
+import com.mj.cafe.view.LoadingDialog;
 
 public class BaseActivity extends AppCompatActivity {
     private Toast mToast;

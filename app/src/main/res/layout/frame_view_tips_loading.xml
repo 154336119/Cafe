@@ -18,10 +18,10 @@
 		     android:layout_centerInParent="true"
 		     android:background="@drawable/frame_bg_common_dialog"
 			 android:gravity="center"
-		     android:paddingBottom="12.0dip"
-			 android:paddingLeft="16.0dip"
-			 android:paddingRight="16.0dip"
-			 android:paddingTop="12.0dip">
+		     android:paddingBottom="22.0dip"
+			 android:paddingLeft="36.0dip"
+			 android:paddingRight="36.0dip"
+			 android:paddingTop="22.0dip">
 	    <ProgressBar
 	        android:id="@+id/pressbarupgrade"
 	        style="@style/LoadingSmall" />
@@ -32,7 +32,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_marginTop="3dp"
 	        android:textColor="#999999"
-	        android:textSize="16sp" 
+	        android:textSize="@dimen/tv_com_35"
 	        android:text="asdasdsadas"/>
 	    </LinearLayout>
 	</RelativeLayout>

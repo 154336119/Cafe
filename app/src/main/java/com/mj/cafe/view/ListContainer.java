@@ -81,7 +81,7 @@ public class ListContainer extends LinearLayout {
 	public void setAddClick(AddWidget.OnAddClick onAddClick) {
 		foodAdapter = new FoodAdapter(foodBeanList, onAddClick);
 		View view = new View(mContext);
-		view.setMinimumHeight(ViewUtils.dip2px(mContext, 50));
+		view.setMinimumHeight(ViewUtils.dip2px(mContext, 120));
 		foodAdapter.addFooterView(view);
 		foodAdapter.bindToRecyclerView(recyclerView2);
 		stickView = findViewById(R.id.stick_header);
@@ -145,7 +145,7 @@ public class ListContainer extends LinearLayout {
 		//测试数据
 		typeAdapter = new TypeAdapter(typeBeanList);
 		View view = new View(mContext);
-		view.setMinimumHeight(ViewUtils.dip2px(mContext, 70));
+		view.setMinimumHeight(ViewUtils.dip2px(mContext, 120));
 		typeAdapter.addFooterView(view);
 		typeAdapter.bindToRecyclerView(recyclerView1);
 		recyclerView1.addItemDecoration(new SimpleDividerDecoration(mContext));

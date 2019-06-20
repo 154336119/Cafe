@@ -5,8 +5,7 @@
               android:layout_height="match_parent"
               android:splitMotionEvents="false"
               android:background="@color/white"
-              android:orientation="horizontal"
-    android:layout_marginBottom="100dp">
+              android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="170dp"

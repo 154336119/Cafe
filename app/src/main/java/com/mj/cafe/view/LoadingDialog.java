@@ -1,4 +1,4 @@
-package com.mj.cafe;
+package com.mj.cafe.view;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.mj.cafe.R;
 
 
 public class LoadingDialog extends ProgressDialog {

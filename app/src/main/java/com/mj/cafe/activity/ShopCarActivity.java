@@ -186,7 +186,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         int p = -1;
         for (int i = 0; i < flist.size(); i++) {
             FoodBean fb = flist.get(i);
-            if (fb.getId() == foodBean.getId()) {
+            if (fb.getId() == foodBean.getId() && fb.getType().equals(foodBean.getType())) {
                 fb = foodBean;
                 hasFood = true;
                 if (foodBean.getSelectCount() == 0) {
