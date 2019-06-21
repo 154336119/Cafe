@@ -237,7 +237,6 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
-
 //    //网络请求
 //    private void getGoodList(){
 //        OkGo.<LzyArrayResponse<Type>>post(BizcContant.API  +"/app/goods/category/list")

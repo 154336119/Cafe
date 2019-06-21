@@ -52,6 +52,7 @@ public class ChooseWayEatActivity extends BaseActivity {
                 ActivityUtil.next(this,ShopCarActivity.class);
                 break;
             case R.id.IvForHere:
+                ActivityUtil.next(this,SeatListActivity.class);
                 break;
         }
     }
