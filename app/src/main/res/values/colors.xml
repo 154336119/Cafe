@@ -6,7 +6,7 @@
     <color name="com_txt_color">#494949</color>
     <color name="color_green">#65C920</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="color_yellow">#FFB553</color>
     <color name="type_gray">#F1F1F1</color>
     <color name="type_normal">#6b6b6b</color>
     <color name="type_checked">#535353</color>
@@ -14,6 +14,6 @@
     <color name="dividerColor">#BDBDBD</color>
     <color name="color_F1F1F1">#F1F1F1</color>
     <color name="color_F5F5F5">#F5F5F5</color>
-
+    <color name="light_gray">#fff5f5f5</color>
     <color name="color_D8D8D8">#D8D8D8</color>
 </resources>

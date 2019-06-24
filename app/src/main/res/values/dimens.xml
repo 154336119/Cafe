@@ -8,6 +8,10 @@
     <dimen name="add_width">75dp</dimen>
 
     <dimen name="shopcar_height">100dp</dimen>
+    <dimen name="tv_com_60">60sp</dimen>
+    <dimen name="tv_com_55">55sp</dimen>
+    <dimen name="tv_com_50">50sp</dimen>
+    <dimen name="tv_com_45">45sp</dimen>
     <dimen name="tv_com_40">40sp</dimen>
     <dimen name="tv_com_35">35sp</dimen>
     <dimen name="tv_com_30">30sp</dimen>
@@ -25,6 +29,7 @@
     <!--<dimen name="tv18">18sp</dimen>-->
     <!--<dimen name="city_letter_size">12dp</dimen>-->
     <!--<dimen name="app_bar_height">228dp</dimen>-->
-
+    <dimen name="three_grid_unit">24dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">12dp</dimen>
 
 </resources>
