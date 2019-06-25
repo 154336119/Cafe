@@ -23,13 +23,18 @@ import java.util.Map;
 public class SeatAdapter extends BaseQuickAdapter<SeatBean, BaseViewHolder> {
 	private List<String> mList;
 	private Context mContext;
-
 	private Map<Integer, Boolean> map = new HashMap<>();
 	private boolean onBind;
 	private int checkedPosition = -1;
-	public SeatAdapter(@Nullable List<SeatBean> data ,Context context) {
+    private OnSelectBtnEnable mOnSelectBtnEnable;
+	public interface OnSelectBtnEnable{
+		void isEnable(boolean enable);
+	}
+
+	public SeatAdapter(@Nullable List<SeatBean> data ,Context context,OnSelectBtnEnable onSelectBtnEnable) {
 		super(R.layout.item_seat, data);
 		mContext = context;
+		mOnSelectBtnEnable = onSelectBtnEnable;
 	}
 
 	@Override
@@ -57,10 +62,12 @@ public class SeatAdapter extends BaseQuickAdapter<SeatBean, BaseViewHolder> {
 						map.clear();
 						map.put(helper.getPosition(), true);
 						checkedPosition = helper.getPosition();
+						mOnSelectBtnEnable.isEnable(true);
 					} else {
 						map.remove(helper.getPosition());
 						if (map.size() == 0) {
 							checkedPosition = -1; //-1 代表一个都未选择
+							mOnSelectBtnEnable.isEnable(false);
 						}
 					}
 					if (!onBind) {

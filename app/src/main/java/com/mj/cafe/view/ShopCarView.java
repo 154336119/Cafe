@@ -95,7 +95,7 @@ public class ShopCarView extends FrameLayout {
 			car_limit.setEnabled(true);
 			findViewById(R.id.amount_container).setVisibility(View.VISIBLE);
 		}
-		tv_amount.setText("¥" + amount);
+		tv_amount.setText("₩" + amount);
 	}
 
 	public void showBadge(int total) {
@@ -125,4 +125,9 @@ public class ShopCarView extends FrameLayout {
 		}
 	}
 
+
+	//返回显示金额，有符号
+	public String getTotaliAccount(){
+		return tv_amount.getText().toString();
+	}
 }

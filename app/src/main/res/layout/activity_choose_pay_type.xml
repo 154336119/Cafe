@@ -70,8 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginRight="@dimen/dp_40"
-        android:layout_marginLeft="@dimen/dp_40"
-        android:visibility="gone">
+        android:layout_marginLeft="@dimen/dp_40">
         <TextView
             android:id="@+id/TvUsedCouponTips"
             android:layout_width="wrap_content"
@@ -80,6 +79,7 @@
             android:textSize="@dimen/tv_com_40"
             android:text="是否使用优惠券？"/>
         <TextView
+            android:id="@+id/BtnRegister"
             android:layout_width="330dp"
             android:layout_height="80dp"
             android:background="@drawable/slt_btn_stroke_bottom"
@@ -90,6 +90,7 @@
             android:gravity="center"
             android:layout_marginTop="60dp"/>
         <TextView
+            android:id="@+id/BtnLogin"
             android:layout_width="330dp"
             android:layout_height="80dp"
             android:background="@drawable/slt_btn_bottom"
@@ -108,7 +109,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_40"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
         <TextView
             android:id="@+id/TvDiscountTips"
             android:layout_width="wrap_content"
@@ -235,43 +237,50 @@
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/IvKakapay"
-                android:layout_width="320dp"
-                android:layout_height="100dp"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/RvPayType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/Rl"
-                android:layout_marginTop="40dp"
-                android:padding="@dimen/tv_com_20"
-                android:background="@drawable/bg_item_choose_pay_type"
-                android:src="@mipmap/kakaopay" />
-            <ImageView
-                android:id="@+id/IvPayco"
-                android:layout_width="320dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/Rl"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/bg_item_choose_pay_type"
-                android:src="@mipmap/payco"
-                android:layout_alignParentRight="true"/>
-            <ImageView
-                android:id="@+id/IvZfb"
-                android:layout_width="320dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/IvKakapay"
-                android:layout_marginTop="40dp"
-                android:padding="@dimen/tv_com_20"
-                android:background="@drawable/bg_item_choose_pay_type"
-                android:src="@mipmap/zhifubaozhifu" />
-            <ImageView
-                android:id="@+id/IvWx"
-                android:layout_width="320dp"
-                android:layout_height="100dp"
-                android:layout_below="@+id/IvKakapay"
-                android:layout_marginTop="40dp"
-                android:padding="@dimen/tv_com_20"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_item_choose_pay_type"
-                android:src="@mipmap/weixinzhifu" />
+               android:layout_marginTop="40dp"
+                android:layout_above="@+id/BtnChoseSet"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/IvKakapay"-->
+                <!--android:layout_width="320dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_below="@+id/Rl"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:padding="@dimen/tv_com_20"-->
+                <!--android:background="@drawable/bg_item_choose_pay_type"-->
+                <!--android:src="@mipmap/kakaopay" />-->
+            <!--<ImageView-->
+                <!--android:id="@+id/IvPayco"-->
+                <!--android:layout_width="320dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_below="@+id/Rl"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:background="@drawable/bg_item_choose_pay_type"-->
+                <!--android:src="@mipmap/payco"-->
+                <!--android:layout_alignParentRight="true"/>-->
+            <!--<ImageView-->
+                <!--android:id="@+id/IvZfb"-->
+                <!--android:layout_width="320dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_below="@+id/IvKakapay"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:padding="@dimen/tv_com_20"-->
+                <!--android:background="@drawable/bg_item_choose_pay_type"-->
+                <!--android:src="@mipmap/zhifubaozhifu" />-->
+            <!--<ImageView-->
+                <!--android:id="@+id/IvWx"-->
+                <!--android:layout_width="320dp"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:layout_below="@+id/IvKakapay"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:padding="@dimen/tv_com_20"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@drawable/bg_item_choose_pay_type"-->
+                <!--android:src="@mipmap/weixinzhifu" />-->
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/IvLogo"
+    android:layout_width="320dp"
+    android:layout_height="100dp"
+    android:layout_marginTop="40dp"
+    android:padding="@dimen/tv_com_20"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/bg_item_choose_pay_type"
+    android:src="@mipmap/weixinzhifu" />

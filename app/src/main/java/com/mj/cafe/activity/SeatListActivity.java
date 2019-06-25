@@ -22,6 +22,7 @@ import com.mj.cafe.retorfit.RetrofitSerciveFactory;
 import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.SortUtils;
 import com.orhanobut.logger.Logger;
@@ -33,7 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SeatListActivity extends BaseActivity {
+public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSelectBtnEnable{
     @BindView(R.id.IvBack)
     ImageView IvBack;
     @BindView(R.id.IvZhongWen)
@@ -80,6 +81,13 @@ public class SeatListActivity extends BaseActivity {
             case R.id.IvYingYu:
                 break;
             case R.id.BtnChoseSet:
+                Bundle bundle = new Bundle();
+                SeatBean seatBean = mSeatAdapter.getData().get(mSeatAdapter.getCheckedPosition());
+                String seatId = "["+seatBean.getId()+"]";
+
+                bundle.putString("SeatArray",seatId);
+                bundle.putInt("Enjoyway",1);
+                ActivityUtil.next(this,ShopCarActivity.class,bundle,false);
                 break;
         }
     }
@@ -108,7 +116,12 @@ public class SeatListActivity extends BaseActivity {
     private void initRv(List<SeatBean> seatBeanList,int maxRow){
         mSeatList = seatBeanList;
         RvSeat.setLayoutManager(new GridLayoutManager(this, maxRow));
-        mSeatAdapter = new SeatAdapter(mSeatList,this);
+        mSeatAdapter = new SeatAdapter(mSeatList,this,this);
         RvSeat.setAdapter(mSeatAdapter);
+    }
+
+    @Override
+    public void isEnable(boolean enable) {
+        BtnChoseSet.setEnabled(enable);
     }
 }

@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.mj.cafe.BaseActivity;
@@ -33,10 +35,12 @@ import com.mj.cafe.retorfit.RetrofitSerciveFactory;
 import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.ViewUtils;
 import com.mj.cafe.view.AddWidget;
 import com.mj.cafe.view.ShopCarView;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -70,11 +74,20 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     private ShopCarView shopCarView;
     public BottomSheetBehavior behavior;
 
+    //座位
+    private String mSeatArray = null;
+    //1堂食, 2打包
+    private Integer mEnjoyway = null;
+    //点餐数据
+    private String mGoodsArray =null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_car);
         ButterKnife.bind(this);
+        mSeatArray = getIntent().getStringExtra("SeatArray");
+        mEnjoyway = getIntent().getIntExtra("Enjoyway",1);
+
         initViews();
         IntentFilter intentFilter = new IntentFilter(CAR_ACTION);
         intentFilter.addAction(CLEARCAR_ACTION);
@@ -101,9 +114,9 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         carAdapter.bindToRecyclerView(carRecView);
     }
 
-
-    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu})
+    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu,R.id.car_limit})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.IvBack:
                 finish();
@@ -115,6 +128,12 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
             case R.id.IvYingYu:
                 carAdapter.getData();
                 break;
+            case R.id.car_limit:
+                bundle.putString("SeatArray",mSeatArray);
+                bundle.putInt("Enjoyway",mEnjoyway);
+                bundle.putString("GoodsArray", converGoodsData());
+                bundle.putString("ShowTotialAccount",shopCarView.getTotaliAccount());
+                ActivityUtil.next(this,ChoosePayTypeActitiy.class,bundle,false);
         }
     }
 
@@ -237,20 +256,6 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
-//    //网络请求
-//    private void getGoodList(){
-//        OkGo.<LzyArrayResponse<Type>>post(BizcContant.API  +"/app/goods/category/list")
-//                .tag(this)
-//                .params("lang", (String)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,BizcContant._CN))
-//                .params("storeId",1)
-//                .execute(new JsonCallback<LzyArrayResponse<Type>>() {
-//                    @Override
-//                    public void onSuccess(Response<LzyArrayResponse<Type>> response) {
-////                        RxBus.get().post(new HistoryErrorEvent(response.body().data));
-//                       List<Type> typeList = response.body().data;
-//                    }
-//                });
-//    }
     //网络请求
     private void getGoodList(){
         RetrofitSerciveFactory.provideComService().getGoods((String)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,BizcContant._CN),1)
@@ -263,5 +268,18 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
                         ListContainer.setdata(entity);
                     }
                 });
+    }
+
+    //转换菜单数据
+    private String converGoodsData(){
+        JSONArray array = new JSONArray();
+        for(FoodBean foodBean : carAdapter.getData()){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("goodsId",foodBean.getId());
+            jsonObject.put("num",foodBean.getSelectCount());
+            array.add(jsonObject);
+        }
+        Logger.d("================:"+array.toJSONString());
+        return array.toJSONString();
     }
 }
