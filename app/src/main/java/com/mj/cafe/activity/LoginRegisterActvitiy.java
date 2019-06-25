@@ -63,22 +63,25 @@ public class LoginRegisterActvitiy extends BaseActivity {
         type = getIntent().getIntExtra("type", REIGSTER);
         if (type == REIGSTER) {
             btn.setText("注册");
+            TvLoginTips.setText("注册");
             LLAgagin.setVisibility(View.VISIBLE);
             textChangeListener(btn, EtPhone, EtPin, EtAgainPin);
         } else {
             btn.setText("登录");
+            TvLoginTips.setText("登录");
             LLAgagin.setVisibility(View.GONE);
             textChangeListener(btn, EtPhone, EtPin);
         }
     }
 
-    @OnClick({R.id.TvCountryCode, R.id.btn})
+    @OnClick({R.id.TvCountryCode, R.id.btn,R.id.IvBack})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.TvCountryCode:
                 break;
             case R.id.btn:
                 registerOrLogin();
+                break;
             case R.id.IvBack:
                 finish();
                 break;
@@ -106,6 +109,12 @@ public class LoginRegisterActvitiy extends BaseActivity {
                         super.onNext(entity);
                         RxBus.get().post(entity);
                         finish();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+
                     }
                 });
     }

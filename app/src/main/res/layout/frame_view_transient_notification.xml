@@ -30,7 +30,7 @@
                 android:layout_marginBottom="12dp"
                 android:text="asdasdsadas"
                 android:textColor="#4c4c4c"
-                android:textSize="14sp" />
+                android:textSize="34sp" />
         </LinearLayout>
     </RelativeLayout>
     <Button

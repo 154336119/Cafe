@@ -2,6 +2,7 @@ package com.mj.cafe.retorfit;
 
 
 import com.mj.cafe.bean.CouponBean;
+import com.mj.cafe.bean.CouponOutBean;
 import com.mj.cafe.bean.OrderBean;
 import com.mj.cafe.bean.PayTypeBean;
 import com.mj.cafe.bean.SeatBean;
@@ -58,7 +59,7 @@ public interface ComService {
      */
     @FormUrlEncoded
     @POST("/app/user/points/coupons"  )
-    Observable<HttpMjResult<List<CouponBean>>> getCouponList(@Field("lang") String lang,@Field("token") String token);
+    Observable<HttpMjResult<CouponOutBean>> getCouponList(@Field("lang") String lang, @Field("token") String token);
 
     /**
      * 创建订单

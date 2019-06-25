@@ -20,6 +20,7 @@ import com.mj.cafe.R;
 import com.mj.cafe.adapter.PayTypeAdapter;
 import com.mj.cafe.adapter.SeatAdapter;
 import com.mj.cafe.bean.CouponBean;
+import com.mj.cafe.bean.CouponOutBean;
 import com.mj.cafe.bean.OrderBean;
 import com.mj.cafe.bean.PayTypeBean;
 import com.mj.cafe.bean.SeatBean;
@@ -32,8 +33,11 @@ import com.mj.cafe.retorfit.rxjava.RxUtil;
 import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.view.spinner.NiceSpinner;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,6 +89,10 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     RecyclerView RvPayType;
     PayTypeAdapter mPayTypeAdapter;
     private List<PayTypeBean> mPayTypeList = new ArrayList<>();
+    //优惠券
+    private List<CouponBean> CouponList = new ArrayList<>();
+    private Map<String,Integer> CouponMap = new HashMap<>();
+    private List<String> mSpinnerList = new ArrayList<>();
     //订单总金额 元
     private String mShowTotialAccount;
     //用户
@@ -194,13 +202,29 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     //http - 优惠券列表
     private void httpGetCouponList(){
         RetrofitSerciveFactory.provideComService().getCouponList("cn",mUserBean.getToken())
-                .compose(RxUtil.<HttpMjResult<List<CouponBean>>>applySchedulersForRetrofit())
-                .map(new HttpMjEntityFun<List<CouponBean>>())
-                .subscribe(new BaseSubscriber<List<CouponBean>>(this) {
+                .compose(RxUtil.<HttpMjResult<CouponOutBean>>applySchedulersForRetrofit())
+                .map(new HttpMjEntityFun<CouponOutBean>())
+                .subscribe(new BaseSubscriber<CouponOutBean>(this) {
                     @Override
-                    public void onNext(List<CouponBean> entity) {
+                    public void onNext(CouponOutBean entity) {
                         super.onNext(entity);
+                        if(entity!=null && entity.getCoupons().size()>0){
+                            CouponList = entity.getCoupons();
+                            initSpinner();
+                        }
                     }
                 });
+    }
+
+    //初始化优惠券列表
+    private void initSpinner(){
+        for(CouponBean couponBean : CouponList){
+            CouponMap.put(couponBean.getName(),couponBean.getId());
+            mSpinnerList.add(couponBean.getName());
+        }
+        niceSpinner.attachDataSource(mSpinnerList);
+//        niceSpinner.setBackgroundResource(R.drawable.textview_round_border);
+        niceSpinner.setTextColor(getResources().getColor(R.color.color_green));
+        niceSpinner.setTextSize(25);
     }
 }

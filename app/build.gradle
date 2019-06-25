@@ -68,5 +68,5 @@ dependencies {
 //    //下拉框
 //    implementation 'com.github.arcadefire:nice-spinner:1.4.3'
     //倒计时
-    compile 'com.github.iwgang:countdownview:2.1.6'
+    implementation 'com.github.iwgang:countdownview:2.1.6'
 }

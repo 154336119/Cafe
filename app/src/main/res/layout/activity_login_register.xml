@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/beijing_zhifufangshi"
-    android:padding="30dp"
+    android:padding="20dp"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,12 +31,11 @@
         android:textColor="@color/com_txt_color"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_gray"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:inputType="number"
-        android:maxLength="12"
         android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/TvCountryCode"
@@ -59,6 +58,7 @@
             android:background="@null"
             android:ellipsize="end"
             android:maxLines="1"
+            android:maxLength="12"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_35" />
     </RelativeLayout>
@@ -73,13 +73,10 @@
     <EditText
         android:id="@+id/EtPin"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_gray"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/TvCountryCode"
         android:ellipsize="end"
         android:maxLines="1"
@@ -98,16 +95,14 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/tv_com_40"
             android:text="请再次输入PIN码"
-            android:textColor="@color/com_txt_color"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/com_txt_color"/>
         <EditText
             android:id="@+id/EtAgainPin"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_gray"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:layout_marginTop="40dp"
             android:layout_toRightOf="@+id/TvCountryCode"
             android:ellipsize="end"
             android:maxLines="1"
@@ -124,7 +119,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/slt_btn_bottom"
         android:gravity="center"
         android:text="登录"
