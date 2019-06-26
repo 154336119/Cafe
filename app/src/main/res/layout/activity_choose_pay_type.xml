@@ -38,7 +38,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_40">
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_45"
-            android:text="订单金额"/>
+            android:text="订单总金额"/>
         <TextView
             android:id="@+id/TvAccount"
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
         android:id="@+id/RlLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_40">
         <TextView
@@ -80,7 +80,7 @@
             android:text="是否使用优惠券？"/>
         <TextView
             android:id="@+id/BtnRegister"
-            android:layout_width="330dp"
+            android:layout_width="310dp"
             android:layout_height="80dp"
             android:background="@drawable/slt_btn_stroke_bottom"
             android:layout_below="@id/TvUsedCouponTips"
@@ -91,7 +91,7 @@
             android:layout_marginTop="60dp"/>
         <TextView
             android:id="@+id/BtnLogin"
-            android:layout_width="330dp"
+            android:layout_width="310dp"
             android:layout_height="80dp"
             android:background="@drawable/slt_btn_bottom"
             android:layout_below="@id/TvUsedCouponTips"
@@ -106,7 +106,7 @@
         android:id="@+id/RlCoupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_40"
         android:orientation="vertical"
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TvDiscountTips"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="30dp">
             <CheckBox
                 android:id="@+id/CheckBox"
                 android:layout_width="wrap_content"
@@ -135,6 +135,7 @@
                 android:layout_centerVertical="true"
                 />
             <TextView
+                android:id="@+id/TvJiFenTips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tv_com_30"
@@ -154,8 +155,8 @@
                 android:background="@drawable/bg_gray"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="22"
                 android:textColor="@color/color_green"
+                android:inputType="number"
                 android:textSize="@dimen/tv_com_30" />
         </RelativeLayout>
         <RelativeLayout
@@ -163,8 +164,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TvDiscountTips"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="30dp">
             <TextView
+                android:id="@+id/Tv01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/tv_com_30"
@@ -174,11 +176,26 @@
                 android:layout_marginLeft="20dp"/>
             <com.mj.cafe.view.spinner.NiceSpinner
                 android:id="@+id/nice_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/Tv01"
+                android:layout_marginLeft="40dp"
+                app:arrowTint="@color/color_green"
+                android:background="@drawable/bg_gray"
+                android:drawablePadding="@dimen/tv_com_20"
+                android:gravity="right"
+                />
+            <TextView
+                android:id="@+id/TvNoCouponTips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:textSize="@dimen/tv_com_30"
+                android:textColor="@color/com_txt_color"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/bg_gray"/>
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:text="暂无优惠券"/>
             <!--<org.angmarch.views.NiceSpinner-->
                 <!--android:id="@+id/nice_spinner"-->
                 <!--android:layout_width="wrap_content"-->
@@ -198,7 +215,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="@dimen/dp_40"
         android:layout_marginLeft="@dimen/dp_40">
         <TextView
@@ -207,7 +224,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_40"
-            android:text="请选择支付方式？"/>
+            android:text="请选择支付方式"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

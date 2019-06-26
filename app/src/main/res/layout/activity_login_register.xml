@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/RlRootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/beijing_zhifufangshi"
-    android:padding="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="30dp"
+    android:layout_marginLeft="30dp"
+    app:cardCornerRadius="20dp"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/beijing_zhifufangshi"
+        android:padding="@dimen/tv_com_20"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,28 +35,32 @@
         android:id="@+id/TvPhoneTips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/tv_com_40"
+        android:textSize="@dimen/tv_com_35"
         android:text="请输入手机号"
-        android:textColor="@color/com_txt_color"/>
+        android:textColor="@color/com_txt_color"
+        android:layout_marginTop="20dp"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80sp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_gray"
+        android:inputType="number"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
-        android:inputType="number"
-        android:layout_marginTop="20dp">
+        android:gravity="center_vertical"
+        >
+
         <TextView
             android:id="@+id/TvCountryCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/tv_com_35"
-            android:text="+82"
             android:layout_centerVertical="true"
-            android:drawablePadding="10dp"
             android:drawableRight="@mipmap/jiantou_xuanzequhao"
+            android:drawablePadding="10dp"
+            android:text="+82"
             android:textColor="@color/com_txt_color"
-            />
+            android:textSize="@dimen/tv_com_35" />
 
         <EditText
             android:id="@+id/EtPhone"
@@ -57,8 +70,9 @@
             android:layout_toRightOf="@+id/TvCountryCode"
             android:background="@null"
             android:ellipsize="end"
-            android:maxLines="1"
             android:maxLength="12"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_35" />
     </RelativeLayout>
@@ -66,14 +80,14 @@
         android:id="@+id/TvPinTips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/tv_com_40"
+        android:textSize="@dimen/tv_com_35"
         android:text="请输入PIN码"
         android:textColor="@color/com_txt_color"
         android:layout_marginTop="20dp"/>
     <EditText
         android:id="@+id/EtPin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80sp"
         android:background="@drawable/bg_gray"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
@@ -83,28 +97,31 @@
         android:textColor="@color/com_txt_color"
         android:inputType="number"
         android:maxLength="8"
+        android:layout_marginTop="40dp"
         android:textSize="@dimen/tv_com_35" />
     <LinearLayout
         android:id="@+id/LLAgagin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
         <TextView
             android:id="@+id/TvAgainPinTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/tv_com_40"
+            android:textSize="@dimen/tv_com_35"
             android:text="请再次输入PIN码"
             android:textColor="@color/com_txt_color"/>
         <EditText
             android:id="@+id/EtAgainPin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80sp"
             android:background="@drawable/bg_gray"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:layout_toRightOf="@+id/TvCountryCode"
             android:ellipsize="end"
+            android:layout_marginTop="40dp"
             android:maxLines="1"
             android:textColor="@color/com_txt_color"
             android:inputType="number"
@@ -125,4 +142,5 @@
         android:text="登录"
         android:textColor="@color/com_txt_color"
         android:textSize="@dimen/tv_com_40"/>
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

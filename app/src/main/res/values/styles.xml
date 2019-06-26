@@ -65,23 +65,12 @@
         <attr name="entries" format="reference" />
     </declare-styleable>
     <style name="ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 背景透明 -->
-        <item name="android:paddingLeft">25dp</item>
-        <item name="android:paddingRight">25dp</item>
-        <item name="android:paddingBottom">25dp</item>
-        <item name="android:paddingTop">25dp</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- 浮于Activity之上 -->
-        <item name="android:windowIsFloating">true</item>
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- Dialog以外的区域模糊效果 -->
-        <item name="android:backgroundDimEnabled">true</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 半透明 -->
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@drawable/bg_activity_dialog</item>
+        <item name="android:windowIsFloating">true</item>
         <!-- Dialog进入及退出动画 -->
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
     </style>

@@ -2,4 +2,8 @@
     <string name="app_name">Cafe</string>
     <string name="scroll_behavior">@string/appbar_scrolling_view_behavior</string>
     <!--<string name="detail_header_behavior">com.k.neleme.detail.DetailHeaderBehavior</string>-->
+
+    <string name="cam_used_integral">使用积分抵扣（%1$s点可用）</string>
+    <string name="cam_used_coupon_num">共有%1$s张优惠券可用</string>
+    <string name="np_cam_used_coupon">暂无优惠券</string>
 </resources>

@@ -72,7 +72,7 @@ public abstract class NiceSpinnerBaseAdapter<T> extends BaseAdapter {
         textView.setText(spinnerTextFormatter.format(getItem(position)));
         textView.setTextColor(textColor);
 
-        setTextHorizontalAlignment(textView);
+       // setTextHorizontalAlignment(textView);
 
         return convertView;
     }

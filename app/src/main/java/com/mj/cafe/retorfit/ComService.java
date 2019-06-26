@@ -67,7 +67,7 @@ public interface ComService {
     @FormUrlEncoded
     @POST("/app/order/create"  )
     Observable<HttpMjResult<OrderBean>> orderCreate(@Field("lang") String lang, @Field("token") String token
-                                                    ,@Field("storeId") Integer storeId, @Field("seatArray") String seatArray
+                                                    ,@Field("storeId") Integer storeId, @Field("seatId") String seatId
                                                     ,@Field("enjoyway") Integer enjoyway, @Field("integral") Integer integral
                                                     ,@Field("couponId") Integer couponId, @Field("payType") Integer payType
                                                       ,@Field("goodsArray") String goodsArray);

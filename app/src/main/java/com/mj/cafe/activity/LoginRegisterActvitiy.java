@@ -2,13 +2,17 @@ package com.mj.cafe.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hwangjr.rxbus.RxBus;
@@ -20,6 +24,7 @@ import com.mj.cafe.retorfit.RetrofitSerciveFactory;
 import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.SizeUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +59,8 @@ public class LoginRegisterActvitiy extends BaseActivity {
     int prefixNo = 86;
     @BindView(R.id.IvBack)
     ImageView IvBack;
+    @BindView(R.id.RlRootView)
+    CardView RlRootView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,15 +73,23 @@ public class LoginRegisterActvitiy extends BaseActivity {
             TvLoginTips.setText("注册");
             LLAgagin.setVisibility(View.VISIBLE);
             textChangeListener(btn, EtPhone, EtPin, EtAgainPin);
+            ViewGroup.LayoutParams params = RlRootView.getLayoutParams();
+            params.height = SizeUtils.dp2px(this,830);
         } else {
             btn.setText("登录");
             TvLoginTips.setText("登录");
             LLAgagin.setVisibility(View.GONE);
             textChangeListener(btn, EtPhone, EtPin);
+            ViewGroup.LayoutParams params = RlRootView.getLayoutParams();
+            params.height =  SizeUtils.dp2px(this,700);
+            RlRootView.setLayoutParams(params);
         }
+        //测试
+        EtPhone.setText("15208305795");
+        EtPin.setText("123456");
     }
 
-    @OnClick({R.id.TvCountryCode, R.id.btn,R.id.IvBack})
+    @OnClick({R.id.TvCountryCode, R.id.btn, R.id.IvBack})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.TvCountryCode:

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -144,12 +145,11 @@ public class NiceSpinner extends AppCompatTextView {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NiceSpinner);
         int defaultPadding = resources.getDimensionPixelSize(R.dimen.one_and_a_half_grid_unit);
 
-        setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         setPadding(resources.getDimensionPixelSize(R.dimen.three_grid_unit), defaultPadding, defaultPadding,
                 defaultPadding);
         setClickable(true);
         backgroundSelector = typedArray.getResourceId(R.styleable.NiceSpinner_backgroundSelector, R.drawable.selector);
-        setBackgroundResource(backgroundSelector);
         textColor = typedArray.getColor(R.styleable.NiceSpinner_textTint, getDefaultTextColor(context));
         setTextColor(textColor);
         popupWindow = new ListPopupWindow(context);

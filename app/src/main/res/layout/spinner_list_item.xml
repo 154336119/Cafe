@@ -5,9 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:ellipsize="marquee"
-    android:gravity="center"
+    android:gravity="right"
     android:padding="@dimen/one_and_a_half_grid_unit"
     android:singleLine="true"
-    android:textSize="15sp"
+    android:textSize="25sp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:text="Item"
     tools:textColor="@android:color/black" />

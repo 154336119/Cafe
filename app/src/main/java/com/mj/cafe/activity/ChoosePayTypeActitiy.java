@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,12 +22,10 @@ import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.PayTypeAdapter;
-import com.mj.cafe.adapter.SeatAdapter;
 import com.mj.cafe.bean.CouponBean;
 import com.mj.cafe.bean.CouponOutBean;
 import com.mj.cafe.bean.OrderBean;
 import com.mj.cafe.bean.PayTypeBean;
-import com.mj.cafe.bean.SeatBean;
 import com.mj.cafe.bean.UserBean;
 import com.mj.cafe.retorfit.HttpMjResult;
 import com.mj.cafe.retorfit.RetrofitSerciveFactory;
@@ -31,13 +33,15 @@ import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
 import com.mj.cafe.utils.ActivityUtil;
+import com.mj.cafe.utils.EtInputFilters;
 import com.mj.cafe.view.spinner.NiceSpinner;
+import com.mj.cafe.view.spinner.OnSpinnerItemSelectedListener;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,23 +92,27 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     @BindView(R.id.RvPayType)
     RecyclerView RvPayType;
     PayTypeAdapter mPayTypeAdapter;
+    @BindView(R.id.TvNoCouponTips)
+    TextView TvNoCouponTips;
+    @BindView(R.id.TvJiFenTips)
+    TextView TvJiFenTips;
     private List<PayTypeBean> mPayTypeList = new ArrayList<>();
     //优惠券
     private List<CouponBean> CouponList = new ArrayList<>();
-    private Map<String,Integer> CouponMap = new HashMap<>();
+    private Map<String, Integer> CouponMap = new HashMap<>();
     private List<String> mSpinnerList = new ArrayList<>();
     //订单总金额 元
     private String mShowTotialAccount;
     //用户
     private UserBean mUserBean;
     //座位
-    private String mSeatArray = null;
+    private String mSeatArray = "0";
     //1堂食, 2打包
     private Integer mEnjoyway = 2;
     //点数
-    private Integer mIntegral;
+    private Integer mIntegral=0;
     //优惠券
-    private Integer mCouponId;
+    private Integer mCouponId=0;
     //支付类型
     private Integer mPayType;
     //点餐数据
@@ -114,11 +122,14 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_pay_type);
-        mSeatArray = getIntent().getStringExtra("SeatArray");
-        mEnjoyway = getIntent().getIntExtra("Enjoyway",2);
+        if(!TextUtils.isEmpty(getIntent().getStringExtra("SeatArray"))){
+            mSeatArray = getIntent().getStringExtra("SeatArray");
+        }
+        mEnjoyway = getIntent().getIntExtra("Enjoyway", 2);
         mGoodsArray = getIntent().getStringExtra("GoodsArray");
-        mShowTotialAccount =  getIntent().getStringExtra("ShowTotialAccount");
+        mShowTotialAccount = getIntent().getStringExtra("ShowTotialAccount");
         ButterKnife.bind(this);
+        TvAccount.setText(mShowTotialAccount);
         getPayTypeList();
     }
 
@@ -156,6 +167,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         httpGetCouponList();
         RlCoupon.setVisibility(View.VISIBLE);
         RlLogin.setVisibility(View.GONE);
+        initIntegral();
     }
 
     //http-支付方式
@@ -174,6 +186,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                         mPayTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                mPayType = mPayTypeList.get(position).getId();
                                 httpOrderCreate();
                             }
                         });
@@ -182,11 +195,14 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     }
 
     //http - 订单创建
-    public void httpOrderCreate(){
-        if(mUserBean == null){
+    public void httpOrderCreate() {
+        if (mUserBean == null) {
             return;
         }
-        RetrofitSerciveFactory.provideComService().orderCreate("cn",mUserBean.getToken(),1,mSeatArray,mEnjoyway,mIntegral,mCouponId,mPayType,mGoodsArray)
+        if(CheckBox.isChecked()){
+            mIntegral = Integer.getInteger(EtJiFen.getText().toString());
+        }
+        RetrofitSerciveFactory.provideComService().orderCreate("cn", mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType, mGoodsArray)
                 .compose(RxUtil.<HttpMjResult<OrderBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<OrderBean>())
                 .subscribe(new BaseSubscriber<OrderBean>(this) {
@@ -200,31 +216,65 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     }
 
     //http - 优惠券列表
-    private void httpGetCouponList(){
-        RetrofitSerciveFactory.provideComService().getCouponList("cn",mUserBean.getToken())
+    private void httpGetCouponList() {
+        RetrofitSerciveFactory.provideComService().getCouponList("cn", mUserBean.getToken())
                 .compose(RxUtil.<HttpMjResult<CouponOutBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<CouponOutBean>())
                 .subscribe(new BaseSubscriber<CouponOutBean>(this) {
                     @Override
                     public void onNext(CouponOutBean entity) {
                         super.onNext(entity);
-                        if(entity!=null && entity.getCoupons().size()>0){
-                            CouponList = entity.getCoupons();
-                            initSpinner();
-                        }
+                        initSpinner(entity);
                     }
                 });
     }
 
     //初始化优惠券列表
-    private void initSpinner(){
-        for(CouponBean couponBean : CouponList){
-            CouponMap.put(couponBean.getName(),couponBean.getId());
-            mSpinnerList.add(couponBean.getName());
-        }
-        niceSpinner.attachDataSource(mSpinnerList);
-//        niceSpinner.setBackgroundResource(R.drawable.textview_round_border);
+    private void initSpinner(CouponOutBean entity) {
         niceSpinner.setTextColor(getResources().getColor(R.color.color_green));
         niceSpinner.setTextSize(25);
+        if (entity != null && entity.getCoupons().size() > 0) {
+            //有优惠券的情况
+            niceSpinner.setSelected(true);
+            CouponList = entity.getCoupons();
+            for (CouponBean couponBean : CouponList) {
+                CouponMap.put(couponBean.getName(), couponBean.getId());
+                mSpinnerList.add(couponBean.getName());
+            }
+            niceSpinner.attachDataSource(mSpinnerList);
+            niceSpinner.setText(getString(R.string.cam_used_coupon_num,CouponList.size()+""));
+            niceSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
+                @Override
+                public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
+                    mCouponId = CouponMap.get(mSpinnerList.get(position));
+                }
+            });
+        } else {
+            //没有优惠券的情况
+            niceSpinner.setSelected(false);
+            niceSpinner.setText(getString(R.string.np_cam_used_coupon));
+            niceSpinner.hideArrow();
+        }
+
+}
+
+    //初始化点数优惠的情况
+    private void initIntegral() {
+        if (mUserBean.getIntegral() == null || mUserBean.getIntegral() == 0) {
+            //没点数的情况
+            CheckBox.setEnabled(false);
+            CheckBox.setChecked(false);
+            EtJiFen.setEnabled(false);
+//            EtJiFen.setText("0");
+            TvJiFenTips.setText(getString(R.string.cam_used_integral,"0"));
+        }else{
+            CheckBox.setEnabled(true);
+            EtJiFen.setEnabled(true);
+            TvJiFenTips.setText(getString(R.string.cam_used_integral,mUserBean.getIntegral()+""));
+            EtInputFilters filter = new EtInputFilters(EtInputFilters.TYPE_MAXNUMBER);
+            filter.setMaxNum(1,mUserBean.getIntegral(),0);
+            EtJiFen.setFilters(new InputFilter[]{filter});
+
+        }
     }
 }

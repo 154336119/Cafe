@@ -83,7 +83,7 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
             case R.id.BtnChoseSet:
                 Bundle bundle = new Bundle();
                 SeatBean seatBean = mSeatAdapter.getData().get(mSeatAdapter.getCheckedPosition());
-                String seatId = "["+seatBean.getId()+"]";
+                String seatId = seatBean.getId()+"";
 
                 bundle.putString("SeatArray",seatId);
                 bundle.putInt("Enjoyway",1);
