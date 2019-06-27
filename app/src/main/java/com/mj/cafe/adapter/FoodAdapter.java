@@ -12,11 +12,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.FoodBean;
+import com.mj.cafe.bean.LangTypeBean;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.view.AddWidget;
 
 import java.util.List;
+
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.EN;
+import static com.mj.cafe.bean.LangTypeBean.KO;
 
 public class FoodAdapter extends BaseQuickAdapter<FoodBean, BaseViewHolder> {
 	public static final int FIRST_STICKY_VIEW = 1;
@@ -51,6 +58,21 @@ public class FoodAdapter extends BaseQuickAdapter<FoodBean, BaseViewHolder> {
 		RelativeLayout RlShadow = helper.getView(R.id.RlShadow);
 		if(item.getStock()==null ||  item.getStock() == 0){
 			//中英文切换？？？？？？
+			String ShadowTips = null;
+			LangTypeBean langTypeBean = (LangTypeBean) SharedPreferencesUtil
+					.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT));
+			switch (langTypeBean.getType()) {
+				case CN:
+					ShadowTips = mContext.getText(R.string.cn_sold_out).toString();
+					break;
+				case EN:
+					ShadowTips = mContext.getText(R.string.en_sold_out).toString();
+					break;
+				case KO:
+					ShadowTips = mContext.getText(R.string.ko_sold_out).toString();
+					break;
+			}
+			helper.setText(R.id.TvShadow,ShadowTips);
 			helper.setVisible(R.id.RlShadow,true);
 			helper.setVisible(R.id.IvNoadd,true);
 			helper.setVisible(R.id.addwidget,false);

@@ -75,17 +75,18 @@ public class ViewUtils {
 			}
 		}).start();
 	}
-	public static void showClearCar(Context mContext, DialogInterface.OnClickListener onClickListener) {
+	public static void showClearCar(Context mContext, DialogInterface.OnClickListener onClickListener,String title
+			,String negativeTxt,String PositiveTxt) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		TextView tv = new TextView(mContext);
-		tv.setText("清空购物车?");
+		tv.setText(title+"?");
 		tv.setTextSize(30);
 		tv.setPadding(ViewUtils.dip2px(mContext, 26), ViewUtils.dip2px(mContext, 26), 0, 0);
 		tv.setTextColor(Color.parseColor("#757575"));
 		AlertDialog alertDialog = builder
-				.setNegativeButton("取消", null)
+				.setNegativeButton(negativeTxt, null)
 				.setCustomTitle(tv)
-				.setPositiveButton("清空", onClickListener)
+				.setPositiveButton(PositiveTxt, onClickListener)
 				.show();
 		Button nButton = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
 		nButton.setTextColor(ContextCompat.getColor(mContext, R.color.color_green));

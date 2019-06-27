@@ -20,10 +20,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
+import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.PayTypeAdapter;
 import com.mj.cafe.bean.CouponBean;
 import com.mj.cafe.bean.CouponOutBean;
+import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.OrderBean;
 import com.mj.cafe.bean.PayTypeBean;
 import com.mj.cafe.bean.UserBean;
@@ -34,6 +36,7 @@ import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
 import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.EtInputFilters;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.view.spinner.NiceSpinner;
 import com.mj.cafe.view.spinner.OnSpinnerItemSelectedListener;
 
@@ -46,6 +49,10 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.EN;
+import static com.mj.cafe.bean.LangTypeBean.KO;
 
 public class ChoosePayTypeActitiy extends BaseActivity {
 
@@ -131,6 +138,8 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         ButterKnife.bind(this);
         TvAccount.setText(mShowTotialAccount);
         getPayTypeList();
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
+
     }
 
     @Override
@@ -142,13 +151,17 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
-            case R.id.IvBack:
-                break;
             case R.id.IvZhongWen:
+                postLangLiveData(new LangTypeBean(CN));
                 break;
             case R.id.IvHanYu:
+                postLangLiveData(new LangTypeBean(KO));
                 break;
             case R.id.IvYingYu:
+                postLangLiveData(new LangTypeBean(EN));
+                break;
+            case R.id.IvBack:
+                finish();
                 break;
             case R.id.BtnRegister:
                 bundle.putInt("type", LoginRegisterActvitiy.REIGSTER);
@@ -196,13 +209,15 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //http - 订单创建
     public void httpOrderCreate() {
+
         if (mUserBean == null) {
             return;
         }
         if(CheckBox.isChecked()){
             mIntegral = Integer.getInteger(EtJiFen.getText().toString());
         }
-        RetrofitSerciveFactory.provideComService().orderCreate("cn", mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType, mGoodsArray)
+        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
+        RetrofitSerciveFactory.provideComService().orderCreate(typeBean.getUserHttpType(), mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType, mGoodsArray)
                 .compose(RxUtil.<HttpMjResult<OrderBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<OrderBean>())
                 .subscribe(new BaseSubscriber<OrderBean>(this) {
@@ -217,7 +232,8 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //http - 优惠券列表
     private void httpGetCouponList() {
-        RetrofitSerciveFactory.provideComService().getCouponList("cn", mUserBean.getToken())
+        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
+        RetrofitSerciveFactory.provideComService().getCouponList(typeBean.getUserHttpType(), mUserBean.getToken())
                 .compose(RxUtil.<HttpMjResult<CouponOutBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<CouponOutBean>())
                 .subscribe(new BaseSubscriber<CouponOutBean>(this) {
@@ -275,6 +291,36 @@ public class ChoosePayTypeActitiy extends BaseActivity {
             filter.setMaxNum(1,mUserBean.getIntegral(),0);
             EtJiFen.setFilters(new InputFilter[]{filter});
 
+        }
+    }
+
+    @Override
+    public void setLangView(LangTypeBean langTypeBean) {
+        switch (langTypeBean.getType()) {
+            case CN:
+                TvAccountTips.setText(getString(R.string.cn_Total_price));
+                TvUsedCouponTips.setText(getString(R.string.cn_Do_you_want_to_use_membership_discounts));
+                BtnRegister.setText(R.string.cn_Create_account);
+                BtnLogin.setText(R.string.cn_Sign_up);
+                TvChoosePayTypeTips.setText(R.string.cn_Please_choose_the_way_of_payment);
+                TvYinHangKaPayTips.setText(R.string.cn_Credit_or_debit_card);
+                break;
+            case EN:
+                TvAccountTips.setText(getString(R.string.en_Total_price));
+                TvUsedCouponTips.setText(getString(R.string.en_Do_you_want_to_use_membership_discounts));
+                BtnRegister.setText(R.string.en_Create_account);
+                BtnLogin.setText(R.string.en_Sign_up);
+                TvChoosePayTypeTips.setText(R.string.en_Please_choose_the_way_of_payment);
+                TvYinHangKaPayTips.setText(R.string.en_Credit_or_debit_card);
+                break;
+            case KO:
+                TvAccountTips.setText(getString(R.string.ko_Total_price));
+                TvUsedCouponTips.setText(getString(R.string.ko_Do_you_want_to_use_membership_discounts));
+                BtnRegister.setText(R.string.ko_Create_account);
+                BtnLogin.setText(R.string.ko_Sign_up);
+                TvChoosePayTypeTips.setText(R.string.ko_Please_choose_the_way_of_payment);
+                TvYinHangKaPayTips.setText(R.string.ko_Credit_or_debit_card);
+                break;
         }
     }
 }

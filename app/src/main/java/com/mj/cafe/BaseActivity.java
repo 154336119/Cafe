@@ -1,5 +1,6 @@
 package com.mj.cafe;
 
+import android.arch.lifecycle.Observer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
@@ -12,9 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
+import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.mj.cafe.bean.LangTypeBean;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.view.LoadingDialog;
 
-public class BaseActivity extends AppCompatActivity {
+import static com.mj.cafe.BizcContant.SP_LANAUAGE;
+import static com.mj.cafe.BizcContant._CN;
+import static com.mj.cafe.activity.ShopCarActivity.carAdapter;
+
+public abstract class BaseActivity extends AppCompatActivity {
     private Toast mToast;
     /** 加载等待框 */
     private LoadingDialog mLoadingDialog;
@@ -31,6 +39,7 @@ public class BaseActivity extends AppCompatActivity {
         if (rxBusRegist()){
             RxBus.get().register(this);
         }
+        registerLiveDateBus();
     }
 
     /**
@@ -103,4 +112,24 @@ public class BaseActivity extends AppCompatActivity {
 
     public void goAccount(View view) {
     }
+
+    //发送语言变化事件
+    public void postLangLiveData(LangTypeBean langType){
+        SharedPreferencesUtil.putData(SP_LANAUAGE,langType);
+        LiveEventBus.get().with(LangTypeBean.KEY_LANG_OBSERVE).post(langType);
+    }
+
+    public void registerLiveDateBus(){
+        LiveEventBus.get().with(LangTypeBean.KEY_LANG_OBSERVE,LangTypeBean.class)
+                .observe(this, new Observer<LangTypeBean>() {
+                    @Override
+                    public void onChanged(@Nullable LangTypeBean langTypeBean) {
+                        setLangView(langTypeBean);
+                        langChangeForHttp();
+                    }
+                });
+    }
+    public abstract void setLangView(LangTypeBean langTypeBean);
+    //语言切换时候http的请求的操作
+    public void langChangeForHttp(){};
 }

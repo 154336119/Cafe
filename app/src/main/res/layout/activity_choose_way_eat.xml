@@ -41,7 +41,7 @@
         android:layout_marginTop="300px"/>
 
     <TextView
-        android:id="@+id/Tv01"
+        android:id="@+id/TvChooseTips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/IvLogo"
@@ -58,20 +58,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/Tv01"
+        android:layout_below="@+id/TvChooseTips"
         android:layout_marginTop="200px">
-        <ImageView
-            android:id="@+id/TvPack"
+        <RelativeLayout
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/dabao"
-            />
-        <ImageView
-            android:id="@+id/IvForHere"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/TvPack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/dabao"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:id="@+id/TvPackTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tv_com_30"
+                android:text="打包"
+                android:textColor="@color/com_txt_color"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="160dp"/>
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/tangshi"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/IvForHere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/tangshi"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:id="@+id/TvForHereTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tv_com_30"
+                android:text="打包"
+                android:textColor="@color/com_txt_color"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="170dp"/>
+        </RelativeLayout>
+        <!--<ImageView-->
+            <!--android:id="@+id/IvForHere"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/tangshi"/>-->
     </LinearLayout>
 </RelativeLayout>

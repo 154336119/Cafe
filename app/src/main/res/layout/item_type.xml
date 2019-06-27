@@ -18,12 +18,15 @@
         android:gravity="center"
         android:textColor="@color/type_normal"
         android:layout_toRightOf="@+id/Iv"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:enabled="true"
         android:textSize="@dimen/tv_com_25"
         android:layout_marginLeft="20dp"/>
     <ImageView
         android:id="@+id/Iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@mipmap/dangao"
         android:layout_centerVertical="true"/>
     <TextView

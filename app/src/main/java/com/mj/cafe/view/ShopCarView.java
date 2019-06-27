@@ -23,9 +23,10 @@ import static com.mj.cafe.activity.ShopCarActivity.carAdapter;
 
 
 public class ShopCarView extends FrameLayout {
-	private TextView car_limit, tv_amount;
+	public TextView car_limit, tv_amount;
 	public ImageView iv_shop_car;
 	public TextView car_badge;
+	public TextView TvTotalTips;
 	private BottomSheetBehavior behavior;
 	public boolean sheetScrolling;
 	public View shoprl;
@@ -76,9 +77,10 @@ public class ShopCarView extends FrameLayout {
 		if (iv_shop_car == null) {
 			iv_shop_car = findViewById(R.id.iv_shop_car);
 			car_badge = findViewById(R.id.car_badge);
-			car_limit = findViewById(R.id.car_limit);
+			car_limit = (TextView)findViewById(R.id.car_limit);
 			tv_amount = findViewById(R.id.tv_amount);
 			shoprl = findViewById(R.id.car_rl);
+			TvTotalTips = (TextView)findViewById(R.id.TvTotalTips);
 			shoprl.setOnClickListener(new toggleCar());
 			carLoc = new int[2];
 			iv_shop_car.getLocationInWindow(carLoc);
@@ -130,4 +132,5 @@ public class ShopCarView extends FrameLayout {
 	public String getTotaliAccount(){
 		return tv_amount.getText().toString();
 	}
+
 }

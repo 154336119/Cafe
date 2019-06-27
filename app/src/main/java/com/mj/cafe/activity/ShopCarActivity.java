@@ -13,8 +13,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -25,6 +27,7 @@ import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.CarAdapter;
 import com.mj.cafe.bean.FoodBean;
+import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.TypeBean;
 import com.mj.cafe.http.DialogCallback;
 import com.mj.cafe.http.JsonCallback;
@@ -52,6 +55,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.EN;
+import static com.mj.cafe.bean.LangTypeBean.KO;
+
 public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClick{
 
     public static final String CAR_ACTION = "handleCar";
@@ -71,9 +78,11 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     com.mj.cafe.view.ListContainer ListContainer;
     @BindView(R.id.rootview)
     CoordinatorLayout rootview;
+    TextView TvClearTips;
     private ShopCarView shopCarView;
     public BottomSheetBehavior behavior;
-
+    //
+    private String dialog_title,dialog_negativeTxt,dialog_PositiveTxt;
     //座位
     private String mSeatArray = null;
     //1堂食, 2打包
@@ -87,7 +96,6 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         ButterKnife.bind(this);
         mSeatArray = getIntent().getStringExtra("SeatArray");
         mEnjoyway = getIntent().getIntExtra("Enjoyway",1);
-
         initViews();
         IntentFilter intentFilter = new IntentFilter(CAR_ACTION);
         intentFilter.addAction(CLEARCAR_ACTION);
@@ -97,6 +105,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
 
     private void initViews() {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TvClearTips = (TextView)findViewById(R.id.TvClearTips);
         initShopCar();
         ListContainer.setAddClick(this);
     }
@@ -112,6 +121,12 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         ((DefaultItemAnimator) carRecView.getItemAnimator()).setSupportsChangeAnimations(false);
         carAdapter = new CarAdapter(new ArrayList<FoodBean>(), this);
         carAdapter.bindToRecyclerView(carRecView);
+        shopCarView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
+            }
+        });
     }
 
     @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu,R.id.car_limit})
@@ -122,11 +137,13 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
                 finish();
                 break;
             case R.id.IvZhongWen:
+                postLangLiveData(new LangTypeBean(CN));
                 break;
             case R.id.IvHanYu:
+                postLangLiveData(new LangTypeBean(KO));
                 break;
             case R.id.IvYingYu:
-                carAdapter.getData();
+                postLangLiveData(new LangTypeBean(EN));
                 break;
             case R.id.car_limit:
                 bundle.putString("SeatArray",mSeatArray);
@@ -162,6 +179,7 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
                     dealCar(fb);
                     break;
                 case CLEARCAR_ACTION:
+
                     clearCar();
                     break;
             }
@@ -172,12 +190,14 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     };
 
     public void clearCar(View view) {
+
+
         ViewUtils.showClearCar(this, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 clearCar();
             }
-        });
+        },dialog_title,dialog_PositiveTxt,dialog_negativeTxt);
     }
 
     private void clearCar() {
@@ -258,7 +278,8 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     }
     //网络请求
     private void getGoodList(){
-        RetrofitSerciveFactory.provideComService().getGoods((String)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,BizcContant._CN),1)
+        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
+        RetrofitSerciveFactory.provideComService().getGoods(typeBean.getUserHttpType(),1)
                 .compose(RxUtil.<HttpMjResult<List<TypeBean>>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<List<TypeBean>>())
                 .subscribe(new BaseSubscriber<List<TypeBean>>(this) {
@@ -281,5 +302,43 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         }
         Logger.d("================:"+array.toJSONString());
         return array.toJSONString();
+    }
+
+
+    @Override
+    public void setLangView(LangTypeBean langTypeBean) {
+        switch (langTypeBean.getType()) {
+            case CN:
+                shopCarView.TvTotalTips.setText(getString(R.string.cn_Total));
+                shopCarView.car_limit.setText(getString(R.string.cn_Payment));
+                TvClearTips.setText(R.string.cn_Delete_all);
+                dialog_title = getString(R.string.cn_Delete_all);
+                dialog_negativeTxt = getString(R.string.cn_Confirm);
+                dialog_PositiveTxt = getString(R.string.cn_Cancel);
+                break;
+            case EN:
+                shopCarView.TvTotalTips.setText(getString(R.string.en_Total));
+                shopCarView.car_limit.setText(getString(R.string.en_Payment));
+                TvClearTips.setText(R.string.en_Delete_all);
+                dialog_title = getString(R.string.en_Delete_all);
+                dialog_negativeTxt = getString(R.string.en_Confirm);
+                dialog_PositiveTxt = getString(R.string.en_Cancel);
+                break;
+            case KO:
+                shopCarView.TvTotalTips.setText(getString(R.string.ko_Total));
+                shopCarView.car_limit.setText(getString(R.string.ko_Payment));
+                TvClearTips.setText(R.string.ko_Delete_all);
+                dialog_title = getString(R.string.ko_Delete_all);
+                dialog_negativeTxt = getString(R.string.ko_Confirm);
+                dialog_PositiveTxt = getString(R.string.ko_Cancel);
+                break;
+        }
+    }
+
+    @Override
+    public void langChangeForHttp() {
+        super.langChangeForHttp();
+        clearCar();
+        getGoodList();
     }
 }

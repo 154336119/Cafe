@@ -15,6 +15,7 @@ import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.SeatAdapter;
+import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.SeatBean;
 import com.mj.cafe.bean.TypeBean;
 import com.mj.cafe.retorfit.HttpMjResult;
@@ -33,6 +34,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.EN;
+import static com.mj.cafe.bean.LangTypeBean.KO;
 
 public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSelectBtnEnable{
     @BindView(R.id.IvBack)
@@ -67,18 +72,23 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
         setContentView(R.layout.activity_seat_list);
         ButterKnife.bind(this);
         getSetList();
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 
     @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu, R.id.BtnChoseSet})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.IvBack:
+                finish();
                 break;
             case R.id.IvZhongWen:
+                postLangLiveData(new LangTypeBean(CN));
                 break;
             case R.id.IvHanYu:
+                postLangLiveData(new LangTypeBean(KO));
                 break;
             case R.id.IvYingYu:
+                postLangLiveData(new LangTypeBean(EN));
                 break;
             case R.id.BtnChoseSet:
                 Bundle bundle = new Bundle();
@@ -123,5 +133,32 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
     @Override
     public void isEnable(boolean enable) {
         BtnChoseSet.setEnabled(enable);
+    }
+
+    @Override
+    public void setLangView(LangTypeBean langTypeBean) {
+        switch (langTypeBean.getType()) {
+            case CN:
+                TvTips.setText(getString(R.string.cn_Please_choose_seat));
+                tvKexuanTips.setText(getString(R.string.cn_Can_select));
+                tvBukexuanTips .setText(getString(R.string.cn_Cannot_select));
+                tvYixuanTips.setText(getString(R.string.cn_Selected));
+                BtnChoseSet.setText(getString(R.string.cn_Select_a_seat_and_order));
+                break;
+            case EN:
+                TvTips.setText(getString(R.string.en_Please_choose_seat));
+                tvKexuanTips.setText(getString(R.string.en_Can_select));
+                tvBukexuanTips .setText(getString(R.string.en_Cannot_select));
+                tvYixuanTips.setText(getString(R.string.en_Selected));
+                BtnChoseSet.setText(getString(R.string.en_Select_a_seat_and_order));
+                break;
+            case KO:
+                TvTips.setText(getString(R.string.ko_Please_choose_seat));
+                tvKexuanTips.setText(getString(R.string.ko_Can_select));
+                tvBukexuanTips .setText(getString(R.string.ko_Cannot_select));
+                tvYixuanTips.setText(getString(R.string.ko_Selected));
+                BtnChoseSet.setText(getString(R.string.ko_Select_a_seat_and_order));
+                break;
+        }
     }
 }

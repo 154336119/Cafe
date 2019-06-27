@@ -15,21 +15,32 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.hwangjr.rxbus.RxBus;
 import com.mj.cafe.BaseActivity;
+import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
+import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.UserBean;
 import com.mj.cafe.retorfit.HttpMjResult;
 import com.mj.cafe.retorfit.RetrofitSerciveFactory;
 import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.SizeUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
+
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.EN;
+import static com.mj.cafe.bean.LangTypeBean.KO;
 
 public class LoginRegisterActvitiy extends BaseActivity {
     public static final int REIGSTER = 0;
@@ -61,38 +72,40 @@ public class LoginRegisterActvitiy extends BaseActivity {
     ImageView IvBack;
     @BindView(R.id.RlRootView)
     CardView RlRootView;
-
+    private OptionsPickerView pvOptionsOne;
+    private String dialog_title,dialog_negativeTxt,dialog_PositiveTxt;
+    private List<String> optList = BizcContant.getCountry();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         ButterKnife.bind(this);
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
         type = getIntent().getIntExtra("type", REIGSTER);
         if (type == REIGSTER) {
-            btn.setText("注册");
-            TvLoginTips.setText("注册");
             LLAgagin.setVisibility(View.VISIBLE);
             textChangeListener(btn, EtPhone, EtPin, EtAgainPin);
             ViewGroup.LayoutParams params = RlRootView.getLayoutParams();
             params.height = SizeUtils.dp2px(this,830);
         } else {
-            btn.setText("登录");
-            TvLoginTips.setText("登录");
             LLAgagin.setVisibility(View.GONE);
             textChangeListener(btn, EtPhone, EtPin);
             ViewGroup.LayoutParams params = RlRootView.getLayoutParams();
             params.height =  SizeUtils.dp2px(this,700);
             RlRootView.setLayoutParams(params);
         }
+        initOptionPickerOne();
         //测试
         EtPhone.setText("15208305795");
         EtPin.setText("123456");
+
     }
 
     @OnClick({R.id.TvCountryCode, R.id.btn, R.id.IvBack})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.TvCountryCode:
+                pvOptionsOne.show();
                 break;
             case R.id.btn:
                 registerOrLogin();
@@ -106,15 +119,16 @@ public class LoginRegisterActvitiy extends BaseActivity {
 
     //注册
     private void registerOrLogin() {
+        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
+
         Observable<HttpMjResult<UserBean>> observable;
         if (type == REIGSTER) {
             if (!EtPin.getText().toString().equals(EtAgainPin.getText().toString())) {
-                showToastMsg("PIN码不一致");
                 return;
             }
-            observable = RetrofitSerciveFactory.provideComService().register("cn", prefixNo, EtPhone.getText().toString(), EtPin.getText().toString());
+            observable = RetrofitSerciveFactory.provideComService().register(typeBean.getUserHttpType(), prefixNo, EtPhone.getText().toString(), EtPin.getText().toString());
         } else {
-            observable = RetrofitSerciveFactory.provideComService().login("cn", prefixNo, EtPhone.getText().toString(), EtPin.getText().toString());
+            observable = RetrofitSerciveFactory.provideComService().login(typeBean.getUserHttpType(), prefixNo, EtPhone.getText().toString(), EtPin.getText().toString());
         }
         observable.compose(RxUtil.<HttpMjResult<UserBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<UserBean>())
@@ -170,5 +184,72 @@ public class LoginRegisterActvitiy extends BaseActivity {
         for (int i = 0; i < len; i++) {
             textViews[i].addTextChangedListener(textWatcher);
         }
+    }
+
+    @Override
+    public void setLangView(LangTypeBean langTypeBean) {
+        switch (langTypeBean.getType()) {
+            case CN:
+                TvPhoneTips.setText(getString(R.string.cn_Please_enter_your_cellphone_number));
+                TvPinTips.setText(getString(R.string.cn_Please_enter_pin_number));
+                TvAgainPinTips.setText(R.string.cn_Please_enter_pin_number_again);
+                dialog_negativeTxt = getString(R.string.cn_Confirm);
+                dialog_PositiveTxt = getString(R.string.cn_Cancel);
+                if (type == REIGSTER){
+                    btn.setText(R.string.cn_Create_account);
+                    TvLoginTips.setText(R.string.cn_Create_account);
+                }else{
+                    btn.setText(R.string.cn_Sign_up);
+                    TvLoginTips.setText(R.string.cn_Sign_up);
+                }
+                break;
+            case EN:
+                TvPhoneTips.setText(getString(R.string.en_Please_enter_your_cellphone_number));
+                TvPinTips.setText(getString(R.string.en_Please_enter_pin_number));
+                TvAgainPinTips.setText(R.string.en_Please_enter_pin_number_again);
+                dialog_negativeTxt = getString(R.string.en_Confirm);
+                dialog_PositiveTxt = getString(R.string.en_Cancel);
+                if (type == REIGSTER){
+                    btn.setText(R.string.en_Create_account);
+                    TvLoginTips.setText(R.string.en_Create_account);
+                }else{
+                    btn.setText(R.string.en_Sign_up);
+                    TvLoginTips.setText(R.string.en_Sign_up);
+                }
+                break;
+            case KO:
+                TvPhoneTips.setText(getString(R.string.ko_Please_enter_your_cellphone_number));
+                TvPinTips.setText(getString(R.string.ko_Please_enter_pin_number));
+                TvAgainPinTips.setText(R.string.ko_Please_enter_pin_number_again);
+                dialog_negativeTxt = getString(R.string.ko_Confirm);
+                dialog_PositiveTxt = getString(R.string.ko_Cancel);
+                if (type == REIGSTER){
+                    btn.setText(R.string.ko_Create_account);
+                    TvLoginTips.setText(R.string.ko_Create_account);
+                }else{
+                    btn.setText(R.string.ko_Sign_up);
+                    TvLoginTips.setText(R.string.ko_Sign_up);
+                }
+                break;
+        }
+    }
+
+    private void initOptionPickerOne() {//条件选择器初始化
+        pvOptionsOne = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                TvCountryCode.setText(optList.get(options1));
+                prefixNo = Integer.parseInt(optList.get(options1));
+            }
+        })
+                .setContentTextSize(30)//设置滚轮文字大小
+                .setSelectOptions(0, 1)//默认选中项\
+                .setSubCalSize(35)
+                .setSubmitText(dialog_negativeTxt)
+                .setCancelText(dialog_PositiveTxt)
+                .isDialog(true)
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .build();
+        pvOptionsOne.setPicker(optList);//二级选择器
     }
 }

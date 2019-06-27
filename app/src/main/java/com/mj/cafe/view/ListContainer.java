@@ -53,6 +53,14 @@ public class ListContainer extends LinearLayout {
 		inflate(mContext, R.layout.view_listcontainer, this);
 		recyclerView1 = findViewById(R.id.recycler1);
 		recyclerView2 = findViewById(R.id.recycler2);
+		recyclerView1.addItemDecoration(new SimpleDividerDecoration(mContext));
+		((DefaultItemAnimator) recyclerView1.getItemAnimator()).setSupportsChangeAnimations(false);
+		recyclerView2.addItemDecoration(
+				new HorizontalDividerItemDecoration.Builder(mContext)
+						.color(Color.parseColor("#ffffff"))
+						.sizeResId(R.dimen.dp_10)
+						.build());
+		recyclerView2.addItemDecoration(new SimpleDividerDecoration(mContext));
 	}
 
 
@@ -137,6 +145,7 @@ public class ListContainer extends LinearLayout {
 
 
 	public void setdata(List<TypeBean> typeBeanList){
+		foodBeanList.clear();
 		for(TypeBean typeBean : typeBeanList){
 			foodBeanList.addAll(typeBean.getGoodsList());
 		}
@@ -148,8 +157,6 @@ public class ListContainer extends LinearLayout {
 		view.setMinimumHeight(ViewUtils.dip2px(mContext, 120));
 		typeAdapter.addFooterView(view);
 		typeAdapter.bindToRecyclerView(recyclerView1);
-		recyclerView1.addItemDecoration(new SimpleDividerDecoration(mContext));
-		((DefaultItemAnimator) recyclerView1.getItemAnimator()).setSupportsChangeAnimations(false);
 		recyclerView1.addOnItemTouchListener(new OnItemClickListener() {
 			@Override
 			public void onSimpleItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
@@ -170,12 +177,6 @@ public class ListContainer extends LinearLayout {
 		});
 		linearLayoutManager = new LinearLayoutManager(mContext);
 		recyclerView2.setLayoutManager(linearLayoutManager);
-		recyclerView2.addItemDecoration(
-				new HorizontalDividerItemDecoration.Builder(mContext)
-						.color(Color.parseColor("#ffffff"))
-						.sizeResId(R.dimen.dp_10)
-						.build());
-		recyclerView2.addItemDecoration(new SimpleDividerDecoration(mContext));
 		((DefaultItemAnimator) recyclerView2.getItemAnimator()).setSupportsChangeAnimations(false);
 	}
 }

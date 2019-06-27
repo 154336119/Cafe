@@ -73,9 +73,12 @@ android {
 
         //分割线+
         implementation 'com.yqritc:recyclerview-flexibledivider:1.2.9'
-//    //下拉框
-//    implementation 'com.github.arcadefire:nice-spinner:1.4.3'
+//     implementation 'com.github.arcadefire:nice-spinner:1.4.3'
         //倒计时
         implementation 'com.github.iwgang:countdownview:2.1.6'
+        //liveDataBus
+        implementation 'com.jeremyliao:live-event-bus:1.4.4'
+        //选择器
+        implementation 'com.contrarywind:Android-PickerView:3.2.3'
     }
 }

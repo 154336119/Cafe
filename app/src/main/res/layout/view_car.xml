@@ -25,6 +25,7 @@ android:background="@color/white"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/TvTotalTips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/com_txt_color"

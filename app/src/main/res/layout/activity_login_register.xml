@@ -52,13 +52,23 @@
         >
 
         <TextView
+        android:id="@+id/TvFuhao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="+"
+        android:textColor="@color/com_txt_color"
+        android:textSize="@dimen/tv_com_35" />
+        <TextView
             android:id="@+id/TvCountryCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
             android:drawableRight="@mipmap/jiantou_xuanzequhao"
             android:drawablePadding="10dp"
-            android:text="+82"
+            android:layout_toRightOf="@+id/TvFuhao"
+            android:text="82"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_35" />
 

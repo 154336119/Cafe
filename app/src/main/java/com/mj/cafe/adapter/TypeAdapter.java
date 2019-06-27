@@ -6,7 +6,10 @@ import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.mj.cafe.R;
@@ -38,6 +41,7 @@ public class TypeAdapter extends BaseQuickAdapter<TypeBean, BaseViewHolder> {
 
 	@Override
 	protected void convert(BaseViewHolder helper, TypeBean item) {
+		ImageView iv = helper.getView(R.id.Iv);
 		helper.setText(R.id.tv_name, item.getName())
 				.setTag(R.id.item_main, item.getName());
 		if (helper.getAdapterPosition() == checked) {
@@ -57,6 +61,10 @@ public class TypeAdapter extends BaseQuickAdapter<TypeBean, BaseViewHolder> {
 			helper.setVisible(R.id.item_badge, false);
 		}
 
+		Glide.with(mContext)
+				.load(item.getLogo())
+				.apply(new RequestOptions().placeholder(R.mipmap.dangao))
+				.into(iv);
 	}
 
 	public void setChecked(int checked) {

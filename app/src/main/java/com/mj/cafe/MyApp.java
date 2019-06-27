@@ -2,12 +2,14 @@ package com.mj.cafe;
 
 import android.app.Application;
 
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
@@ -19,6 +21,9 @@ import okhttp3.OkHttpClient;
 
 import static com.mj.cafe.BizcContant.SP_LANAUAGE;
 import static com.mj.cafe.BizcContant._CN;
+import static com.mj.cafe.bean.LangTypeBean.CN;
+import static com.mj.cafe.bean.LangTypeBean.DEFAULT;
+import static com.mj.cafe.bean.LangTypeBean.EN;
 
 public class MyApp extends Application {
     private static MyApp mInstance;
@@ -30,12 +35,20 @@ public class MyApp extends Application {
         initLogUtils();
         initOkGo();
         initSP();
-
+        initLiveDateBus();
     }
+
+    private void initLiveDateBus() {
+        LiveEventBus.get()
+                .config()
+                .supportBroadcast(this)
+                .lifecycleObserverAlwaysActive(true);
+    }
+
     private void initSP(){
         SharedPreferencesUtil.getInstance(this, BizcContant.SP_CAFE);
         //初始化为中文
-        SharedPreferencesUtil.putData(SP_LANAUAGE,_CN);
+        SharedPreferencesUtil.putData(SP_LANAUAGE,new LangTypeBean(EN));
     }
 
     private void initLogUtils(){
