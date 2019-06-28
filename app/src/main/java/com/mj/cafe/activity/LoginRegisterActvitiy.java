@@ -80,8 +80,8 @@ public class LoginRegisterActvitiy extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         ButterKnife.bind(this);
-        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
         type = getIntent().getIntExtra("type", REIGSTER);
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
         if (type == REIGSTER) {
             LLAgagin.setVisibility(View.VISIBLE);
             textChangeListener(btn, EtPhone, EtPin, EtAgainPin);
@@ -195,6 +195,7 @@ public class LoginRegisterActvitiy extends BaseActivity {
                 TvAgainPinTips.setText(R.string.cn_Please_enter_pin_number_again);
                 dialog_negativeTxt = getString(R.string.cn_Confirm);
                 dialog_PositiveTxt = getString(R.string.cn_Cancel);
+                dialog_title = getString(R.string.cn_Select_country_number);
                 if (type == REIGSTER){
                     btn.setText(R.string.cn_Create_account);
                     TvLoginTips.setText(R.string.cn_Create_account);
@@ -209,6 +210,7 @@ public class LoginRegisterActvitiy extends BaseActivity {
                 TvAgainPinTips.setText(R.string.en_Please_enter_pin_number_again);
                 dialog_negativeTxt = getString(R.string.en_Confirm);
                 dialog_PositiveTxt = getString(R.string.en_Cancel);
+                dialog_title = getString(R.string.en_Select_country_number);
                 if (type == REIGSTER){
                     btn.setText(R.string.en_Create_account);
                     TvLoginTips.setText(R.string.en_Create_account);
@@ -223,6 +225,7 @@ public class LoginRegisterActvitiy extends BaseActivity {
                 TvAgainPinTips.setText(R.string.ko_Please_enter_pin_number_again);
                 dialog_negativeTxt = getString(R.string.ko_Confirm);
                 dialog_PositiveTxt = getString(R.string.ko_Cancel);
+                dialog_title = getString(R.string.ko_Select_country_number);
                 if (type == REIGSTER){
                     btn.setText(R.string.ko_Create_account);
                     TvLoginTips.setText(R.string.ko_Create_account);
@@ -244,10 +247,15 @@ public class LoginRegisterActvitiy extends BaseActivity {
         })
                 .setContentTextSize(30)//设置滚轮文字大小
                 .setSelectOptions(0, 1)//默认选中项\
-                .setSubCalSize(35)
+                .setSubCalSize(25)
                 .setSubmitText(dialog_negativeTxt)
                 .setCancelText(dialog_PositiveTxt)
                 .isDialog(true)
+                .setTitleText(dialog_title)
+                .setCancelColor(R.color.color_green)
+                .setSubmitColor(R.color.color_green)
+                .setTitleColor(R.color.com_txt_color)
+                .setTitleSize(30)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .build();
         pvOptionsOne.setPicker(optList);//二级选择器

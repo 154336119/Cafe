@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -17,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
@@ -44,7 +41,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,9 +99,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     TextView TvNoCouponTips;
     @BindView(R.id.TvJiFenTips)
     TextView TvJiFenTips;
+    @BindView(R.id.Tv01)
+    TextView Tv01;
     private List<PayTypeBean> mPayTypeList = new ArrayList<>();
     //优惠券
-    private List<CouponBean> CouponList = new ArrayList<>();
+    private List<CouponBean> CouponList;
     private Map<String, Integer> CouponMap = new HashMap<>();
     private List<String> mSpinnerList = new ArrayList<>();
     //订单总金额 元
@@ -117,11 +115,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     //1堂食, 2打包
     private Integer mEnjoyway = 2;
     //点数
-    private Integer mIntegral=0;
+    private Integer mIntegral = 0;
     //优惠券
-    private Integer mCouponId=0;
+    private Integer mCouponId = 0;
     //支付类型
-    private Integer mPayType;
+    private PayTypeBean mPayType;
     //点餐数据
     private String mGoodsArray;
 
@@ -129,7 +127,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_pay_type);
-        if(!TextUtils.isEmpty(getIntent().getStringExtra("SeatArray"))){
+        if (!TextUtils.isEmpty(getIntent().getStringExtra("SeatArray"))) {
             mSeatArray = getIntent().getStringExtra("SeatArray");
         }
         mEnjoyway = getIntent().getIntExtra("Enjoyway", 2);
@@ -138,7 +136,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         ButterKnife.bind(this);
         TvAccount.setText(mShowTotialAccount);
         getPayTypeList();
-        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
 
     }
 
@@ -199,7 +197,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                         mPayTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                mPayType = mPayTypeList.get(position).getId();
+                                mPayType = mPayTypeList.get(position);
                                 httpOrderCreate();
                             }
                         });
@@ -209,30 +207,31 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //http - 订单创建
     public void httpOrderCreate() {
-
         if (mUserBean == null) {
             return;
         }
-        if(CheckBox.isChecked()){
+        if (CheckBox.isChecked()) {
             mIntegral = Integer.getInteger(EtJiFen.getText().toString());
         }
-        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
-        RetrofitSerciveFactory.provideComService().orderCreate(typeBean.getUserHttpType(), mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType, mGoodsArray)
+        LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
+        RetrofitSerciveFactory.provideComService().orderCreate(typeBean.getUserHttpType(), mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType.getId(), mGoodsArray)
                 .compose(RxUtil.<HttpMjResult<OrderBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<OrderBean>())
                 .subscribe(new BaseSubscriber<OrderBean>(this) {
                     @Override
                     public void onNext(OrderBean entity) {
                         super.onNext(entity);
-                        RxBus.get().post(entity);
-                        finish();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("type", mPayType);
+                        bundle.putParcelable("order", entity);
+                        ActivityUtil.next(ChoosePayTypeActitiy.this, ThreePayAcitivty.class, bundle, true);
                     }
                 });
     }
 
     //http - 优惠券列表
     private void httpGetCouponList() {
-        LangTypeBean typeBean = (LangTypeBean)SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.CN));
+        LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
         RetrofitSerciveFactory.provideComService().getCouponList(typeBean.getUserHttpType(), mUserBean.getToken())
                 .compose(RxUtil.<HttpMjResult<CouponOutBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<CouponOutBean>())
@@ -247,6 +246,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //初始化优惠券列表
     private void initSpinner(CouponOutBean entity) {
+        LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
         niceSpinner.setTextColor(getResources().getColor(R.color.color_green));
         niceSpinner.setTextSize(25);
         if (entity != null && entity.getCoupons().size() > 0) {
@@ -258,7 +258,17 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 mSpinnerList.add(couponBean.getName());
             }
             niceSpinner.attachDataSource(mSpinnerList);
-            niceSpinner.setText(getString(R.string.cam_used_coupon_num,CouponList.size()+""));
+            switch (typeBean.getType()) {
+                case CN:
+                    niceSpinner.setText(getString(R.string.cn_There_are_x_coupons_can_be_use, CouponList.size() + ""));
+                    break;
+                case EN:
+                    niceSpinner.setText(getString(R.string.en_There_are_x_coupons_can_be_use, CouponList.size() + ""));
+                    break;
+                case KO:
+                    niceSpinner.setText(getString(R.string.ko_There_are_x_coupons_can_be_use, CouponList.size() + ""));
+                    break;
+            }
             niceSpinner.setOnSpinnerItemSelectedListener(new OnSpinnerItemSelectedListener() {
                 @Override
                 public void onItemSelected(NiceSpinner parent, View view, int position, long id) {
@@ -268,11 +278,21 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         } else {
             //没有优惠券的情况
             niceSpinner.setSelected(false);
-            niceSpinner.setText(getString(R.string.np_cam_used_coupon));
+            switch (typeBean.getType()) {
+                case CN:
+                    niceSpinner.setText(getString(R.string.cn_There_is_no_coupon_can_be_use));
+                    break;
+                case EN:
+                    niceSpinner.setText(getString(R.string.en_There_is_no_coupon_can_be_use));
+                    break;
+                case KO:
+                    niceSpinner.setText(getString(R.string.ko_ko_There_is_no_coupon_can_be_use));
+                    break;
+            }
             niceSpinner.hideArrow();
         }
 
-}
+    }
 
     //初始化点数优惠的情况
     private void initIntegral() {
@@ -282,15 +302,24 @@ public class ChoosePayTypeActitiy extends BaseActivity {
             CheckBox.setChecked(false);
             EtJiFen.setEnabled(false);
 //            EtJiFen.setText("0");
-            TvJiFenTips.setText(getString(R.string.cam_used_integral,"0"));
-        }else{
+        } else {
             CheckBox.setEnabled(true);
             EtJiFen.setEnabled(true);
-            TvJiFenTips.setText(getString(R.string.cam_used_integral,mUserBean.getIntegral()+""));
             EtInputFilters filter = new EtInputFilters(EtInputFilters.TYPE_MAXNUMBER);
-            filter.setMaxNum(1,mUserBean.getIntegral(),0);
+            filter.setMaxNum(1, mUserBean.getIntegral(), 0);
             EtJiFen.setFilters(new InputFilter[]{filter});
-
+        }
+        LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
+        switch (typeBean.getType()) {
+            case CN:
+                TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                break;
+            case EN:
+                TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                break;
+            case KO:
+                TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                break;
         }
     }
 
@@ -304,6 +333,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 BtnLogin.setText(R.string.cn_Sign_up);
                 TvChoosePayTypeTips.setText(R.string.cn_Please_choose_the_way_of_payment);
                 TvYinHangKaPayTips.setText(R.string.cn_Credit_or_debit_card);
+                TvDiscountTips.setText(R.string.cn_Use_points);
+                Tv01.setText(R.string.cn_coupons);
+                if(mUserBean!=null){
+                    TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                }
                 break;
             case EN:
                 TvAccountTips.setText(getString(R.string.en_Total_price));
@@ -312,6 +346,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 BtnLogin.setText(R.string.en_Sign_up);
                 TvChoosePayTypeTips.setText(R.string.en_Please_choose_the_way_of_payment);
                 TvYinHangKaPayTips.setText(R.string.en_Credit_or_debit_card);
+                TvDiscountTips.setText(R.string.en_Use_points);
+                Tv01.setText(R.string.en_coupons);
+                if(mUserBean!=null){
+                    TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                }
                 break;
             case KO:
                 TvAccountTips.setText(getString(R.string.ko_Total_price));
@@ -320,7 +359,27 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 BtnLogin.setText(R.string.ko_Sign_up);
                 TvChoosePayTypeTips.setText(R.string.ko_Please_choose_the_way_of_payment);
                 TvYinHangKaPayTips.setText(R.string.ko_Credit_or_debit_card);
+                TvDiscountTips.setText(R.string.ko_Use_points);
+                Tv01.setText(R.string.ko_coupons);
+                if(mUserBean!=null){
+                    TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                }
                 break;
         }
+    }
+    @Override
+    public void langChangeForHttp() {
+        super.langChangeForHttp();
+        if(mUserBean!=null){
+            clearCouponData();
+            httpGetCouponList();
+        }
+    }
+
+    private void clearCouponData(){
+        mCouponId = 0;
+        CouponList.clear();
+        CouponMap.clear();
+        mSpinnerList.clear();
     }
 }

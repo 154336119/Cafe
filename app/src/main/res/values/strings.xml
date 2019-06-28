@@ -55,7 +55,10 @@
     <string name="cn_Confirm">确认</string>
     <string name="cn_Cancel">取消</string>
     <string name="cn_sold_out">已售罄</string>
-
+    <string name="cn_Select_country_number">选择区号</string>
+    <string name="cn_Total_price_small">订单金额小计</string>
+    <string name="cn_Use_points">优惠抵扣</string>
+    Use points
     <!--英文-->
     <string name="en_Order">Order</string>
     <string name="en_Please_select_way_of_order">Please select way of order</string>
@@ -100,9 +103,13 @@
     <string name="en_Sorry_the_data_request_failed_the_order_has_been_cancelled">Sorry, the data request failed, the order has been cancelled!</string>
     <string name="en_Congratulations_Your_payment_was_successful_Please_wait_a_minute">Congratulations! Your payment was successful! Please wait a minute!</string>
     <string name="en_en_Order_code">Order code</string>
-    <string name="en_Confirm">Confirm</string>
-    <string name="en_Cancel">Cancel</string>
+    <string name="en_Confirm">ok</string>
+    <string name="en_Cancel">cancel</string>
     <string name="en_sold_out">sold out</string>
+    <string name="en_Select_country_number">Select country number</string>
+    <string name="en_Total_price_small">Total price</string>
+    <string name="en_Use_points">Use points</string>
+    Total price
     <!--韩文-->
     <string name="ko_Order">주문</string>
     <string name="ko_Please_select_way_of_order"> 주문 방식을 선택하세요</string>
@@ -150,4 +157,7 @@
     <string name="ko_Confirm">확인</string>
     <string name="ko_Cancel">취소</string>
     <string name="ko_sold_out">품절</string>
+    <string name="ko_Select_country_number">국가번호 선택</string>
+    <string name="ko_Total_price_small">지불 금액</string>
+    <string name="ko_Use_points">포인트 사용</string>
 </resources>

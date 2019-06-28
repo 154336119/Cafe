@@ -28,7 +28,7 @@ public class BizcContant {
         list.add("852");
         list.add("853");
         list.add("886");
-        list.add("+82");
+        list.add("82");
         list.add("81");
         list.add("1");
         list.add("1");

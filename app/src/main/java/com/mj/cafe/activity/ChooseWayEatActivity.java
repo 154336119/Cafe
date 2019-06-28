@@ -11,6 +11,7 @@ import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.utils.ActivityUtil;
+import com.mj.cafe.utils.AntiShakeUtils;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 
 import butterknife.BindView;
@@ -67,9 +68,11 @@ public class ChooseWayEatActivity extends BaseActivity {
                 postLangLiveData(new LangTypeBean(EN));
                 break;
             case R.id.TvPack:
+                if (AntiShakeUtils.isInvalidClick(view)) return;
                 ActivityUtil.next(this, ShopCarActivity.class);
                 break;
             case R.id.IvForHere:
+                if (AntiShakeUtils.isInvalidClick(view)) return;
                 ActivityUtil.next(this, SeatListActivity.class);
                 break;
         }

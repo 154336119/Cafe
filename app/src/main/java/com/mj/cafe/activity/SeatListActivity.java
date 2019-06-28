@@ -94,7 +94,6 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
                 Bundle bundle = new Bundle();
                 SeatBean seatBean = mSeatAdapter.getData().get(mSeatAdapter.getCheckedPosition());
                 String seatId = seatBean.getId()+"";
-
                 bundle.putString("SeatArray",seatId);
                 bundle.putInt("Enjoyway",1);
                 ActivityUtil.next(this,ShopCarActivity.class,bundle,false);

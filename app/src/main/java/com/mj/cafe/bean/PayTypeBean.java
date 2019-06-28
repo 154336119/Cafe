@@ -1,6 +1,9 @@
 package com.mj.cafe.bean;
 
-public class PayTypeBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PayTypeBean implements Parcelable {
 
     /**
      * id : 1
@@ -35,4 +38,37 @@ public class PayTypeBean {
     public void setLogo(String logo) {
         this.logo = logo;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.pay_name);
+        dest.writeString(this.logo);
+    }
+
+    public PayTypeBean() {
+    }
+
+    protected PayTypeBean(Parcel in) {
+        this.id = in.readInt();
+        this.pay_name = in.readString();
+        this.logo = in.readString();
+    }
+
+    public static final Parcelable.Creator<PayTypeBean> CREATOR = new Parcelable.Creator<PayTypeBean>() {
+        @Override
+        public PayTypeBean createFromParcel(Parcel source) {
+            return new PayTypeBean(source);
+        }
+
+        @Override
+        public PayTypeBean[] newArray(int size) {
+            return new PayTypeBean[size];
+        }
+    };
 }
