@@ -42,7 +42,7 @@ public abstract class DialogCallback<T> extends JsonCallback<T> {
 
     @Override
     public void onStart(Request<T, ? extends Request> request) {
-        mView.showWaitDialog("正在加载");
+        mView.showWaitDialog("loading...");
     }
 
     @Override
