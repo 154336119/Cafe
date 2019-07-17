@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.LangTypeBean;
@@ -62,8 +63,11 @@ public class ThreePayAcitivty extends BaseActivity {
     TextView TvShadow;
     @BindView(R.id.RlShadow)
     RelativeLayout RlShadow;
+    @BindView(R.id.IvQrcode)
+    ImageView IvQrcode;
     private PayTypeBean mPayType;
     private OrderBean mOrderBean;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +79,9 @@ public class ThreePayAcitivty extends BaseActivity {
         TvScore.setText(mOrderBean.getStringIntegralMoney());
         TvCoupun.setText(mOrderBean.getStringCouponMoneyMoney());
         TvRealAccount.setText(mOrderBean.getStringPay_moneyMoney());
+        Glide.with(this)
+                .load(mOrderBean.getQrcode())
+                .into(IvQrcode);
     }
 
     @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu})
@@ -90,7 +97,7 @@ public class ThreePayAcitivty extends BaseActivity {
                 postLangLiveData(new LangTypeBean(EN));
                 break;
             case R.id.btn:
-                ActivityUtil.next(this,ChooseWayEatActivity.class);
+                ActivityUtil.next(this, ChooseWayEatActivity.class);
                 break;
             case R.id.IvBack:
                 finish();
@@ -107,13 +114,13 @@ public class ThreePayAcitivty extends BaseActivity {
                 TvScoreTips.setText(R.string.cn_Point_discount);
                 TvCouponTips.setText(R.string.cn_coupons_discount);
                 TvShadow.setText(R.string.cn_QR_code_has_been_expired_click_refresh);
-                if(mPayType.getPay_name().equals("Kakao Pay")){
+                if (mPayType.getPay_name().equals("Kakao Pay")) {
                     TvPayTypeTips.setText(R.string.cn_Please_scan_your_barcode_of_Kakao_talk);
-                }else  if(mPayType.getPay_name().equals("PAYCO")){
+                } else if (mPayType.getPay_name().equals("PAYCO")) {
                     TvPayTypeTips.setText(R.string.cn_Please_scan_your_barcode_of_Payco);
-                }else  if(mPayType.getPay_name().equals("AliPAY")){
+                } else if (mPayType.getPay_name().equals("AliPAY")) {
                     TvPayTypeTips.setText(R.string.cn_Please_use_Alipay_to_pay);
-                }else if(mPayType.getPay_name().equals("Wechat Pay")){
+                } else if (mPayType.getPay_name().equals("Wechat Pay")) {
                     TvPayTypeTips.setText(R.string.cn_Please_use_Wechat_Pay_to_pay);
                 }
                 break;
@@ -123,13 +130,13 @@ public class ThreePayAcitivty extends BaseActivity {
                 TvScoreTips.setText(R.string.en_Point_discount);
                 TvCouponTips.setText(R.string.en_coupons_discount);
                 TvShadow.setText(R.string.en_QR_code_has_been_expired_click_refresh);
-                if(mPayType.getPay_name().equals("Kakao Pay")){
+                if (mPayType.getPay_name().equals("Kakao Pay")) {
                     TvPayTypeTips.setText(R.string.en_Please_scan_your_barcode_of_Kakao_talk);
-                }else  if(mPayType.getPay_name().equals("PAYCO")){
+                } else if (mPayType.getPay_name().equals("PAYCO")) {
                     TvPayTypeTips.setText(R.string.en_Please_scan_your_barcode_of_Payco);
-                }else  if(mPayType.getPay_name().equals("AliPAY")){
+                } else if (mPayType.getPay_name().equals("AliPAY")) {
                     TvPayTypeTips.setText(R.string.en_Please_use_Alipay_to_pay);
-                }else if(mPayType.getPay_name().equals("Wechat Pay")){
+                } else if (mPayType.getPay_name().equals("Wechat Pay")) {
                     TvPayTypeTips.setText(R.string.en_Please_use_Wechat_Pay_to_pay);
                 }
                 break;
@@ -139,14 +146,14 @@ public class ThreePayAcitivty extends BaseActivity {
                 TvScoreTips.setText(R.string.ko_Point_discount);
                 TvCouponTips.setText(R.string.ko_coupons_discount);
                 TvShadow.setText(R.string.ko_QR_code_has_been_expired_click_refresh);
-                if(mPayType.getPay_name().equals("Kakao Pay")){
+                if (mPayType.getPay_name().equals("Kakao Pay")) {
                     TvPayTypeTips.setText(R.string.ko_Please_scan_your_barcode_of_Kakao_talk);
-                }else  if(mPayType.getPay_name().equals("PAYCO")){
+                } else if (mPayType.getPay_name().equals("PAYCO")) {
                     TvPayTypeTips.setText(R.string.ko_Please_scan_your_barcode_of_Payco);
-                }else  if(mPayType.getPay_name().equals("AliPAY")){
+                } else if (mPayType.getPay_name().equals("AliPAY")) {
                     TvPayTypeTips.setText(R.string.ko_Please_use_Alipay_to_pay);
 
-                }else if(mPayType.getPay_name().equals("Wechat Pay")){
+                } else if (mPayType.getPay_name().equals("Wechat Pay")) {
                     TvPayTypeTips.setText(R.string.ko_Please_use_Wechat_Pay_to_pay);
                 }
                 break;

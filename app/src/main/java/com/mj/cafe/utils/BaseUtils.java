@@ -32,7 +32,7 @@ public class BaseUtils {
 			foodBean.setId(Long.parseLong(i+""));
 			foodBean.setName("食品--" + i + 1);
 //			foodBean.setPrice(BigDecimal.valueOf((new Random().nextDouble() * 100)).setScale(1, BigDecimal.ROUND_HALF_DOWN));
-			foodBean.setPrice(Long.parseLong("2500"));
+//			foodBean.setPrice(2500"));
 			foodBean.setType("类别" + i / 10);
 			int resID = context.getResources().getIdentifier("food" + new Random().nextInt(8), "drawable", "com.k.neleme");
 			fList.add(foodBean);

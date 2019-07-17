@@ -152,12 +152,14 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp">
             <ImageView
+                android:id="@+id/IvQrcode"
                 android:layout_width="300dp"
                 android:layout_height="300dp"/>
             <RelativeLayout
                 android:id="@+id/RlShadow"
                 android:layout_width="300dp"
-                android:layout_height="300dp">
+                android:layout_height="300dp"
+                android:visibility="gone">
                 <ImageView
                     android:layout_width="300dp"
                     android:layout_height="300dp"

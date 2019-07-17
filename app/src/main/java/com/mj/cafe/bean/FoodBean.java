@@ -29,8 +29,8 @@ public class FoodBean implements Parcelable, Serializable {
 	private Long id;
 	private String name;
 	private String logo;
-	private Long price;
-	private Long discount_price;
+	private String price;
+	private String discount_price;
 	private Long stock;
 
 	public String getType() {
@@ -53,10 +53,10 @@ public class FoodBean implements Parcelable, Serializable {
 	private long selectCount;
 
 	public BigDecimal getBigDecimalPrice() {
-		if(discount_price!=null && discount_price!= 0){
-			return AmountUtils.fen2Yuan(discount_price);
+		if(discount_price!=null && Double.parseDouble(discount_price)> 0){
+			return AmountUtils.toBigyuan(discount_price);
 		}else{
-			return AmountUtils.fen2Yuan(price);
+			return AmountUtils.toBigyuan(price);
 		}
 	}
 
@@ -100,19 +100,19 @@ public class FoodBean implements Parcelable, Serializable {
 		this.logo = logo;
 	}
 
-	public Long getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
-	public Long getDiscount_price() {
+	public String getDiscount_price() {
 		return discount_price;
 	}
 
-	public void setDiscount_price(Long discount_price) {
+	public void setDiscount_price(String discount_price) {
 		this.discount_price = discount_price;
 	}
 
@@ -124,6 +124,7 @@ public class FoodBean implements Parcelable, Serializable {
 		this.stock = stock;
 	}
 
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -134,9 +135,9 @@ public class FoodBean implements Parcelable, Serializable {
 		dest.writeValue(this.id);
 		dest.writeString(this.name);
 		dest.writeString(this.logo);
-		dest.writeValue(this.price);
-		dest.writeValue(this.discount_price);
-		dest.writeValue(this.stock);
+		dest.writeString(this.price);
+		dest.writeString(this.discount_price);
+		dest.writeLong(this.stock);
 		dest.writeString(this.type);
 		dest.writeLong(this.selectCount);
 	}
@@ -148,9 +149,9 @@ public class FoodBean implements Parcelable, Serializable {
 		this.id = (Long) in.readValue(Long.class.getClassLoader());
 		this.name = in.readString();
 		this.logo = in.readString();
-		this.price = (Long) in.readValue(Long.class.getClassLoader());
-		this.discount_price = (Long) in.readValue(Long.class.getClassLoader());
-		this.stock = (Long) in.readValue(Long.class.getClassLoader());
+		this.price = in.readString();
+		this.discount_price = in.readString();
+		this.stock = in.readLong();
 		this.type = in.readString();
 		this.selectCount = in.readLong();
 	}

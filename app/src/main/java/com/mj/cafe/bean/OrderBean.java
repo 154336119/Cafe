@@ -23,26 +23,26 @@ public class OrderBean implements Parcelable {
      * pay_money : 9400
      */
 
-    private int integralMoney;
-    private int goodsMoney;
+    private String integralMoney;
+    private String goodsMoney;
     private int orderId;
     private String qrcode;
-    private int couponMoney;
-    private int pay_money;
+    private String couponMoney;
+    private String payMoney;
 
-    public int getIntegralMoney() {
+    public String getIntegralMoney() {
         return integralMoney;
     }
 
-    public void setIntegralMoney(int integralMoney) {
+    public void setIntegralMoney(String integralMoney) {
         this.integralMoney = integralMoney;
     }
 
-    public int getGoodsMoney() {
+    public String getGoodsMoney() {
         return goodsMoney;
     }
 
-    public void setGoodsMoney(int goodsMoney) {
+    public void setGoodsMoney(String goodsMoney) {
         this.goodsMoney = goodsMoney;
     }
 
@@ -62,24 +62,17 @@ public class OrderBean implements Parcelable {
         this.qrcode = qrcode;
     }
 
-    public int getCouponMoney() {
+    public String getCouponMoney() {
         return couponMoney;
     }
 
-    public void setCouponMoney(int couponMoney) {
+    public void setCouponMoney(String couponMoney) {
         this.couponMoney = couponMoney;
     }
 
-    public int getPay_money() {
-        return pay_money;
-    }
 
-    public void setPay_money(int pay_money) {
-        this.pay_money = pay_money;
-    }
-
-    public BigDecimal getBigDecimalPrice(int price) {
-            return AmountUtils.fen2Yuan(price);
+    public BigDecimal getBigDecimalPrice(String price) {
+            return AmountUtils.toBigyuan(price);
     }
 
     public SpannableString getStringIntegralMoney() {
@@ -107,7 +100,7 @@ public class OrderBean implements Parcelable {
     }
 
     public SpannableString getStringPay_moneyMoney() {
-        String priceStr = String.valueOf(getBigDecimalPrice(integralMoney));
+        String priceStr = String.valueOf(getBigDecimalPrice(payMoney));
         SpannableString spanString = new SpannableString("₩"+priceStr);
         AbsoluteSizeSpan span = new AbsoluteSizeSpan(ViewUtils.sp2px(MyApp.getInstance(), 45));
         spanString.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -122,27 +115,27 @@ public class OrderBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.integralMoney);
-        dest.writeInt(this.goodsMoney);
+        dest.writeString(this.integralMoney);
+        dest.writeString(this.goodsMoney);
         dest.writeInt(this.orderId);
         dest.writeString(this.qrcode);
-        dest.writeInt(this.couponMoney);
-        dest.writeInt(this.pay_money);
+        dest.writeString(this.couponMoney);
+        dest.writeString(this.payMoney);
     }
 
     public OrderBean() {
     }
 
     protected OrderBean(Parcel in) {
-        this.integralMoney = in.readInt();
-        this.goodsMoney = in.readInt();
+        this.integralMoney = in.readString();
+        this.goodsMoney = in.readString();
         this.orderId = in.readInt();
         this.qrcode = in.readString();
-        this.couponMoney = in.readInt();
-        this.pay_money = in.readInt();
+        this.couponMoney = in.readString();
+        this.payMoney = in.readString();
     }
 
-    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
+    public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {
         @Override
         public OrderBean createFromParcel(Parcel source) {
             return new OrderBean(source);
@@ -153,4 +146,12 @@ public class OrderBean implements Parcelable {
             return new OrderBean[size];
         }
     };
+
+    public String getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(String payMoney) {
+        this.payMoney = payMoney;
+    }
 }
