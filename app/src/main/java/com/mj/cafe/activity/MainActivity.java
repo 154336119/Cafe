@@ -14,6 +14,8 @@ import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.R;
 import com.mj.cafe.utils.SharedPreferencesUtil;
+import com.mj.cafe.utils.StringToHex;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +44,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
+//        StringToHex.getXor(StringToHex.hexStringToBytes("4F4F4F4E"));
+//        byte[] data = StringToHex.hexStringToBytes("024B494F534B313131343931353534350032303137313032363134343135304100000003");
+        Logger.d("======="+StringToHex.convertHexToString("3230313730333132323030323038"));
+        //020000000000000000000000000000000032303137303331323230303230384100000003
     }
 
     @OnClick({R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu, R.id.btn})

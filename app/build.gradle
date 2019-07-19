@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.mj.cafe"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -81,6 +81,6 @@ android {
         //选择器
         implementation 'com.contrarywind:Android-PickerView:3.2.3'
 //        串口
-//        implementation 'com.github.kongqw:AndroidSerialPort:1.0.1'
+        implementation 'com.github.kongqw:AndroidSerialPort:1.0.1'
     }
 }

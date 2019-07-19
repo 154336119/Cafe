@@ -77,7 +77,6 @@ public class ChooseWayEatActivity extends BaseActivity {
                 break;
         }
     }
-
     @Override
     public void setLangView(LangTypeBean langTypeBean) {
         switch (langTypeBean.getType()) {
@@ -98,6 +97,4 @@ public class ChooseWayEatActivity extends BaseActivity {
                 break;
         }
     }
-
-
 }
