@@ -3,6 +3,9 @@ package com.mj.cafe;
 import android.app.Application;
 
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.kongqw.serialportlibrary.Device;
+import com.kongqw.serialportlibrary.SerialPortManager;
+import com.lvrenyang.io.Pos;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -14,6 +17,7 @@ import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.Bugly;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +31,11 @@ import static com.mj.cafe.bean.LangTypeBean.EN;
 
 public class MyApp extends Application {
     private static MyApp mInstance;
+    private  SerialPortManager mSerialPortManager;
 
+
+    private Pos mPos;
+    private Device mSelectDevice;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,6 +44,7 @@ public class MyApp extends Application {
         initOkGo();
         initSP();
         initLiveDateBus();
+        Bugly.init(getApplicationContext(), "60be1128c4", false);
     }
 
     private void initLiveDateBus() {
@@ -91,5 +100,30 @@ public class MyApp extends Application {
     }
     public static MyApp getInstance() {
         return mInstance;
+    }
+
+    public  SerialPortManager getSerialPortManager() {
+        if(mSerialPortManager == null ){
+            mSerialPortManager = new SerialPortManager();
+        }
+        return mSerialPortManager;
+    }
+
+    public Device getmSelectDevice() {
+        return mSelectDevice;
+    }
+
+    public void setmSelectDevice(Device mSelectDevice) {
+        this.mSelectDevice = mSelectDevice;
+    }
+    public Pos getPos() {
+        if(mPos == null ){
+            mPos = new Pos();
+        }
+        return mPos;
+    }
+
+    public void setPos(Pos mPos) {
+        this.mPos = mPos;
     }
 }

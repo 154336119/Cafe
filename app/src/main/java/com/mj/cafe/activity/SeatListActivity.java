@@ -11,10 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.SeatAdapter;
+import com.mj.cafe.bean.FinishActivityEvent;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.SeatBean;
 import com.mj.cafe.bean.TypeBean;
@@ -61,7 +63,7 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
     @BindView(R.id.tvYixuanTips)
     TextView tvYixuanTips;
     @BindView(R.id.RcHeard)
-    RelativeLayout RcHeard;
+    LinearLayout RcHeard;
     @BindView(R.id.RvSeat)
     RecyclerView RvSeat;
     SeatAdapter mSeatAdapter;
@@ -159,5 +161,13 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
                 BtnChoseSet.setText(getString(R.string.ko_Select_a_seat_and_order));
                 break;
         }
+    }
+    @Override
+    protected boolean rxBusRegist() {
+        return true;
+    }
+    @Subscribe
+    public void onFinishEvent(FinishActivityEvent event) {
+        finish();
     }
 }

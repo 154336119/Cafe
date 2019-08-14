@@ -21,7 +21,9 @@ public class BaseSubscriber<T> extends Subscriber<T> {
     @Override
     public void onStart() {
         super.onStart();
-        mView.showWaitDialog("loading...");
+        if(!mView.isFinishing()){
+            mView.showWaitDialog("loading...");
+        }
     }
 
     @Override
@@ -34,7 +36,9 @@ public class BaseSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onNext(T t) {
-        mView.hideWaitDialog();
+        if(!mView.isFinishing()){
+            mView.hideWaitDialog();
+        }
     }
 
     @Override

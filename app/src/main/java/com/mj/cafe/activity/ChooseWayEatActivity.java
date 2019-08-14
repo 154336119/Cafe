@@ -6,9 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
+import com.mj.cafe.bean.FinishActivityEvent;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.AntiShakeUtils;
@@ -96,5 +98,13 @@ public class ChooseWayEatActivity extends BaseActivity {
                 TvForHereTips.setText(getString(R.string.ko_For_Here));
                 break;
         }
+    }
+    @Override
+    protected boolean rxBusRegist() {
+        return true;
+    }
+    @Subscribe
+    public void onFinishEvent(FinishActivityEvent event) {
+        finish();
     }
 }

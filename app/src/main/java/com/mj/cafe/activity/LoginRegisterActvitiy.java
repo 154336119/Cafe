@@ -95,9 +95,9 @@ public class LoginRegisterActvitiy extends BaseActivity {
             RlRootView.setLayoutParams(params);
         }
         initOptionPickerOne();
-        //测试
-        EtPhone.setText("15208305795");
-        EtPin.setText("123456");
+//        //测试
+//        EtPhone.setText("15208305795");
+//        EtPin.setText("123456");
 
     }
 

@@ -62,7 +62,7 @@
         android:padding="25dp"
         android:layout_margin="@dimen/tv_com_40"
         android:textSize="@dimen/tv_com_25"/>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/RcHeard"
         android:layout_width="match_parent"
         android:background="#F1F1F1"
@@ -73,39 +73,68 @@
         android:paddingBottom="20dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp">
-        <TextView
-            android:id="@+id/tvKexuanTips"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="可选"
-            android:drawableRight="@mipmap/kexuan_tishi"
-            android:drawablePadding="20dp"
-            android:gravity="center"
-            android:textSize="@dimen/tv_com_25"
-            android:layout_toLeftOf="@+id/tvBukexuanTips"
-            android:layout_marginRight="60dp"/>
-        <TextView
-            android:id="@+id/tvBukexuanTips"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tvKexuanTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不可选"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:textSize="@dimen/tv_com_25"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/kexuan_tishi"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="不可选"
-            android:drawableRight="@mipmap/bukexuan_tishi"
-            android:layout_centerHorizontal="true"
-            android:drawablePadding="20dp"
-            android:gravity="center"
-            android:textSize="@dimen/tv_com_25"/>
-        <TextView
-            android:id="@+id/tvYixuanTips"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tvBukexuanTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不可选"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:textSize="@dimen/tv_com_25"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/bukexuan_tishi"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="已选"
-            android:layout_toRightOf="@+id/tvBukexuanTips"
-            android:drawableRight="@mipmap/yixuan_tishi"
-            android:layout_marginLeft="60dp"
-            android:drawablePadding="20dp"
-            android:gravity="center"
-            android:textSize="@dimen/tv_com_25"/>
-    </RelativeLayout>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tvYixuanTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvBukexuanTips"
+                android:gravity="center"
+                android:text="已选"
+                android:textSize="@dimen/tv_com_25"
+                android:layout_marginRight="20dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/yixuan_tishi"/>
+         </LinearLayout>
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RvSeat"
         android:layout_width="match_parent"
@@ -114,6 +143,5 @@
         android:layout_below="@+id/RcHeard"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-
         android:layout_above="@+id/BtnChoseSet"/>
 </RelativeLayout>

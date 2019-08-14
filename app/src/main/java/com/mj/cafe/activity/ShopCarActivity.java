@@ -20,12 +20,14 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.hwangjr.rxbus.annotation.Subscribe;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.CarAdapter;
+import com.mj.cafe.bean.FinishActivityEvent;
 import com.mj.cafe.bean.FoodBean;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.TypeBean;
@@ -340,5 +342,14 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
         super.langChangeForHttp();
         clearCar();
         getGoodList();
+    }
+
+    @Override
+    protected boolean rxBusRegist() {
+        return true;
+    }
+    @Subscribe
+    public void onFinishEvent(FinishActivityEvent event) {
+        finish();
     }
 }

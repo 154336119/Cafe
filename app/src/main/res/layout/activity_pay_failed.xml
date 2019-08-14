@@ -50,6 +50,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
         android:text="非常抱歉，数据请求失败!\n订单已退款"
+        android:paddingLeft="40dp"
+        android:paddingRight="@dimen/dp_40"
         android:lineSpacingExtra="@dimen/dp_10"
         android:textStyle="bold"
         android:gravity="center_horizontal"/>

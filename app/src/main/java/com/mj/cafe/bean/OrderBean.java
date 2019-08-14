@@ -30,6 +30,15 @@ public class OrderBean implements Parcelable {
     private String couponMoney;
     private String payMoney;
 
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    private String orderCode;
     public String getIntegralMoney() {
         return integralMoney;
     }
@@ -108,6 +117,15 @@ public class OrderBean implements Parcelable {
     }
 
 
+
+    public String getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(String payMoney) {
+        this.payMoney = payMoney;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -121,6 +139,7 @@ public class OrderBean implements Parcelable {
         dest.writeString(this.qrcode);
         dest.writeString(this.couponMoney);
         dest.writeString(this.payMoney);
+        dest.writeString(this.orderCode);
     }
 
     public OrderBean() {
@@ -133,9 +152,10 @@ public class OrderBean implements Parcelable {
         this.qrcode = in.readString();
         this.couponMoney = in.readString();
         this.payMoney = in.readString();
+        this.orderCode = in.readString();
     }
 
-    public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {
+    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
         @Override
         public OrderBean createFromParcel(Parcel source) {
             return new OrderBean(source);
@@ -146,12 +166,4 @@ public class OrderBean implements Parcelable {
             return new OrderBean[size];
         }
     };
-
-    public String getPayMoney() {
-        return payMoney;
-    }
-
-    public void setPayMoney(String payMoney) {
-        this.payMoney = payMoney;
-    }
 }

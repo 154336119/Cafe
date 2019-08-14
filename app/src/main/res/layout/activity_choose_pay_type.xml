@@ -232,14 +232,15 @@
             android:layout_below="@+id/TvChoosePayTypeTips"
             android:layout_marginTop="40dp">
             <RelativeLayout
-                android:id="@+id/Rl"
+                android:id="@+id/RlBankCarPay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
                 android:paddingBottom="40dp"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
-                android:background="@drawable/bg_item_choose_pay_type">
+                android:background="@drawable/bg_item_choose_pay_type"
+                android:visibility="gone">
                 <TextView
                     android:id="@+id/TvYinHangKaPayTips"
                     android:layout_width="wrap_content"
@@ -259,7 +260,7 @@
                 android:id="@+id/RvPayType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/Rl"
+                android:layout_below="@+id/RlBankCarPay"
                android:layout_marginTop="40dp"
                 android:layout_above="@+id/BtnChoseSet"/>
             <!--<ImageView-->

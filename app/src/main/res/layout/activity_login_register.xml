@@ -82,6 +82,7 @@
             android:ellipsize="end"
             android:maxLength="12"
             android:maxLines="1"
+            android:inputType="number"
             android:layout_centerVertical="true"
             android:textColor="@color/com_txt_color"
             android:textSize="@dimen/tv_com_35" />

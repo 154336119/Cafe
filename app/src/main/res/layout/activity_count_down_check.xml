@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:padding="10dp"
+	android:background="@mipmap/beijing_zhifufangshi">
+
+	<TextView
+		android:id="@+id/TvTips"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/com_txt_color"
+		android:layout_above="@+id/CountdownView"
+		android:layout_centerHorizontal="true"
+		android:textSize="40sp"
+		android:layout_marginBottom="70dp"
+		android:text="请求数据中，请耐心等待"/>
+	<cn.iwgang.countdownview.CountdownView
+		android:id="@+id/CountdownView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:isHideTimeBackground="true"
+		app:isShowDay="false"
+		app:isShowHour="false"
+		app:isShowMinute="true"
+		app:isShowSecond="true"
+		app:isShowMillisecond="false"
+		app:timeTextColor="@color/com_txt_color"
+		app:timeTextSize="100sp"
+		app:isTimeTextBold="true"
+		app:suffixGravity="center"
+		app:suffixTextColor="@color/com_txt_color"
+		app:suffixTextSize="100sp"
+		app:suffixMinute=":"
+		android:layout_centerInParent="true"/>
+	<Button
+        android:id="@+id/buttonPrint"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:text="Print" />
+
+</RelativeLayout>

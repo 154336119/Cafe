@@ -22,6 +22,7 @@ import com.mj.cafe.R;
 import com.mj.cafe.adapter.PayTypeAdapter;
 import com.mj.cafe.bean.CouponBean;
 import com.mj.cafe.bean.CouponOutBean;
+import com.mj.cafe.bean.FinishActivityEvent;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.bean.OrderBean;
 import com.mj.cafe.bean.PayTypeBean;
@@ -101,6 +102,8 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     TextView TvJiFenTips;
     @BindView(R.id.Tv01)
     TextView Tv01;
+    @BindView(R.id.RlBankCarPay)
+    RelativeLayout RlBankCarPay;
     private List<PayTypeBean> mPayTypeList = new ArrayList<>();
     //优惠券
     private List<CouponBean> CouponList;
@@ -190,7 +193,14 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                     @Override
                     public void onNext(List<PayTypeBean> list) {
                         super.onNext(list);
-                        mPayTypeList = list;
+                        //查询是否有银行卡支付
+                        for (PayTypeBean payTypeBean : list) {
+                            if (payTypeBean.getPay_name().equals("Bank card")) {
+                                RlBankCarPay.setVisibility(View.VISIBLE);
+                            } else {
+                                mPayTypeList.add(payTypeBean);
+                            }
+                        }
                         RvPayType.setLayoutManager(new GridLayoutManager(ChoosePayTypeActitiy.this, 2));
                         mPayTypeAdapter = new PayTypeAdapter(mPayTypeList);
                         RvPayType.setAdapter(mPayTypeAdapter);
@@ -312,13 +322,13 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
         switch (typeBean.getType()) {
             case CN:
-                TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 break;
             case EN:
-                TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 break;
             case KO:
-                TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 break;
         }
     }
@@ -335,8 +345,8 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 TvYinHangKaPayTips.setText(R.string.cn_Credit_or_debit_card);
                 TvDiscountTips.setText(R.string.cn_Use_points);
                 Tv01.setText(R.string.cn_coupons);
-                if(mUserBean!=null){
-                    TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                if (mUserBean != null) {
+                    TvJiFenTips.setText(getString(R.string.cn_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 }
                 break;
             case EN:
@@ -348,8 +358,8 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 TvYinHangKaPayTips.setText(R.string.en_Credit_or_debit_card);
                 TvDiscountTips.setText(R.string.en_Use_points);
                 Tv01.setText(R.string.en_coupons);
-                if(mUserBean!=null){
-                    TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                if (mUserBean != null) {
+                    TvJiFenTips.setText(getString(R.string.en_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 }
                 break;
             case KO:
@@ -361,25 +371,30 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                 TvYinHangKaPayTips.setText(R.string.ko_Credit_or_debit_card);
                 TvDiscountTips.setText(R.string.ko_Use_points);
                 Tv01.setText(R.string.ko_coupons);
-                if(mUserBean!=null){
-                    TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use,mUserBean.getIntegral() + ""));
+                if (mUserBean != null) {
+                    TvJiFenTips.setText(getString(R.string.ko_Use_points_xxx_points_can_be_use, mUserBean.getIntegral() + ""));
                 }
                 break;
         }
     }
+
     @Override
     public void langChangeForHttp() {
         super.langChangeForHttp();
-        if(mUserBean!=null){
+        if (mUserBean != null) {
             clearCouponData();
             httpGetCouponList();
         }
     }
 
-    private void clearCouponData(){
+    private void clearCouponData() {
         mCouponId = 0;
         CouponList.clear();
         CouponMap.clear();
         mSpinnerList.clear();
+    }
+    @Subscribe
+    public void onFinishEvent(FinishActivityEvent event) {
+        finish();
     }
 }

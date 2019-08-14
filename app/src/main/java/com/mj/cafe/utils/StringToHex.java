@@ -103,7 +103,7 @@ public class StringToHex {
      * @param
      * @return
      */
-    public String convertStringToHex(String str) {
+    public static String convertStringToHex(String str) {
 
         char[] chars = str.toCharArray();
 
@@ -121,22 +121,20 @@ public class StringToHex {
      * @return
      */
     public static byte getXor(byte[] data){
+
         byte temp = data[0];
         for(int i=1;i<data.length;i++){
             temp^=data[i];
         }
-        Log.d("=======tttttttttttttt",intToHex(temp));
         return temp;
     }
-
-
     /**
-     * 16进制字符串转 byte[]
+     * 16进制字符串转 byte[] _  10进制数组
      * "4F4F4F4F" ->  [0X4F,0X4F,0X4F,0X4F]
-     * @param hexString
      * @return
      */
-    public static byte[] hexStringToBytes(String hexString) {
+
+    public static byte[] hexStringToBytes10(String hexString) {
         if (hexString == null || hexString.equals("")) {
             return null;
         }
@@ -148,8 +146,27 @@ public class StringToHex {
             int pos = i * 2;
             d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
         }
-        getXor(d);
         return d;
+    }
+
+    /**
+     * 16进制字符串转 byte[] 16进制数组
+     * "4F4F4F4F" ->  [0X4F,0X4F,0X4F,0X4F]
+     * @return
+     */
+    public static byte[] hexStringToBytes16(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            // 要对应起来，高4位在前面
+            // 高4位对应的数值 X 16 + 低4位对应的数值
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+        }
+        return data;
+    }
+    protected static int toDigit(final char ch, final int index) {
+        final int digit = Character.digit(ch, 16);
+        return digit;
     }
 
     private static byte charToByte(char c) {  //
@@ -162,7 +179,7 @@ public class StringToHex {
      * @param n
      * @return
      */
-    private static String intToHex(int n) {
+    public static String intToHex(Integer n) {
         StringBuffer s = new StringBuffer();
         String a;
         char []b = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
