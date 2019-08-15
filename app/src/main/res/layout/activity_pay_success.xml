@@ -47,6 +47,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/com_txt_color"
         android:textSize="@dimen/tv_com_35"
+        android:paddingLeft="90dp"
+        android:paddingRight="90dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
         android:text="恭喜您，支付成功!\n请耐心等待您的佳肴"

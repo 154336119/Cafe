@@ -8,8 +8,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mj.cafe.BaseActivity;
+import com.mj.cafe.BizcContant;
+import com.mj.cafe.MyApp;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.LangTypeBean;
+import com.mj.cafe.bean.OrderBean;
+import com.mj.cafe.bean.PrintEntity;
+import com.mj.cafe.retorfit.HttpMjResult;
+import com.mj.cafe.retorfit.RetrofitSerciveFactory;
+import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
+import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
+import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.SharedPreferencesUtil;
+import com.mj.cafe.utils.print.TaskEnPrint;
+import com.mj.cafe.utils.print.TaskKoPrint;
+import com.mj.cafe.utils.print.TaskPrint;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,12 +54,19 @@ public class PaySuccessAcitivty extends BaseActivity {
     TextView TvFoodNum;
     @BindView(R.id.LLWaiMai)
     LinearLayout LLWaiMai;
-
+    String mMealCode; //取餐码
+    String mOrderCode;//订单号
+    private PrintEntity mPrintEntity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mOrderCode = getIntent().getStringExtra("order_code");
+        mMealCode = getIntent().getStringExtra("meal_code");
         setContentView(R.layout.activity_pay_success);
         ButterKnife.bind(this);
+        TvFoodNum.setText(mMealCode);
+        httpGetPrintData();
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 
     @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu})
@@ -81,6 +101,46 @@ public class PaySuccessAcitivty extends BaseActivity {
             case KO:
                 TvSuccessTips.setText(getString(R.string.ko_Congratulations_Your_payment_was_successful_Please_wait_a_minute));
                 TvFoodNumTips.setText(getString(R.string.ko_Order_code));
+                break;
+        }
+    }
+
+    //http - 小票打印数据
+    private void httpGetPrintData() {
+        LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
+        RetrofitSerciveFactory.provideComService().getPrintData(mOrderCode,typeBean.getUserHttpType())
+                .compose(RxUtil.<HttpMjResult<PrintEntity>>applySchedulersForRetrofit())
+                .map(new HttpMjEntityFun<PrintEntity>())
+                .subscribe(new BaseSubscriber<PrintEntity>(this) {
+                    @Override
+                    public void onNext(PrintEntity entity) {
+                        super.onNext(entity);
+                        mPrintEntity = entity;
+                        printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
+    }
+
+    //打印小票
+    private void printTiket(LangTypeBean langTypeBean,PrintEntity printEntity){
+        if(printEntity == null){
+            showToastMsg("error_printEntity_null");
+            return;
+        }
+        switch (langTypeBean.getType()) {
+            case CN:
+                new Thread(new TaskPrint(MyApp.getInstance().getPos(), printEntity)).start();
+                break;
+            case EN:
+                new Thread(new TaskEnPrint(MyApp.getInstance().getPos(), printEntity)).start();
+                break;
+            case KO:
+                new Thread(new TaskKoPrint(MyApp.getInstance().getPos(), printEntity)).start();
                 break;
         }
     }

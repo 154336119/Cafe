@@ -35,13 +35,5 @@
 		app:suffixTextSize="100sp"
 		app:suffixMinute=":"
 		android:layout_centerInParent="true"/>
-	<Button
-        android:id="@+id/buttonPrint"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:text="Print" />
 
 </RelativeLayout>

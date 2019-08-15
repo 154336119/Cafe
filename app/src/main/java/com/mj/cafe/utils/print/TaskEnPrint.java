@@ -19,7 +19,7 @@ public class TaskEnPrint implements Runnable {
     public void printGoods() {
         if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
             for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                PrintGBKStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                PrintGBKStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
             }
         }
     }
@@ -54,13 +54,13 @@ public class TaskEnPrint implements Runnable {
             PrintGBKStr("[PW:" + printEntity.getMeal_pwd() + "]\r\n", 0, 1, 1, 0, 0);//2倍大，有下划线0);//2倍大，有下划线
             pos.POS_FeedLine();
             pos.POS_S_Align(0);//左对齐
-
             ////点餐内容
             PrintGBKStr(" [Order Time]" + printEntity.getCreate_time() + "\r\n", 0, 0, 0, 0, 0);//1倍大
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);//
-            printGoods();
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);//
+            PrintGBKStr(PrintUtils.addSpc("Product", "Count") + "\n", 0, 0, 0, 0, 0);//            printGoods();
             pos.POS_S_Align(0);//左对齐
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
+            PrintGBKStr(printEntity.getStore_name() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr(printEntity.getLicense_number() + printEntity.getContact() + "Tel." + printEntity.getTel() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr(printEntity.getAddress() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
@@ -72,18 +72,18 @@ public class TaskEnPrint implements Runnable {
             PrintGBKStr(PrintUtils.addSpc("Total:", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
             pos.POS_S_Align(0);//左对齐
             PrintGBKStr("[Payment Details] ------------------------------\n", 0, 0, 0, 0, 0);
-            PrintGBKStr(PrintUtils.addSpc("Credit card:", "4,000") + "\n", 0, 0, 0, 0, 0);//
+            PrintGBKStr(PrintUtils.addSpc(printEntity.getPay_type()+":", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
             pos.POS_S_Align(0);//左对齐
             PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
             PrintGBKStr("Card # : " + printEntity.getCard_number() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr("Card com.:" + printEntity.getCard_company() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr("instalments: " + printEntity.getStage_month() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr("Approval #: " + printEntity.getApproval_number() + "\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("Transaction Time: 2019-07-16 13:33:32\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("Transaction Time" + printEntity.getCreate_time() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
             PrintGBKStr("Koisk ID:" + printEntity.getDevice_no() + "]\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("Membership #:" + printEntity.getVip_card() + "]\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("Point        : " + printEntity.getIntegral() + "]\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("Membership #:" + printEntity.getVip_card() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("Point        : " + printEntity.getIntegral() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
             pos.POS_S_Align(1);//居中
             PrintGBKStr("*****Thank you*****\n", 0, 0, 0, 0, 0);

@@ -170,7 +170,8 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
                 initOptionPickerUsebDevice(mUsbDeviceNameList);
                 break;
             case R.id.btnNext:
-                ActivityUtil.next(this,MainActivity.class);
+                ActivityUtil.next(this,BankCardPayAcitivty.class);
+//                ActivityUtil.next(this,MainActivity.class);
                 break;
             case R.id.buttonPrint:
                 es.submit(new TaskEnPrint(MyApp.getInstance().getPos()));

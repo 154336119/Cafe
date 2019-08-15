@@ -148,7 +148,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu, R.id.BtnRegister, R.id.BtnLogin})
+    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu, R.id.BtnRegister, R.id.BtnLogin,R.id.RlBankCarPay})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -171,6 +171,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
             case R.id.BtnLogin:
                 bundle.putInt("type", LoginRegisterActvitiy.LOGIN);
                 ActivityUtil.next(this, LoginRegisterActvitiy.class, bundle, false);
+                break;
+            case R.id.RlBankCarPay:
+                mPayType = new PayTypeBean();
+                mPayType.setId(5);
+                httpOrderCreate();
                 break;
         }
     }
@@ -234,7 +239,11 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("type", mPayType);
                         bundle.putParcelable("order", entity);
-                        ActivityUtil.next(ChoosePayTypeActitiy.this, ThreePayAcitivty.class, bundle, true);
+                        if(mPayType.getId() == 5){
+                            ActivityUtil.next(ChoosePayTypeActitiy.this, BankCardPayAcitivty.class, bundle, true);
+                        }else {
+                            ActivityUtil.next(ChoosePayTypeActitiy.this, ThreePayAcitivty.class, bundle, true);
+                        }
                     }
                 });
     }

@@ -6,22 +6,29 @@ public class PrintEntity {
 
 
     /**
-     * meal_code : 0015
-     * meal_pwd : 9482
-     * create_time : 2019-07-31 21:47:47
+     * meal_code : 0066
+     * meal_pwd : 8449
+     * create_time : 2019-08-15 11:09:52
+     * goodsList : [{"num":1,"name":"美式咖啡"}]
      * license_number : 282-34-00719
      * tel : 010-2505-8844
      * store_name : Smart Green Cafe (澳林广场店)
      * address : 大田广域市儒城区Guryongdaljeon路396号1层（屯股洞）
      * contact : 李东载
-     * invoice_date : 2019-08-05 11:18:58
-     * invoice_code : 19073174585941
-     * total_money : 0
-     * tax_money : 0.02
-     * pay_money : 0.22
+     * invoice_date : 2019-08-15 14:07:45
+     * invoice_code : 2019081520804716
+     * total_money : 2
+     * tax_money : 0.2
+     * pay_money : 2.2
      * device_no : 34892343
      * vip_card : 2039485445
      * integral : 200
+     * card_number :
+     * card_company : 腾讯 Tencent
+     * stage_month : 00
+     * approval_number :
+     * pay_time : 2019-08-15 11:10:02
+     * pay_type : 微信
      */
 
     private String meal_code;
@@ -40,12 +47,12 @@ public class PrintEntity {
     private String device_no;
     private String vip_card;
     private String integral;
-
     private String card_number;
     private String card_company;
     private String stage_month;
     private String approval_number;
-
+    private String pay_time;
+    private String pay_type;
     private List<PrintGoodsEntity> goodsList;
 
     public String getMeal_code() {
@@ -176,14 +183,6 @@ public class PrintEntity {
         this.integral = integral;
     }
 
-    public List<PrintGoodsEntity> getGoodsList() {
-        return goodsList;
-    }
-
-    public void setGoodsList(List<PrintGoodsEntity> goodsList) {
-        this.goodsList = goodsList;
-    }
-
     public String getCard_number() {
         return card_number;
     }
@@ -214,5 +213,29 @@ public class PrintEntity {
 
     public void setApproval_number(String approval_number) {
         this.approval_number = approval_number;
+    }
+
+    public String getPay_time() {
+        return pay_time;
+    }
+
+    public void setPay_time(String pay_time) {
+        this.pay_time = pay_time;
+    }
+
+    public String getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public List<PrintGoodsEntity> getGoodsList() {
+        return goodsList;
+    }
+
+    public void setGoodsList(List<PrintGoodsEntity> goodsList) {
+        this.goodsList = goodsList;
     }
 }

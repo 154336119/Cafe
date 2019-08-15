@@ -7,9 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mj.cafe.BaseActivity;
+import com.mj.cafe.BizcContant;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.utils.ActivityUtil;
+import com.mj.cafe.utils.SharedPreferencesUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +43,7 @@ public class PayFailedAcitivty extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_failed);
         ButterKnife.bind(this);
+        setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 
     @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu,R.id.btn})

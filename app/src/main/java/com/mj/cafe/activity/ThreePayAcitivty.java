@@ -199,6 +199,7 @@ public class ThreePayAcitivty extends BaseActivity {
                     @Override
                     public void onNext(Object entity) {
                         super.onNext(entity);
+                        showToastMsg("支付状态查询");
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("type", mPayType);
                         if(mOrderBean == null ){
@@ -224,6 +225,14 @@ public class ThreePayAcitivty extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(disposable!=null){
+            disposable.unsubscribe();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if(disposable!=null){
             disposable.unsubscribe();
         }

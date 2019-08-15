@@ -33,6 +33,7 @@ import com.mj.cafe.utils.PrintUtils;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +47,6 @@ import static com.mj.cafe.bean.LangTypeBean.KO;
 
 public class CountDownActivity extends BaseActivity {
     static CountDownActivity mActivity;
-    @BindView(R.id.buttonPrint)
-    Button buttonPrint;
     @BindView(R.id.CountdownView)
     CountdownView mCountdownView;
     @BindView(R.id.TvTips)
@@ -62,7 +61,6 @@ public class CountDownActivity extends BaseActivity {
         @Override
         public boolean handleMessage(Message msg) {
             httpNum++;
-
             httpGetOrderStatus();
             return true;
         }
@@ -78,7 +76,7 @@ public class CountDownActivity extends BaseActivity {
             showToastMsg("CountDownActivity +mOrderBean为空");
             return;
         }
-        mCountdownView.start(30);
+        mCountdownView.start(60 * 1000);
         mCountdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
             @Override
             public void onEnd(CountdownView cv) {
@@ -86,22 +84,21 @@ public class CountDownActivity extends BaseActivity {
                 if (!isSuccess) {
                     RxBus.get().post(new FinishActivityEvent());
                     //测试打印小票
-                    printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
-                    disposable.unsubscribe();
+                    showToastMsg("倒计时完");
+                    if(disposable!=null){
+                        disposable.unsubscribe();
+                    }
+                    handler.removeMessages(0);
                     ActivityUtil.next(CountDownActivity.this, PayFailedAcitivty.class);
                 }
             }
         });
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
         httpGetOrderStatus();
-        httpGetPrintData();
+//        httpGetPrintData();
     }
 
 
-    @OnClick(R.id.buttonPrint)
-    public void onViewClicked() {
-        new Thread(new TaskPrint(MyApp.getInstance().getPos(), mPrintEntity)).start();
-    }
 
     public static class TaskPrint implements Runnable {
         Pos pos = null;
@@ -139,7 +136,7 @@ public class CountDownActivity extends BaseActivity {
         public void printGoods() {
             if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
                 for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                    PrintGBKStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                    PrintGBKStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
                 }
             }
         }
@@ -245,7 +242,7 @@ public class CountDownActivity extends BaseActivity {
         public void printGoods() {
             if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
                 for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                    PrintGBKStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                    PrintGBKStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
                 }
             }
         }
@@ -321,23 +318,23 @@ public class CountDownActivity extends BaseActivity {
                 bPrintResult = pos.POS_QueryStatus(status, 2000, 2);
             }
             final boolean bIsOpened = pos.GetIO().IsOpened();
-            if (bPrintResult) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                    }
-
-                });
-            } else {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                    }
-
-                });
-            }
+//            if (bPrintResult) {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                    }
+//
+//                });
+//            } else {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                    }
+//
+//                });
+//            }
         }
     }
 
@@ -353,7 +350,7 @@ public class CountDownActivity extends BaseActivity {
         public void printGoods() {
             if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
                 for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                    PrintKSCStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                    PrintKSCStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
                 }
             }
         }
@@ -436,38 +433,46 @@ public class CountDownActivity extends BaseActivity {
                 bPrintResult = pos.POS_QueryStatus(status, 2000, 2);
             }
             final boolean bIsOpened = pos.GetIO().IsOpened();
-            if (bPrintResult) {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(mActivity.getApplicationContext(), "打印成功", Toast.LENGTH_SHORT).show();
-                    }
-
-                });
-            } else {
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // TODO Auto-generated method stub
-                        Toast.makeText(mActivity.getApplicationContext(), "打印失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+//            if (bPrintResult) {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                        Toast.makeText(mActivity.getApplicationContext(), "打印成功", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                });
+//            } else {
+//                mActivity.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // TODO Auto-generated method stub
+//                        Toast.makeText(mActivity.getApplicationContext(), "打印失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
         }
     }
 
 
     //http - 小票打印数据
     private void httpGetPrintData() {
-        RetrofitSerciveFactory.provideComService().getPrintData(mOrderBean.getOrderCode())
+        showToastMsg("获取——小票打印数据");
+        RetrofitSerciveFactory.provideComService().getPrintData(mOrderBean.getOrderCode(),"")
                 .compose(RxUtil.<HttpMjResult<PrintEntity>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<PrintEntity>())
                 .subscribe(new BaseSubscriber<PrintEntity>(this) {
                     @Override
                     public void onNext(PrintEntity entity) {
                         super.onNext(entity);
+                        showToastMsg("获取——成功");
                         mPrintEntity = entity;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showToastMsg("获取——失败");
+                        super.onError(e);
                     }
                 });
     }
@@ -480,31 +485,38 @@ public class CountDownActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<OrderStateEntity>(this) {
                     @Override
                     public void onNext(OrderStateEntity entity) {
-                        super.onNext(entity);
                         if(entity!=null && entity.getState()!=null){
                             if(entity.getState() == 1){
                                 //支付成功
-                                showToastMsg("支付成功");
+//                                showToastMsg("支付成功");
                                 handler.sendEmptyMessageDelayed(0,2000);
                             }else if(entity.getState() == 5){
                                 //下单失败(不可制作)
                                 showToastMsg("下单失败");
                                 RxBus.get().post(new FinishActivityEvent());
                                 disposable.unsubscribe();
+                                handler.removeMessages(0);
                                 ActivityUtil.next(CountDownActivity.this,PayFailedAcitivty.class,null,false);
                             }else if(entity.getState() == 2){
                                 showToastMsg("下单成功");
                                 //下单成功
                                 isSuccess = true;
                                 //打印小票
-                                printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
+//                                printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("meal_code",entity.getMeal_code());
+                                bundle.putString("order_code",mOrderBean.getOrderCode());
                                 disposable.unsubscribe();
+                                handler.removeMessages(0);
                                 RxBus.get().post(new FinishActivityEvent());
                                 ActivityUtil.next(CountDownActivity.this,PaySuccessAcitivty.class,bundle,true);
                             }
                         }
+                    }
+
+                    @Override
+                    public void onStart() {
+//                        super.onStart();
                     }
                 });
     }
@@ -512,7 +524,9 @@ public class CountDownActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disposable.unsubscribe();
+        if(disposable!=null){
+            disposable.unsubscribe();
+        }
         mCountdownView.stop();
     }
 
@@ -557,5 +571,12 @@ public class CountDownActivity extends BaseActivity {
     @Subscribe
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(disposable!=null){
+            disposable.unsubscribe();
+        }
     }
 }

@@ -24,6 +24,8 @@ public class TaskPrint implements Runnable {
 
     public int PrintGBKStr(String StrUtf8, int nOrgx, int nWidthTimes, int nHeightTimes, int nFontType, int nFontStyle) {
         //原字符串函数里有乱码，仅用来设置格式
+        byte[] korea = new byte[]{(byte) 0x12, (byte) 0x90, (byte) 0x00};
+        pos.GetIO().Write(korea, 0, 3);
         pos.POS_S_TextOut("\r\n", nOrgx, nWidthTimes, nHeightTimes, nFontType, nFontStyle);
         //自己将UTF-8字符串转成GBK码，并调用底层函数发送字节
         String t = StrUtf8;
@@ -43,7 +45,7 @@ public class TaskPrint implements Runnable {
     public void printGoods() {
         if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
             for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                PrintGBKStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                PrintGBKStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
             }
         }
     }
@@ -53,22 +55,22 @@ public class TaskPrint implements Runnable {
         // TODO Auto-generated method stub
         boolean bPrintResult = false;
         byte[] status = new byte[1];
-        changeChinese();
+//        changeChinese();
         if (pos.POS_QueryStatus(status, 2000, 2)) {
             pos.POS_FeedLine();
             pos.POS_S_Align(1);//居中对齐
-            PrintGBKStr("[点单号: " + printEntity.getMeal_code() + "]\r\n", 0, 1, 1, 0, 0);//2倍大，有下划线
+                PrintGBKStr("[点单号: " + printEntity.getMeal_code() + "]\r\n", 0, 1, 1, 0, 0);//2倍大，有下划线
             PrintGBKStr("[点餐密码: " + printEntity.getMeal_pwd() + "]\r\n", 0, 1, 1, 0, 0);//2倍大，有下划线
             pos.POS_FeedLine();
             pos.POS_S_Align(0);//左对齐
             ////点餐内容
             PrintGBKStr(" [点单时间] " + printEntity.getCreate_time() + "\r\n", 0, 0, 0, 0, 0);//1倍大
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);//
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);//
             PrintGBKStr(PrintUtils.addSpc("商品名", "数量") + "\n", 0, 0, 0, 0, 0);//
             printGoods();
             pos.POS_S_Align(0);//左对齐
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("Smart Green Cafe\n", 0, 0, 0, 0, 0x08);
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
+            PrintGBKStr(printEntity.getStore_name() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr(printEntity.getLicense_number() + printEntity.getContact() + "Tel." + printEntity.getTel() + "\n", 0, 0, 0, 0, 0);
             PrintGBKStr(printEntity.getAddress() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
@@ -80,18 +82,18 @@ public class TaskPrint implements Runnable {
             PrintGBKStr(PrintUtils.addSpc("总       计:", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
             pos.POS_S_Align(0);//左对齐
             PrintGBKStr("[结算明细] -------------------------------------\n", 0, 0, 0, 0, 0);
-            PrintGBKStr(PrintUtils.addSpc("信 用 卡 片:", "4,000") + "\n", 0, 0, 0, 0, 0);//
+            PrintGBKStr(PrintUtils.addSpc(printEntity.getPay_type()+":", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
             pos.POS_S_Align(0);//左对齐
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("卡 片 号 码: 6251-20**-****-****\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("卡 片 公 司: BC发卡公司\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("分 期 月 数: 00\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("批 准 号 码: 33593898\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("交 易 时 间: 2019-07-16 13:33:32\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("卡 片 号 码: " + printEntity.getCard_number() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("卡 片 公 司: " + printEntity.getCard_company() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("分 期 月 数: " + printEntity.getStage_month() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("批 准 号 码:" + printEntity.getApproval_number() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("交 易 时 间:" + printEntity.getCreate_time() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
             PrintGBKStr("点 餐 机 ID:" + printEntity.getDevice_no() + "]\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("会 员 卡 号:" + printEntity.getVip_card() + "]\n", 0, 0, 0, 0, 0);
-            PrintGBKStr("累 计 积 分:" + printEntity.getIntegral() + "]\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("会 员 卡 号:" + printEntity.getVip_card() + "\n", 0, 0, 0, 0, 0);
+            PrintGBKStr("累 计 积 分:" + printEntity.getIntegral() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
             pos.POS_S_Align(1);//居中
             PrintGBKStr("*****感谢您的使用*****\n", 0, 0, 0, 0, 0);

@@ -12,6 +12,8 @@ import com.mj.cafe.MyApp;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.FinishActivityEvent;
 import com.mj.cafe.bean.LangTypeBean;
+import com.mj.cafe.bean.OrderBean;
+import com.mj.cafe.bean.PayTypeBean;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.StringToHex;
 import com.orhanobut.logger.Logger;
@@ -23,17 +25,22 @@ import static com.mj.cafe.utils.PortUtils.check;
 import static com.mj.cafe.utils.StringToHex.bytesToHexString;
 
 /**
- * 第三方支付
+ * 银行卡支付
  */
 public class BankCardPayAcitivty extends BaseActivity {
+    private PayTypeBean mPayType;
+    private OrderBean mOrderBean;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_pay);
+        mPayType = getIntent().getParcelableExtra("type");
+        mOrderBean = getIntent().getParcelableExtra("order");
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE,new LangTypeBean(LangTypeBean.DEFAULT)));
         MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(new OnSerialPortDataListener() {
             @Override
             public void onDataReceived(byte[] bytes) {
+
                 checkResponse(bytes);
             }
 
@@ -86,6 +93,7 @@ public class BankCardPayAcitivty extends BaseActivity {
             //插卡后的反应
             if(StringToHex.convertHexToString(hexStr).equals("@")){
                 //执行结算确认
+                showToastMsg("插卡了");
             }
         }
     }

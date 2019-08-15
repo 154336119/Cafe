@@ -8,7 +8,7 @@ public class PrintGoodsEntity {
      */
 
     private int num;
-    private String name_ko;
+    private String name;
 
     public int getNum() {
         return num;
@@ -18,11 +18,11 @@ public class PrintGoodsEntity {
         this.num = num;
     }
 
-    public String getName_ko() {
-        return name_ko;
+    public String getName() {
+        return name;
     }
 
-    public void setName_ko(String name_ko) {
-        this.name_ko = name_ko;
+    public void setName(String name) {
+        this.name = name;
     }
 }

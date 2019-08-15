@@ -21,7 +21,7 @@ public class TaskKoPrint implements Runnable {
     public void printGoods() {
         if (printEntity.getGoodsList() != null && printEntity.getGoodsList().size() > 0) {
             for (PrintGoodsEntity entity : printEntity.getGoodsList()) {
-                PrintKSCStr(PrintUtils.addSpc(entity.getName_ko(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
+                PrintKSCStr(PrintUtils.addSpc(entity.getName(), entity.getNum() + "") + "\n", 0, 0, 0, 0, 0);//
             }
         }
     }
@@ -67,11 +67,11 @@ public class TaskKoPrint implements Runnable {
             pos.POS_S_Align(0);//左对齐
             ////点餐内容
             PrintKSCStr(" [주문일시] " + printEntity.getCreate_time() + "\r\n", 0, 0, 0, 0, 0);//1倍大
-            pos.POS_S_TextOut("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);//
+            PrintKSCStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
             PrintKSCStr(PrintUtils.addSpc("상품명", "수량") + "\n", 0, 0, 0, 0, 0);//
             printGoods();
-            PrintKSCStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("스마트그린카페\n", 0, 0, 0, 0, 0x08);
+            PrintKSCStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
+            PrintKSCStr(printEntity.getStore_name() + "\n", 0, 0, 0, 0, 0);
             PrintKSCStr(printEntity.getLicense_number() + printEntity.getContact() + "Tel." + printEntity.getTel() + "\n", 0, 0, 0, 0, 0);
             PrintKSCStr(printEntity.getAddress() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
@@ -82,17 +82,17 @@ public class TaskKoPrint implements Runnable {
             PrintKSCStr(PrintUtils.addSpc("부  가   세:", printEntity.getTax_money()) + "\n", 0, 0, 0, 0, 0);//0);//
             PrintKSCStr(PrintUtils.addSpc("합       계:", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
             PrintKSCStr("[결제내역] ------------------------------\n", 0, 0, 0, 0, 0);
-            PrintKSCStr(PrintUtils.addSpc("신 용 카 드:", "4,000") + "\n", 0, 0, 0, 0, 0);//
-            PrintKSCStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("카 드 번 호: 6251-20**-****-****\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("매 입 사 명: BC 카드사\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("할 부 개 월: 00\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("승 인 번 호: 33593898\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("거 래 일 시: 2019-07-16 13:33:32\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("-----------------------------------------------\r\n", 0, 0, 0, 0, 0);
+            PrintKSCStr(PrintUtils.addSpc(printEntity.getPay_type()+":", printEntity.getPay_money()) + "\n", 0, 0, 0, 0, 0);//
+            PrintKSCStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("카 드 번 호: " + printEntity.getCard_number() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("매 입 사 명:" + printEntity.getCard_company() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("할 부 개 월:" + printEntity.getStage_month() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("승 인 번 호:" + printEntity.getApproval_number() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("거 래 일 시:" + printEntity.getCreate_time() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
             PrintKSCStr("주문기기 ID:" + printEntity.getDevice_no() + "]\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("회 원 번 호:" + printEntity.getVip_card() + "]\n", 0, 0, 0, 0, 0);
-            PrintKSCStr("적립 포인트:" + printEntity.getIntegral() + "]\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("회 원 번 호:" + printEntity.getVip_card() + "\n", 0, 0, 0, 0, 0);
+            PrintKSCStr("적립 포인트:" + printEntity.getIntegral() + "\n", 0, 0, 0, 0, 0);
             pos.POS_FeedLine();
             pos.POS_S_Align(1);//居中
             pos.POS_S_TextOut("*****감사합니다*****\n", 0, 0, 0, 0, 0);

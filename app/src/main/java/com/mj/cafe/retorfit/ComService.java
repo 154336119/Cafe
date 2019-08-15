@@ -95,7 +95,7 @@ public interface ComService {
      */
     @FormUrlEncoded
     @POST("/app/order/query/print"  )
-    Observable<HttpMjResult<PrintEntity>> getPrintData(@Field("orderCode") String orderCode);
+    Observable<HttpMjResult<PrintEntity>> getPrintData(@Field("orderCode") String orderCode ,@Field("lang") String lang);
 
     /**
      * 订单状态 轮询
