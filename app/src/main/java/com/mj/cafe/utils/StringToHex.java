@@ -2,6 +2,9 @@ package com.mj.cafe.utils;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringToHex {
 
     /**
@@ -189,5 +192,15 @@ public class StringToHex {
         }
         a = s.reverse().toString();
         return a;
+    }
+
+    /**
+     * 开头去0，加星号
+     * @return
+     */
+    public static String createBankCardCode(String num){
+        String newStr = num.replaceFirst("^0*", "");
+        newStr = newStr + "**********";
+        return newStr;
     }
 }

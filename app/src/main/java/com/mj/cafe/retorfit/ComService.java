@@ -105,4 +105,18 @@ public interface ComService {
     @POST("/app/order/query/orderStatus"  )
     Observable<HttpMjResult<OrderStateEntity>> getOrderStatus(@Field("orderCode") String orderCode);
 
+    /**
+     * 银行卡支付成功
+     * 查询订单支付状态,返回状态码为200即支付成功，其他状态码都表示没完成支付
+     */
+    @FormUrlEncoded
+    @POST("/app/order/bankcard/paysuccess"  )
+    Observable<HttpMjResult<Object>> bankcardPaysuccess(@Field("orderCode") String orderCode
+                                                        ,@Field("cardNumber") String cardNumber
+                                                        ,@Field("cardCompany") String cardCompany
+                                                        ,@Field("stageMonth") String stageMonth
+                                                        ,@Field("approvalNumber") String approvalNumber);
+
+
+
 }

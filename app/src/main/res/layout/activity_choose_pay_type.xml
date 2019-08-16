@@ -230,7 +230,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TvChoosePayTypeTips"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:visibility="gone">
             <RelativeLayout
                 android:id="@+id/RlBankCarPay"
                 android:layout_width="match_parent"
@@ -239,8 +240,7 @@
                 android:paddingBottom="40dp"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
-                android:background="@drawable/bg_item_choose_pay_type"
-                android:visibility="gone">
+                android:background="@drawable/bg_item_choose_pay_type">
                 <TextView
                     android:id="@+id/TvYinHangKaPayTips"
                     android:layout_width="wrap_content"
@@ -249,7 +249,7 @@
                     android:textSize="@dimen/tv_com_35"
                     android:text="银行卡支付"/>
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/yinhangkazhifu_pinpai"

@@ -33,6 +33,7 @@ import com.mj.cafe.MyApp;
 import com.mj.cafe.R;
 import com.mj.cafe.bean.LangTypeBean;
 import com.mj.cafe.utils.ActivityUtil;
+import com.mj.cafe.utils.PortUtils;
 import com.mj.cafe.utils.PrintUtils;
 import com.mj.cafe.utils.StringToHex;
 import com.orhanobut.logger.Logger;
@@ -51,6 +52,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.mj.cafe.utils.PortUtils.JOB_CODE_CHECK;
+import static com.mj.cafe.utils.PortUtils.JOB_CODE_CONFIRME;
 import static com.mj.cafe.utils.PortUtils.JOB_RESPONSE_CODE_CHECK;
 import static com.mj.cafe.utils.PortUtils.RESPONSE_SUCCESS;
 import static com.mj.cafe.utils.PortUtils.bbc;
@@ -95,8 +97,21 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connectusb);
         ButterKnife.bind(this);
-        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//        Logger.d(PortUtils.testconfirm("2"));
+        String hexStr ="0232333236373330303031202020202020323031393038313631363131313562009D005831303030303531333739322A2A2A2A2A2A2A2A2A2A30303030303030303032303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000032333236373330303031303031372D4139B0C5B7A1B1DDBED7BFC0B7F92020202020202020202020202020202020200D2020202020200391";
+        String data = hexStr.substring(hexStr.length() - 318, hexStr.length() - 4);
+        Logger.d("data:"+data);
+        if(data.startsWith("58")){
+            //错误
+        }else{
+            Logger.d("cardNumber:"+StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4,24))));
+            Logger.d("stageMonth:"+StringToHex.convertHexToString(data.substring(96,100)));
+            Logger.d("approvalNumber:"+StringToHex.convertHexToString(data.substring(100,124)));
+            Logger.d("cardCompany:"+StringToHex.convertHexToString(data.substring(242,274)));
+        }
 
+//        Logger.d( StringToHex.convertHexToString(s));
+        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         mActivity = this;
         linearlayoutdevices = (LinearLayout) findViewById(R.id.linearlayoutdevices);
         btnDisconnect = (Button) findViewById(R.id.buttonDisconnect);
@@ -114,7 +129,7 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
             finish();
         }
         serialPortFinder = new SerialPortFinder();
-            sortDevice(serialPortFinder.getDevices());
+        sortDevice(serialPortFinder.getDevices());
     }
 
     @Override
@@ -170,6 +185,7 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
                 initOptionPickerUsebDevice(mUsbDeviceNameList);
                 break;
             case R.id.btnNext:
+                MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(null);
                 ActivityUtil.next(this,BankCardPayAcitivty.class);
 //                ActivityUtil.next(this,MainActivity.class);
                 break;
@@ -354,8 +370,7 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
             @Override
             public void onFail(File device, Status status) {
                 showToastMsg("串口打开失败");
-            }
-        })
+            } })
                 .setOnSerialPortDataListener(new OnSerialPortDataListener() {
                     @Override
                     public void onDataReceived(byte[] bytes) {

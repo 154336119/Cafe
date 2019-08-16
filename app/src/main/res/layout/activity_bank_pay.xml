@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50px">
+
         <ImageView
             android:id="@+id/IvBack"
             android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
             android:src="@mipmap/yingyu_dingbu"
             android:layout_toRightOf="@id/IvZhongWen"
             android:layout_marginLeft="35px"/>
+
     </LinearLayout>
     <ImageView
         android:id="@+id/IvLogo"
@@ -41,13 +43,101 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300px"
         android:layout_gravity="center_horizontal"/>
-
-    <VideoView
-        android:id="@+id/VideoView"
+    <EditText
+        android:id="@+id/EtTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="90dp"
-        android:layout_marginLeft="90dp"
-        android:layout_marginBottom="200dp"
-        android:layout_marginTop="100dp"/>
+        android:text="12321321"/>
+    <TextView
+        android:id="@+id/TvPayTypeTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/com_txt_color"
+        android:textSize="@dimen/tv_com_35"
+        android:layout_marginTop="60dp"
+        android:text="@string/cn_Credit_Card_Samsung_Pay"
+        android:paddingLeft="40dp"
+        android:paddingRight="@dimen/dp_40"
+        android:lineSpacingExtra="@dimen/dp_10"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/TvPayTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/com_txt_color"
+        android:textSize="@dimen/tv_com_35"
+        android:layout_marginTop="30dp"
+        android:text="@string/cn_You_can_pay_with_a_credit_card_or_Samsung_Pay"
+        android:paddingLeft="40dp"
+        android:paddingRight="@dimen/dp_40"
+        android:lineSpacingExtra="@dimen/dp_10"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <ImageView
+        android:layout_width="600dp"
+        android:layout_height="400dp"
+        android:src="@mipmap/bank_bg"
+        android:layout_gravity="center_horizontal"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/TvCreditCardTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_35"
+            android:layout_marginTop="30dp"
+            android:text="@string/cn_Credit_Card"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/dp_40"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/TvSamsungPayTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_35"
+            android:layout_marginTop="30dp"
+            android:text="@string/cn_Samsung_Pay"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/dp_40"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/tv_com_60"/>
+        <TextView
+            android:id="@+id/TvSamsungPayDetailTips"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_35"
+            android:layout_marginTop="30dp"
+            android:text="@string/cn_Card_tips"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/dp_40"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:layout_below="@+id/TvCreditCardTips"/>
+        <TextView
+            android:id="@+id/TvCreditCardDetailTips"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/com_txt_color"
+            android:textSize="@dimen/tv_com_35"
+            android:layout_marginTop="30dp"
+            android:text="@string/cn_Card_tips"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/dp_40"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:layout_below="@+id/TvCreditCardTips"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 </LinearLayout>

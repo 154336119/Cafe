@@ -66,6 +66,7 @@ public class PaySuccessAcitivty extends BaseActivity {
         ButterKnife.bind(this);
         TvFoodNum.setText(mMealCode);
         httpGetPrintData();
+        showToastMsg("mOrderCode:"+mOrderCode);
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 

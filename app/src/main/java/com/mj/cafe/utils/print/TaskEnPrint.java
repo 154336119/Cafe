@@ -26,6 +26,8 @@ public class TaskEnPrint implements Runnable {
 
     public int PrintGBKStr(String StrUtf8, int nOrgx, int nWidthTimes, int nHeightTimes, int nFontType, int nFontStyle) {
         //原字符串函数里有乱码，仅用来设置格式
+        byte[] korea = new byte[]{(byte) 0x12, (byte) 0x90, (byte) 0x01};
+        pos.GetIO().Write(korea, 0, 3);
         pos.POS_S_TextOut("\r\n", nOrgx, nWidthTimes, nHeightTimes, nFontType, nFontStyle);
         //自己将UTF-8字符串转成GBK码，并调用底层函数发送字节
         String t = StrUtf8;
@@ -58,6 +60,7 @@ public class TaskEnPrint implements Runnable {
             PrintGBKStr(" [Order Time]" + printEntity.getCreate_time() + "\r\n", 0, 0, 0, 0, 0);//1倍大
             PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);//
             PrintGBKStr(PrintUtils.addSpc("Product", "Count") + "\n", 0, 0, 0, 0, 0);//            printGoods();
+            printGoods();
             pos.POS_S_Align(0);//左对齐
             PrintGBKStr("-----------------------------------------------\n", 0, 0, 0, 0, 0);
             PrintGBKStr(printEntity.getStore_name() + "\n", 0, 0, 0, 0, 0);

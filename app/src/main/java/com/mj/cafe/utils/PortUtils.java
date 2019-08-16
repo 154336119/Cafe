@@ -17,11 +17,18 @@ public class PortUtils {
     public static final String JOB_CODE_CHECK = "41";
     //请求Job_code——交易确认
     public static final String JOB_CODE_CONFIRME = "42";
+    //请求Job_code——等待结算
+    public static final String JOB_CODE_WAIT_CHECK = "45";
+
     //返回Job_code——设备确认
     public static final String JOB_RESPONSE_CODE_CHECK = "61";
     //返回Job_code——交易确认
     public static final String JOB_RESPONSE_CODE_CONFIRME = "62";
+    //返回Job_code——等待结算
+    public static final String JOB_RESPONSE_CODE_WAIT = "65";
 
+    //返回Job_code——插卡
+    public static final String JOB_RESPONSE_CODE_CARD = "40";
 //    //返回Job_code——交易确认
 //    public static final String JOB_RESPONSE_CODE_CONFIRME = "62";
 
@@ -70,6 +77,21 @@ public class PortUtils {
         return  StringToHex.hexStringToBytes16(sb.toString());
     }
 
+    public static byte[] waitConfirm(){
+        StringBuffer sb = new StringBuffer();
+        sb.append(stx);
+        sb.append(terminaloID);
+        sb.append(StringToHex.convertStringToHex(getStringDateLong1()));
+        sb.append(JOB_CODE_WAIT_CHECK);
+        sb.append(RESPONSE_SUCCESS);
+        sb.append(def_date_code);
+        sb.append(etx);
+        bbc = getXor(StringToHex.hexStringToBytes10(sb.toString()))+"";
+        bbc = StringToHex.intToHex(Integer.parseInt(bbc));
+        sb.append(bbc);
+        return  StringToHex.hexStringToBytes16(sb.toString());
+    }
+
     /**
      * 交易确认
      * HEADER FORMAT : STX[1] + Terminal ID[16] + DateTime[14] + JobCode[1] + Response Code[1] + Data Length[2]
@@ -81,9 +103,9 @@ public class PortUtils {
         sb.append(terminaloID);
         sb.append(StringToHex.convertStringToHex(getStringDateLong1()));
         sb.append(JOB_CODE_CONFIRME);
-        sb.append("1E"); //30个字节（金额）
+        sb.append(RESPONSE_SUCCESS);
+        sb.append("1E00"); //30个字节（金额）
         sb.append(createData(money));
-        sb.append(def_date_code);
         sb.append(etx);
         bbc = getXor(StringToHex.hexStringToBytes10(sb.toString()))+"";
         bbc = StringToHex.intToHex(Integer.parseInt(bbc));
@@ -91,12 +113,28 @@ public class PortUtils {
         return  StringToHex.hexStringToBytes16(sb.toString());
     }
 
+    public static String  testconfirm(String money){
+        StringBuffer sb = new StringBuffer();
+        sb.append(stx);
+        sb.append(terminaloID);
+        sb.append(StringToHex.convertStringToHex(getStringDateLong1()));
+        sb.append(JOB_CODE_CONFIRME);
+        sb.append(RESPONSE_SUCCESS);
+        sb.append("1E00"); //30个字节（金额）
+        sb.append(createData(money));
+        sb.append(etx);
+        bbc = getXor(StringToHex.hexStringToBytes10(sb.toString()))+"";
+        bbc = StringToHex.intToHex(Integer.parseInt(bbc));
+        sb.append(bbc);
+        return sb.toString();
+    }
+
     public static String createData(String money){
         //金额拼接
         //头部01
         //金额部分
         //尾部 30303030303030303030303030303030303031 （19个字节）
-        String str = "01"+StringToHex.convertStringToHex(String.format("%010d", Integer.valueOf(money)))
+        String str = "31"+StringToHex.convertStringToHex(String.format("%010d", Integer.valueOf(money)))
                 +"30303030303030303030303030303030303031";
         return str;
     }
