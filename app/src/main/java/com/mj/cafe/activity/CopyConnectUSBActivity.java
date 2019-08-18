@@ -65,7 +65,7 @@ import static com.mj.cafe.utils.StringToHex.bytesToHexString;
 import static com.mj.cafe.utils.StringToHex.getXor;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-public class CopyConnectUSBActivity extends BaseActivity implements OnClickListener, IOCallBack {
+public class CopyConnectUSBActivity extends BaseActivity implements IOCallBack {
     @BindView(R.id.btnSelectPort)
     Button btnSelectPort;
     @BindView(R.id.btnSelectUsb)
@@ -98,26 +98,33 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
         setContentView(R.layout.activity_connectusb);
         ButterKnife.bind(this);
 //        Logger.d(PortUtils.testconfirm("2"));
-        String hexStr ="0232333236373330303031202020202020323031393038313631363131313562009D005831303030303531333739322A2A2A2A2A2A2A2A2A2A30303030303030303032303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000032333236373330303031303031372D4139B0C5B7A1B1DDBED7BFC0B7F92020202020202020202020202020202020200D2020202020200391";
-        String data = hexStr.substring(hexStr.length() - 318, hexStr.length() - 4);
-        Logger.d("data:"+data);
-        if(data.startsWith("58")){
-            //错误
-        }else{
-            Logger.d("cardNumber:"+StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4,24))));
-            Logger.d("stageMonth:"+StringToHex.convertHexToString(data.substring(96,100)));
-            Logger.d("approvalNumber:"+StringToHex.convertHexToString(data.substring(100,124)));
-            Logger.d("cardCompany:"+StringToHex.convertHexToString(data.substring(242,274)));
-        }
-
+//        String hexStr ="0232333236373330303031202020202020323031393038313631363131313562009D005831303030303531333739322A2A2A2A2A2A2A2A2A2A30303030303030303032303030303030303030303030303030303030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000032333236373330303031303031372D4139B0C5B7A1B1DDBED7BFC0B7F92020202020202020202020202020202020200D2020202020200391";
+//        String data = hexStr.substring(hexStr.length() - 318, hexStr.length() - 4);
+//        Logger.d("data:"+data);
+//        if(data.startsWith("58")){
+//            //错误
+//        }else{
+//            Logger.d("cardNumber:"+StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4,24))));
+//            Logger.d("stageMonth:"+StringToHex.convertHexToString(data.substring(96,100)));
+//            Logger.d("approvalNumber:"+StringToHex.convertHexToString(data.substring(100,124)));
+//            Logger.d("cardCompany:"+StringToHex.convertHexToString(data.substring(242,274)));
+//        }
 //        Logger.d( StringToHex.convertHexToString(s));
+//         String data = "3131303030303531383138352A2A2A2A2A2A2A2A2A2A303030303030303031303030303030303031303030303030303030303237353331343439202020203230313930383137303132373137313930383137303030303630303039393637303334323720202020323332363733303030313030363030353231C7CFB3AAC4ABB5E5000000000000000030353035BFDCC8AFC4ABB5E5BBE7002020202020";
+//            Logger.d("cardNumber:"+data.substring(4,44));
+//            Logger.d("stageMonth:"+data.substring(96,100));
+//            Logger.d("approvalNumber:"+data.substring(100,124));
+//            Logger.d("cardCompany:"+data.substring(242,274));
+
+//            Logger.d("cardNumber:"+StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4,44))));
+//            Logger.d("stageMonth:"+StringToHex.convertHexToString(data.substring(96,100)));
+//            Logger.d("approvalNumber:"+StringToHex.convertHexToString(data.substring(100,124)));
+//            Logger.d("cardCompany:"+StringToHex.convertHexToString(data.substring(242,274)));
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         mActivity = this;
         linearlayoutdevices = (LinearLayout) findViewById(R.id.linearlayoutdevices);
         btnDisconnect = (Button) findViewById(R.id.buttonDisconnect);
         btnPrint = (Button) findViewById(R.id.buttonPrint);
-        btnDisconnect.setOnClickListener(this);
-        btnPrint.setOnClickListener(this);
         btnDisconnect.setEnabled(false);
         btnPrint.setEnabled(false);
         MyApp.getInstance().getPos().Set(mUsb);
@@ -138,22 +145,7 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
         btnDisconnect.performClick();
     }
 
-    public void onClick(View arg0) {
-        // TODO Auto-generated method stub
-        switch (arg0.getId()) {
-            case R.id.buttonDisconnect:
-//                es.submit(new TaskClose(mUsb));
-                break;
-            case R.id.buttonPrint:
-                btnPrint.setEnabled(false);
-                ActivityUtil.next(this,CountdownAcitivty.class);
-                break;
-            default:
-                break;
 
-        }
-
-    }
 
     /**
      * 搜寻所有sub
@@ -186,8 +178,8 @@ public class CopyConnectUSBActivity extends BaseActivity implements OnClickListe
                 break;
             case R.id.btnNext:
                 MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(null);
-                ActivityUtil.next(this,BankCardPayAcitivty.class);
-//                ActivityUtil.next(this,MainActivity.class);
+//                ActivityUtil.next(this,BankCardPayAcitivty.class);
+                ActivityUtil.next(this,MainActivity.class);
                 break;
             case R.id.buttonPrint:
                 es.submit(new TaskEnPrint(MyApp.getInstance().getPos()));

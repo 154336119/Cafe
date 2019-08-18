@@ -106,7 +106,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     RelativeLayout RlBankCarPay;
     private List<PayTypeBean> mPayTypeList = new ArrayList<>();
     //优惠券
-    private List<CouponBean> CouponList;
+    private List<CouponBean> CouponList = new ArrayList<>();
     private Map<String, Integer> CouponMap = new HashMap<>();
     private List<String> mSpinnerList = new ArrayList<>();
     //订单总金额 元

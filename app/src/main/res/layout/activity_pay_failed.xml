@@ -55,7 +55,6 @@
         android:lineSpacingExtra="@dimen/dp_10"
         android:textStyle="bold"
         android:gravity="center_horizontal"/>
-
     <TextView
         android:id="@+id/btn"
         android:layout_width="match_parent"
@@ -64,7 +63,7 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="100dp"
         android:background="@drawable/slt_btn_bottom"

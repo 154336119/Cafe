@@ -1,6 +1,8 @@
 package com.mj.cafe.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,6 +59,13 @@ public class PaySuccessAcitivty extends BaseActivity {
     String mMealCode; //取餐码
     String mOrderCode;//订单号
     private PrintEntity mPrintEntity;
+    private Handler handler  = new Handler(new Handler.Callback(){
+        @Override
+        public boolean handleMessage(Message msg) {
+            finish();
+            return true;
+        }
+    });;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +75,7 @@ public class PaySuccessAcitivty extends BaseActivity {
         ButterKnife.bind(this);
         TvFoodNum.setText(mMealCode);
         httpGetPrintData();
-        showToastMsg("mOrderCode:"+mOrderCode);
+//        showToastMsg("mOrderCode:"+mOrderCode);
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 
@@ -118,6 +127,7 @@ public class PaySuccessAcitivty extends BaseActivity {
                         super.onNext(entity);
                         mPrintEntity = entity;
                         printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
+                        handler.sendEmptyMessageDelayed(0,3000);
                     }
 
                     @Override

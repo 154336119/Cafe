@@ -230,8 +230,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TvChoosePayTypeTips"
-            android:layout_marginTop="40dp"
-            android:visibility="gone">
+            android:layout_marginTop="40dp">
             <RelativeLayout
                 android:id="@+id/RlBankCarPay"
                 android:layout_width="match_parent"
@@ -249,7 +248,7 @@
                     android:textSize="@dimen/tv_com_35"
                     android:text="银行卡支付"/>
                 <ImageView
-                    android:layout_width="300dp"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/yinhangkazhifu_pinpai"

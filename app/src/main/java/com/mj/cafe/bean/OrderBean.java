@@ -30,6 +30,29 @@ public class OrderBean implements Parcelable {
     private String couponMoney;
     private String payMoney;
 
+    public String getTaxMoney() {
+        return taxMoney;
+    }
+
+    public void setTaxMoney(String taxMoney) {
+        this.taxMoney = taxMoney;
+    }
+
+    private String taxMoney;
+    public String getCancelBankInfo() {
+        return cancelBankInfo;
+    }
+
+    public void setCancelBankInfo(String cancelBankInfo) {
+        this.cancelBankInfo = cancelBankInfo;
+    }
+
+    //确认号码  +  销售日期  + 销售时间   26位 （52个数字）
+    private String cancelBankInfo;
+
+
+
+
     public String getOrderCode() {
         return orderCode;
     }
@@ -139,6 +162,8 @@ public class OrderBean implements Parcelable {
         dest.writeString(this.qrcode);
         dest.writeString(this.couponMoney);
         dest.writeString(this.payMoney);
+        dest.writeString(this.taxMoney);
+        dest.writeString(this.cancelBankInfo);
         dest.writeString(this.orderCode);
     }
 
@@ -152,10 +177,12 @@ public class OrderBean implements Parcelable {
         this.qrcode = in.readString();
         this.couponMoney = in.readString();
         this.payMoney = in.readString();
+        this.taxMoney = in.readString();
+        this.cancelBankInfo = in.readString();
         this.orderCode = in.readString();
     }
 
-    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
+    public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {
         @Override
         public OrderBean createFromParcel(Parcel source) {
             return new OrderBean(source);

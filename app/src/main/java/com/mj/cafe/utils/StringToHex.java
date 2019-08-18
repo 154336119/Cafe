@@ -200,7 +200,6 @@ public class StringToHex {
      */
     public static String createBankCardCode(String num){
         String newStr = num.replaceFirst("^0*", "");
-        newStr = newStr + "**********";
         return newStr;
     }
 }

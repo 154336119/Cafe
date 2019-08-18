@@ -23,6 +23,7 @@ import com.mj.cafe.retorfit.RetrofitSerciveFactory;
 import com.mj.cafe.retorfit.rxjava.BaseSubscriber;
 import com.mj.cafe.retorfit.rxjava.HttpMjEntityFun;
 import com.mj.cafe.retorfit.rxjava.RxUtil;
+import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.PortUtils;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.utils.StringToHex;
@@ -47,8 +48,8 @@ import static com.mj.cafe.utils.StringToHex.bytesToHexString;
  * 银行卡支付
  */
 public class BankCardPayAcitivty extends BaseActivity {
-    @BindView(R.id.EtTest)
-    EditText EtTest;
+//    @BindView(R.id.EtTest)
+//    EditText EtTest;
     @BindView(R.id.IvBack)
     ImageView IvBack;
     @BindView(R.id.IvHanYu)
@@ -57,8 +58,6 @@ public class BankCardPayAcitivty extends BaseActivity {
     ImageView IvZhongWen;
     @BindView(R.id.IvYingYu)
     ImageView IvYingYu;
-    @BindView(R.id.IvLogo)
-    ImageView IvLogo;
     @BindView(R.id.TvPayTypeTips)
     TextView TvPayTypeTips;
     @BindView(R.id.TvPayTips)
@@ -81,6 +80,12 @@ public class BankCardPayAcitivty extends BaseActivity {
         ButterKnife.bind(this);
         mPayType = getIntent().getParcelableExtra("type");
         mOrderBean = getIntent().getParcelableExtra("order");
+//        ///测试
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(" mOrderBean.getPayMoney():"+ mOrderBean.getPayMoney());
+//        sb.append("\n");
+//        sb.append("mOrderBean.getTaxMoney():"+mOrderBean.getTaxMoney());
+//        EtTest.setText(sb.toString());
         MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(new OnSerialPortDataListener() {
             @Override
             public void onDataReceived(byte[] bytes) {
@@ -93,10 +98,11 @@ public class BankCardPayAcitivty extends BaseActivity {
             }
         });
         MyApp.getInstance().getSerialPortManager().sendBytes(waitConfirm());
+        MyApp.getInstance().getSerialPortManager().sendBytes(PortUtils.confirm( mOrderBean.getPayMoney(),mOrderBean.getTaxMoney()));
         setLangView((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)));
     }
 
-    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu,R.id.btn})
+    @OnClick({R.id.IvBack, R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.IvZhongWen:
@@ -121,9 +127,9 @@ public class BankCardPayAcitivty extends BaseActivity {
 //        showToastMsg("hexStr_"+hexStr);
         if (hexStr.length() > 3) {
             jobCode = hexStr.substring(62, 64);
-            showToastMsg("jobCode_" + jobCode);
+//            showToastMsg("jobCode_" + jobCode);
             response_code = hexStr.substring(64, 66);
-            showToastMsg("response_code" + jobCode);
+//            showToastMsg("response_code" + jobCode);
             if (response_code.equals(RESPONSE_SUCCESS)) {
                 if (jobCode.equals(JOB_RESPONSE_CODE_CHECK)) {
                     //设备确认解析
@@ -134,50 +140,50 @@ public class BankCardPayAcitivty extends BaseActivity {
                         //检查成功
                     } else {
                         //检查失败
-                        showToastMsg("state_error_hexStr_" + state);
+//                        showToastMsg("state_error_hexStr_" + state);
                         Logger.d(state);
                     }
 
                 } else if (jobCode.equals(JOB_RESPONSE_CODE_CONFIRME)) {
                     //结算确认解析
-                    BankCardPayAcitivty.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // TODO Auto-generated method stub
-                            EtTest.setText(hexStr);
-                        }
-                    });
-                    showToastMsg("响应_结算确认");
+                    //调试信息
+//                    BankCardPayAcitivty.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            // TODO Auto-generated method stub
+//                            EtTest.setText(hexStr);
+//                        }
+//                    });
+//                    showToastMsg("响应_结算确认");
                     String confirmeData = hexStr.substring(hexStr.length() - 318, hexStr.length() - 4);
                     Logger.d("confirmeData:" + confirmeData);
                     if (confirmeData.startsWith("58")) {
                         //错误
-                        showToastMsg("结算确认_错误");
+//                        showToastMsg("结算确认_错误");
                     } else {
                         //支付成功
-                        showToastMsg("结算确认_成功");
+//                        showToastMsg("结算确认_成功");
                         paySuccess(confirmeData);
                     }
 
                 } else if (jobCode.equals(JOB_RESPONSE_CODE_CARD)) {
                     //结算确认解析
-                    showToastMsg("响应_插卡");
-                    MyApp.getInstance().getSerialPortManager().sendBytes(PortUtils.confirm("2"));
+//                    showToastMsg("响应_插卡");
+//                   boolean s = MyApp.getInstance().getSerialPortManager().sendBytes(PortUtils.confirm( mOrderBean.getPayMoney(),mOrderBean.getTaxMoney()));
+//                   if(s){
+//
+//                   }else{
+//
+//                   }
+
                 } else if (jobCode.equals(JOB_RESPONSE_CODE_WAIT)) {
                     //结算确认解析
-                    showToastMsg("响应_等待结算");
-                    MyApp.getInstance().getSerialPortManager().sendBytes(PortUtils.confirm("2"));
+//                    MyApp.getInstance().getSerialPortManager().sendBytes(PortUtils.confirm("2"));
                 }
 
             } else {
 //                //错误码
 //                showToastMsg("Response_error:"+response_code);
-            }
-        } else {
-            //插卡后的反应
-            if (StringToHex.convertHexToString(hexStr).equals("@")) {
-                //执行结算确认
-                showToastMsg("插卡了");
             }
         }
     }
@@ -196,23 +202,60 @@ public class BankCardPayAcitivty extends BaseActivity {
         if (mOrderBean == null) {
             return;
         }
-        String cardNumber = StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4, 24)));
-        String stageMonth = StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(96, 100)));
-        String approvalNumber = StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(100, 124)));
-        String cardCompany = StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(242, 274)));
-        Logger.d("cardNumber:" + cardNumber);
-        Logger.d("stageMonth:" + cardNumber);
-        Logger.d("approvalNumber:" + stageMonth);
-        Logger.d("cardCompany:" + approvalNumber);
-        RetrofitSerciveFactory.provideComService().bankcardPaysuccess(mOrderBean.getOrderCode(), cardNumber, stageMonth, approvalNumber, cardCompany)
+        String cardNumber = StringToHex.createBankCardCode(StringToHex.convertHexToString(data.substring(4,44)));
+        String stageMonth = StringToHex.convertHexToString(data.substring(96, 100));
+        String approvalNumber = StringToHex.convertHexToString(data.substring(100, 124));
+        String cardCompany = data.substring(242, 274);
+//
+//        Logger.d("cardNumber:" + cardNumber);
+//        Logger.d("stageMonth:" + stageMonth);
+//        Logger.d("approvalNumber:" + stageMonth);
+//        Logger.d("cardCompany:" + approvalNumber);
+//        StringBuilder sb  = new StringBuilder();
+//        sb.append(data);
+//        sb.append("\n");
+//        sb.append("cardNumber.getOrderCode:" + mOrderBean.getOrderCode());
+//        sb.append("\n");
+//        sb.append("cardNumber:" + cardNumber);
+//        sb.append("\n");
+//        sb.append("stageMonth:" + stageMonth);
+//        sb.append("\n");
+//        sb.append("approvalNumber:" + approvalNumber);
+//        sb.append("\n");
+//        sb.append("cardCompany:" + cardCompany);
+//        sb.append("\n");
+
+//        BankCardPayAcitivty.this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                EtTest.setText(sb.toString());
+//            }
+//        });
+        RetrofitSerciveFactory.provideComService().bankcardPaysuccess(mOrderBean.getOrderCode(), cardNumber, cardCompany, stageMonth, approvalNumber)
                 .compose(RxUtil.<HttpMjResult<Object>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<Object>())
                 .subscribe(new BaseSubscriber<Object>(this) {
                     @Override
                     public void onNext(Object entity) {
-                        super.onNext(entity);
+//                        super.onNext(entity);
+                        //结算取消用的数据
+                        String cancelBankInfoHex = data.substring(100, 152);
+//                        showToastMsg("cancelBankInfoHex:"+cancelBankInfoHex);
+                        Bundle bundle = new Bundle();
+                        mOrderBean.setCancelBankInfo(cancelBankInfoHex);
+                        bundle.putParcelable("type", mPayType);
+                        bundle.putParcelable("order", mOrderBean);
+                        MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(null);
+                        ActivityUtil.next(BankCardPayAcitivty.this,CountDownActivity.class,bundle,true);
+                    }
+
+                    @Override
+                    public void onStart() {
+//                        super.onStart();
                     }
                 });
+
     }
 
 

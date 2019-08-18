@@ -90,7 +90,7 @@
     <string name="en_Create_account">Create account</string>
     <string name="en_Sign_up">Sign up</string>
     <string name="en_Please_choose_the_way_of_payment">Please choose the way of payment</string>
-    <string name="en_Credit_or_debit_card">Credit or debit card</string>
+    <string name="en_Credit_or_debit_card">Credit Card</string>
     <string name="en_Please_enter_your_cellphone_number">Please enter your cellphone number</string>
     <string name="en_Please_enter_pin_number">Please enter pin number</string>
     <string name="en_Please_enter_pin_number_again">Please enter pin number again</string>
@@ -121,7 +121,7 @@
     <string name="en_Credit_Card_Samsung_Pay">Credit Card / Samsung Pay</string>
     <string name="en_You_can_pay_with_a_credit_card_or_Samsung_Pay">You can pay with a credit card or Samsung Pay</string>
     <string name="en_Credit_Card">Credit Card</string>
-    <string name="en_Card_tips">Please insert your card to the end of the slot Please insert your card to the end of the slot</string>
+    <string name="en_Card_tips">Please insert your card to the end of the slot Please insert your card to the end of the slot.</string>
     <string name="en_Samsung_Pay">Samsung Pay</string>
     <string name="en_Samsung_Pay_tips">Please contact the backside of your cellphone on the reader till payment is completed.</string>
     <!--韩文-->
@@ -166,7 +166,7 @@
     <string name="ko_QR_code_has_been_expired_click_refresh">QR코드의 인증시간이 만료합니다. 새로 고침하세요.</string>
     <string name="ko_Please_wait_a_minute_for_data_request">결재 요청중입니다. 잠시만 기다리세요.</string>
     <string name="ko_Sorry_the_data_request_failed_the_order_has_been_cancelled">죄송합니다. 결재 요청이 실패하여 주문이 취소 되었습니다.</string>
-    <string name="ko_Congratulations_Your_payment_was_successful_Please_wait_a_minute">축하합니다. 결재가 성공했습니다. 자리에서 기다리세요!</string>
+    <string name="ko_Congratulations_Your_payment_was_successful_Please_wait_a_minute">축하합니다. 결재가 성공했습니다. 기다리세요!</string>
     <string name="ko_Order_code">주문 코드</string>
     <string name="ko_Confirm">확인</string>
     <string name="ko_Cancel">취소</string>

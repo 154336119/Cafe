@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
 import com.hwangjr.rxbus.annotation.Subscribe;
@@ -33,7 +33,6 @@ import com.mj.cafe.utils.PrintUtils;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 
 import java.io.UnsupportedEncodingException;
-import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,20 +50,41 @@ public class CountDownActivity extends BaseActivity {
     CountdownView mCountdownView;
     @BindView(R.id.TvTips)
     TextView TvTips;
+    @BindView(R.id.IvZhongWen)
+    ImageView IvZhongWen;
+    @BindView(R.id.IvHanYu)
+    ImageView IvHanYu;
+    @BindView(R.id.IvYingYu)
+    ImageView IvYingYu;
     private PayTypeBean mPayType;
     private OrderBean mOrderBean;
     private PrintEntity mPrintEntity;
     private boolean isSuccess;
     Subscription disposable;
     private int httpNum = 0;
-    private Handler handler  = new Handler(new Handler.Callback(){
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             httpNum++;
             httpGetOrderStatus();
             return true;
         }
-    });;
+    });
+    @OnClick({R.id.IvZhongWen, R.id.IvHanYu, R.id.IvYingYu})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.IvZhongWen:
+                postLangLiveData(new LangTypeBean(CN));
+                break;
+            case R.id.IvHanYu:
+                postLangLiveData(new LangTypeBean(KO));
+                break;
+            case R.id.IvYingYu:
+                postLangLiveData(new LangTypeBean(EN));
+                break;
+
+        }
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +92,11 @@ public class CountDownActivity extends BaseActivity {
         ButterKnife.bind(this);
         mPayType = getIntent().getParcelableExtra("type");
         mOrderBean = getIntent().getParcelableExtra("order");
-        if(mOrderBean == null ){
-            showToastMsg("CountDownActivity +mOrderBean为空");
+        if (mOrderBean == null) {
+//            showToastMsg("CountDownActivity +mOrderBean为空");
             return;
         }
-        mCountdownView.start(60 * 1000);
+        mCountdownView.start(15 * 1000);
         mCountdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
             @Override
             public void onEnd(CountdownView cv) {
@@ -84,12 +104,17 @@ public class CountDownActivity extends BaseActivity {
                 if (!isSuccess) {
                     RxBus.get().post(new FinishActivityEvent());
                     //测试打印小票
-                    showToastMsg("倒计时完");
-                    if(disposable!=null){
+//                    showToastMsg("倒计时完");
+                    if (disposable != null) {
                         disposable.unsubscribe();
                     }
                     handler.removeMessages(0);
-                    ActivityUtil.next(CountDownActivity.this, PayFailedAcitivty.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("order", mOrderBean);
+                    bundle.putParcelable("type", mPayType);
+//                    showToastMsg(mOrderBean.getPayMoney());
+//                    showToastMsg(mOrderBean.getTaxMoney());
+                    ActivityUtil.next(CountDownActivity.this, PayFailedAcitivty.class, bundle, false);
                 }
             }
         });
@@ -97,7 +122,6 @@ public class CountDownActivity extends BaseActivity {
         httpGetOrderStatus();
 //        httpGetPrintData();
     }
-
 
 
     public static class TaskPrint implements Runnable {
@@ -457,21 +481,21 @@ public class CountDownActivity extends BaseActivity {
 
     //http - 小票打印数据
     private void httpGetPrintData() {
-        showToastMsg("获取——小票打印数据");
-        RetrofitSerciveFactory.provideComService().getPrintData(mOrderBean.getOrderCode(),"")
+//        showToastMsg("获取——小票打印数据");
+        RetrofitSerciveFactory.provideComService().getPrintData(mOrderBean.getOrderCode(), "")
                 .compose(RxUtil.<HttpMjResult<PrintEntity>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<PrintEntity>())
                 .subscribe(new BaseSubscriber<PrintEntity>(this) {
                     @Override
                     public void onNext(PrintEntity entity) {
                         super.onNext(entity);
-                        showToastMsg("获取——成功");
+//                        showToastMsg("获取——成功");
                         mPrintEntity = entity;
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        showToastMsg("获取——失败");
+//                        showToastMsg("获取——失败");
                         super.onError(e);
                     }
                 });
@@ -485,31 +509,33 @@ public class CountDownActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<OrderStateEntity>(this) {
                     @Override
                     public void onNext(OrderStateEntity entity) {
-                        if(entity!=null && entity.getState()!=null){
-                            if(entity.getState() == 1){
+                        Bundle bundle = new Bundle();
+                        if (entity != null && entity.getState() != null) {
+                            if (entity.getState() == 1) {
                                 //支付成功
 //                                showToastMsg("支付成功");
-                                handler.sendEmptyMessageDelayed(0,2000);
-                            }else if(entity.getState() == 5){
+                                handler.sendEmptyMessageDelayed(0, 2000);
+                            } else if (entity.getState() == 5) {
                                 //下单失败(不可制作)
-                                showToastMsg("下单失败");
+//                                showToastMsg("下单失败");
                                 RxBus.get().post(new FinishActivityEvent());
                                 disposable.unsubscribe();
                                 handler.removeMessages(0);
-                                ActivityUtil.next(CountDownActivity.this,PayFailedAcitivty.class,null,false);
-                            }else if(entity.getState() == 2){
-                                showToastMsg("下单成功");
+                                bundle.putParcelable("type", mPayType);
+                                bundle.putParcelable("order", mOrderBean);
+                                ActivityUtil.next(CountDownActivity.this, PayFailedAcitivty.class, bundle, false);
+                            } else if (entity.getState() == 2) {
+//                                showToastMsg("下单成功");
                                 //下单成功
                                 isSuccess = true;
                                 //打印小票
 //                                printTiket((LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(LangTypeBean.DEFAULT)),mPrintEntity);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("meal_code",entity.getMeal_code());
-                                bundle.putString("order_code",mOrderBean.getOrderCode());
+                                bundle.putString("meal_code", entity.getMeal_code());
+                                bundle.putString("order_code", mOrderBean.getOrderCode());
                                 disposable.unsubscribe();
                                 handler.removeMessages(0);
                                 RxBus.get().post(new FinishActivityEvent());
-                                ActivityUtil.next(CountDownActivity.this,PaySuccessAcitivty.class,bundle,true);
+                                ActivityUtil.next(CountDownActivity.this, PaySuccessAcitivty.class, bundle, true);
                             }
                         }
                     }
@@ -524,7 +550,7 @@ public class CountDownActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(disposable!=null){
+        if (disposable != null) {
             disposable.unsubscribe();
         }
         mCountdownView.stop();
@@ -546,8 +572,8 @@ public class CountDownActivity extends BaseActivity {
     }
 
     //打印小票
-    private void printTiket(LangTypeBean langTypeBean,PrintEntity printEntity){
-        if(printEntity == null){
+    private void printTiket(LangTypeBean langTypeBean, PrintEntity printEntity) {
+        if (printEntity == null) {
             showToastMsg("error_printEntity_null");
             return;
         }
@@ -568,14 +594,16 @@ public class CountDownActivity extends BaseActivity {
     protected boolean rxBusRegist() {
         return true;
     }
+
     @Subscribe
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
-        if(disposable!=null){
+        if (disposable != null) {
             disposable.unsubscribe();
         }
     }

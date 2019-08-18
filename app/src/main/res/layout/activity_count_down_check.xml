@@ -6,7 +6,31 @@
 	android:orientation="vertical"
 	android:padding="10dp"
 	android:background="@mipmap/beijing_zhifufangshi">
-
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50px">
+		<ImageView
+			android:id="@+id/IvZhongWen"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/zhongwen_dingbu"
+			android:layout_centerHorizontal="true"/>
+		<ImageView
+			android:id="@+id/IvHanYu"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/hanyu_dingbu"
+			android:layout_toLeftOf="@id/IvZhongWen"
+			android:layout_marginRight="50px"/>
+		<ImageView
+			android:id="@+id/IvYingYu"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/yingyu_dingbu"
+			android:layout_toRightOf="@id/IvZhongWen"
+			android:layout_marginLeft="50px"/>
+	</RelativeLayout>
 	<TextView
 		android:id="@+id/TvTips"
 		android:layout_width="wrap_content"
@@ -19,7 +43,7 @@
 		android:text="请求数据中，请耐心等待"/>
 	<cn.iwgang.countdownview.CountdownView
 		android:id="@+id/CountdownView"
-		android:layout_width="wrap_content"
+		android:layout_width="300dp"
 		android:layout_height="wrap_content"
 		app:isHideTimeBackground="true"
 		app:isShowDay="false"
