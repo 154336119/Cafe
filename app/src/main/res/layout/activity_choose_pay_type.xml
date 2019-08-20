@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/cb_choose_pay_style"
                 android:button="@null"
-                android:checked="true"
+                android:checked="false"
                 android:enabled="true"
                 android:layout_centerVertical="true"
                 />

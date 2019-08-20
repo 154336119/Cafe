@@ -49,12 +49,12 @@ public class SeatAdapter extends BaseQuickAdapter<SeatBean, BaseViewHolder> {
 			checkBox.setVisibility(View.VISIBLE);
 			helper.setVisible(R.id.TvNo,true);
 			helper.setText(R.id.TvNo, item.getSeat_no());
-			//测试
-			if(item.getSeat_no().equals("A")){
-				checkBox.setEnabled(false);
-			}else{
-				checkBox.setEnabled(true);
-			}
+//			//测试
+//			if(item.getSeat_no().equals("A")){
+//				checkBox.setEnabled(false);
+//			}else{
+//				checkBox.setEnabled(true);
+//			}
 			checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -222,14 +222,15 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //http - 订单创建
     public void httpOrderCreate() {
-        if (mUserBean == null) {
-            return;
+        String token = null;
+        if (mUserBean != null) {
+            token = mUserBean.getToken();
         }
         if (CheckBox.isChecked()) {
             mIntegral = Integer.getInteger(EtJiFen.getText().toString());
         }
         LangTypeBean typeBean = (LangTypeBean) SharedPreferencesUtil.getData(BizcContant.SP_LANAUAGE, new LangTypeBean(CN));
-        RetrofitSerciveFactory.provideComService().orderCreate(typeBean.getUserHttpType(), mUserBean.getToken(), 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType.getId(), mGoodsArray)
+        RetrofitSerciveFactory.provideComService().orderCreate(typeBean.getUserHttpType(),token, 1, mSeatArray, mEnjoyway, mIntegral, mCouponId, mPayType.getId(), mGoodsArray)
                 .compose(RxUtil.<HttpMjResult<OrderBean>>applySchedulersForRetrofit())
                 .map(new HttpMjEntityFun<OrderBean>())
                 .subscribe(new BaseSubscriber<OrderBean>(this) {
