@@ -170,4 +170,9 @@ public class SeatListActivity extends BaseActivity implements SeatAdapter.OnSele
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
     }
+
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

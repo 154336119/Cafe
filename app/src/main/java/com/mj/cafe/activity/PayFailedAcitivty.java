@@ -142,4 +142,8 @@ public class PayFailedAcitivty extends BaseActivity {
                 }
             }
         }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

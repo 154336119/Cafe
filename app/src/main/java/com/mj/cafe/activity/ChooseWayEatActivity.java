@@ -107,4 +107,8 @@ public class ChooseWayEatActivity extends BaseActivity {
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
     }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

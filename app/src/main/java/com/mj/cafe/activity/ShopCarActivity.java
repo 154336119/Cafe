@@ -352,4 +352,8 @@ public class ShopCarActivity extends BaseActivity implements AddWidget.OnAddClic
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
     }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

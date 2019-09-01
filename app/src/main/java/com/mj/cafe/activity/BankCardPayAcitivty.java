@@ -288,4 +288,8 @@ public class BankCardPayAcitivty extends BaseActivity {
                 break;
         }
     }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

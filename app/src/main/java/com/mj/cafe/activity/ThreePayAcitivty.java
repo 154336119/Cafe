@@ -246,5 +246,8 @@ public class ThreePayAcitivty extends BaseActivity {
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
     }
-
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

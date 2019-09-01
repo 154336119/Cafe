@@ -155,4 +155,8 @@ public class PaySuccessAcitivty extends BaseActivity {
                 break;
         }
     }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }

@@ -11,21 +11,21 @@
             android:id="@+id/IvZhongWen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/zhongwen_dingbu"
-            android:layout_centerHorizontal="true"/>
+            android:layout_toRightOf="@id/IvYingYu"
+            android:src="@mipmap/zhongwen_dingbu"/>
         <ImageView
             android:id="@+id/IvHanYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/hanyu_dingbu"
-            android:layout_toLeftOf="@id/IvZhongWen"
+            android:layout_toLeftOf="@id/IvYingYu"
             android:layout_marginRight="50px"/>
         <ImageView
             android:id="@+id/IvYingYu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/yingyu_dingbu"
-            android:layout_toRightOf="@id/IvZhongWen"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="50px"/>
     </RelativeLayout>
     <ImageView

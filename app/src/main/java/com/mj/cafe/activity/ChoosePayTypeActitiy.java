@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hwangjr.rxbus.annotation.Subscribe;
 import com.mj.cafe.BaseActivity;
 import com.mj.cafe.BizcContant;
+import com.mj.cafe.MyApp;
 import com.mj.cafe.R;
 import com.mj.cafe.adapter.PayTypeAdapter;
 import com.mj.cafe.bean.CouponBean;
@@ -213,6 +214,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 mPayType = mPayTypeList.get(position);
+//                                MyApp.getInstance().getPos().POS_RTQueryStatus(new byte[1],5,1000*10,1);
                                 httpOrderCreate();
                             }
                         });
@@ -406,5 +408,10 @@ public class ChoosePayTypeActitiy extends BaseActivity {
     @Subscribe
     public void onFinishEvent(FinishActivityEvent event) {
         finish();
+    }
+
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
     }
 }

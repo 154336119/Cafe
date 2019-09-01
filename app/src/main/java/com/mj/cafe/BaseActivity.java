@@ -3,6 +3,8 @@ package com.mj.cafe;
 import android.arch.lifecycle.Observer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,15 +18,19 @@ import android.widget.Toast;
 
 import com.hwangjr.rxbus.RxBus;
 import com.jeremyliao.liveeventbus.LiveEventBus;
+import com.mj.cafe.activity.MainActivity;
 import com.mj.cafe.bean.LangTypeBean;
+import com.mj.cafe.utils.ActivityUtil;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.view.LoadingDialog;
+import com.orhanobut.logger.Logger;
 
 import static com.mj.cafe.BizcContant.SP_LANAUAGE;
 import static com.mj.cafe.BizcContant._CN;
 import static com.mj.cafe.activity.ShopCarActivity.carAdapter;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    public final String TAG = getClass().getSimpleName();
     private Toast mToast;
     /** 加载等待框 */
     private LoadingDialog mLoadingDialog;
@@ -32,6 +38,21 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 是否开启rxbus注册以及销毁时取消注册
      * @return
      */
+    private int num = 0;
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            num++;
+            Logger.d(TAG+"____"+num);
+            if(num<60){
+                startTimeDown();
+            }else{
+                handler.removeMessages(0);
+                ActivityUtil.next(BaseActivity.this, MainActivity.class);
+            }
+            return true;
+        }
+    });
     protected boolean rxBusRegist(){return false;}
 
     @Override
@@ -71,6 +92,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         hideNavigationBar();
+        if(setOpenTimeDown()){
+            startTimeDown();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//                    Logger.d(TAG+"===================================onStop");
+//        if(setOpenTimeDown()){
+//            Logger.d(TAG+"===================================onStop");
+//            resetTimeDown();
+//        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Logger.d(TAG+"===================================onPause");
+        if(setOpenTimeDown()){
+            Logger.d(TAG+"===================================onStop");
+            resetTimeDown();
+        }
     }
 
     /**
@@ -164,4 +208,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void setLangView(LangTypeBean langTypeBean);
     //语言切换时候http的请求的操作
     public void langChangeForHttp(){};
+
+
+    public void startTimeDown(){
+        handler.sendEmptyMessageDelayed(0,1000);
+    }
+
+    public void resetTimeDown(){
+        num =0;
+//        handler.removeMessages(0);
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    protected boolean setOpenTimeDown(){return false;}
+
 }

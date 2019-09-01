@@ -260,4 +260,8 @@ public class LoginRegisterActvitiy extends BaseActivity {
                 .build();
         pvOptionsOne.setPicker(optList);//二级选择器
     }
+    @Override
+    protected boolean setOpenTimeDown() {
+        return true;
+    }
 }
