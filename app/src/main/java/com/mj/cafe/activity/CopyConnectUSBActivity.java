@@ -41,6 +41,7 @@ import com.orhanobut.logger.Logger;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +51,7 @@ import java.util.concurrent.Executors;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.internal.Utils;
 
 import static com.mj.cafe.utils.PortUtils.JOB_CODE_CHECK;
 import static com.mj.cafe.utils.PortUtils.JOB_CODE_CONFIRME;
@@ -177,14 +179,27 @@ public class CopyConnectUSBActivity extends BaseActivity implements IOCallBack {
                 initOptionPickerUsebDevice(mUsbDeviceNameList);
                 break;
             case R.id.btnNext:
-                MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(null);
-//                ActivityUtil.next(this,BankCardPayAcitivty.class);
-                ActivityUtil.next(this,MainActivity.class);
+                //                ActivityUtil.next(this,MainActivity.class);
+
+
+
+//                MyApp.getInstance().getSerialPortManager().setOnSerialPortDataListener(null);
+//                byte[] status = new byte[1];
+//                boolean b = MyApp.getInstance().getPos().POS_RTQueryStatus(status,2,1000*10,1);
+////                if(b){
+//                }
+//                System.out.println("x的第五位二进制位的数为：" + ((((x&(1<<4))>>4)==1)?"1":"0"))
+//                showToastMsg(isIntNumberNBitONEInBinary(18,4)+"");
+                isIntNumberNBitONEInBinary(18,5);
                 break;
             case R.id.buttonPrint:
                 es.submit(new TaskEnPrint(MyApp.getInstance().getPos()));
                 break;
         }
+    }
+    private void isIntNumberNBitONEInBinary(int number,int nbit){
+      int i=  (number>>nbit) & 1;
+      showToastMsg(i+"");
     }
 
 

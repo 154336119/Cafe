@@ -38,6 +38,7 @@ import com.mj.cafe.utils.EtInputFilters;
 import com.mj.cafe.utils.SharedPreferencesUtil;
 import com.mj.cafe.view.spinner.NiceSpinner;
 import com.mj.cafe.view.spinner.OnSpinnerItemSelectedListener;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,8 +215,6 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 mPayType = mPayTypeList.get(position);
-//                                MyApp.getInstance().getPos().POS_RTQueryStatus(new byte[1],5,1000*10,1);
-                                httpOrderCreate();
                             }
                         });
                     }
