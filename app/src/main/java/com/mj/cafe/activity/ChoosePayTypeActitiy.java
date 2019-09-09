@@ -215,6 +215,7 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                                 mPayType = mPayTypeList.get(position);
+                                httpOrderCreate();
                             }
                         });
                     }
@@ -223,6 +224,15 @@ public class ChoosePayTypeActitiy extends BaseActivity {
 
     //http - 订单创建
     public void httpOrderCreate() {
+        byte[] status = new byte[1];
+        boolean b = MyApp.getInstance().getPos().POS_RTQueryStatus(status,2,1000*10,1);
+        if(b){
+           int i =  isIntNumberNBitONEInBinary(status[0],5);
+           if(i == 1){
+               showToastMsg("print_error");
+               return;
+           }
+        }
         String token = null;
         if (mUserBean != null) {
             token = mUserBean.getToken();
@@ -248,6 +258,12 @@ public class ChoosePayTypeActitiy extends BaseActivity {
                         }
                     }
                 });
+    }
+
+
+    private int isIntNumberNBitONEInBinary(int number,int nbit){
+        int i=  (number>>nbit) & 1;
+        return i;
     }
 
     //http - 优惠券列表

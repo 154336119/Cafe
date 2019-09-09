@@ -30,7 +30,8 @@
 			android:layout_height="wrap_content"
 			android:src="@mipmap/yingyu_dingbu"
 			android:layout_centerHorizontal="true"
-			android:layout_marginLeft="50px"/>
+			android:layout_marginLeft="50px"
+			android:layout_marginRight="50px"/>
 	</RelativeLayout>
 	<TextView
 		android:id="@+id/TvTips"

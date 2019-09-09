@@ -12,6 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/IvYingYu"
+            android:layout_marginLeft="50px"
             android:src="@mipmap/zhongwen_dingbu"/>
         <ImageView
             android:id="@+id/IvHanYu"
@@ -26,7 +27,8 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/yingyu_dingbu"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="50px"/>
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"/>
     </RelativeLayout>
     <ImageView
         android:id="@+id/IvLogo"
